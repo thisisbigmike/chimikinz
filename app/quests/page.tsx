@@ -111,7 +111,6 @@ function AnimatedPoints({ value }: { value: number }) {
 }
 
 import { useUser } from '@/lib/context/user-context'
-import { site } from '@/lib/site'
 
 export default function QuestsPage() {
   const { completedQuests, completeQuest, points: totalPoints } = useUser()
