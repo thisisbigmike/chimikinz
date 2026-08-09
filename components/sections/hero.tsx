@@ -19,12 +19,11 @@ export function Hero() {
             </PixelTag>
           </ScrollReveal>
 
-          {/* The signature element: the wordmark itself, stacked and stamped. */}
+          {/* The signature element: the wordmark itself. */}
           <ScrollReveal variant="fade-up" delay={100}>
             <h1 className="font-display text-4xl uppercase leading-[1.1] sm:text-5xl lg:text-6xl">
-              <span className="block">Chimi</span>
-              <span className="pixel-text-shadow-primary block text-foreground">
-                kinz
+              <span className="pixel-text-shadow-primary text-foreground">
+                Chimikinz
               </span>
             </h1>
           </ScrollReveal>
