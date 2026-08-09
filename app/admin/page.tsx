@@ -96,6 +96,71 @@ export default function AdminPage() {
     },
   ])
 
+  // Quests Management State
+  const [quests, setQuests] = useState<
+    {
+      id: string
+      title: string
+      points: number
+      category: 'Social' | 'Daily' | 'Lore' | 'Creative'
+      description: string
+      actionLabel: string
+      actionUrl?: string
+    }[]
+  >([
+    {
+      id: 'x-follow',
+      title: 'Follow @chimikinzzz on X',
+      points: 150,
+      category: 'Social',
+      description: 'Keep up with daily hand-drawn previews and mint announcements.',
+      actionLabel: 'Follow on X',
+      actionUrl: site.links.x,
+    },
+    {
+      id: 'discord-join',
+      title: 'Join the Chimikinz Nest on Discord',
+      points: 200,
+      category: 'Social',
+      description: 'Hang out with the creators, talk lore, and get early community drops.',
+      actionLabel: 'Join Discord',
+      actionUrl: site.links.discord,
+    },
+    {
+      id: 'daily-checkin',
+      title: 'Daily Charm Check-in',
+      points: 50,
+      category: 'Daily',
+      description: 'Claim your daily dose of luck from the sketchbook.',
+      actionLabel: 'Claim Luck',
+    },
+    {
+      id: 'gallery-share',
+      title: 'Inspect an Oddling in the Nest',
+      points: 100,
+      category: 'Creative',
+      description: 'Browse the gallery and find an oddling whose charm speaks to you.',
+      actionLabel: 'Open Gallery',
+      actionUrl: '/gallery',
+    },
+    {
+      id: 'lore-trivia',
+      title: 'Answer the Charm Master Trivia',
+      points: 250,
+      category: 'Lore',
+      description: 'Prove you know where the oddlings came from and how many total charms exist.',
+      actionLabel: 'Take Quiz',
+    },
+  ])
+
+  // New Quest Form Inputs
+  const [qTitle, setQTitle] = useState('')
+  const [qPoints, setQPoints] = useState(150)
+  const [qCategory, setQCategory] = useState<'Social' | 'Daily' | 'Lore' | 'Creative'>('Social')
+  const [qDesc, setQDesc] = useState('')
+  const [qActionLabel, setQActionLabel] = useState('')
+  const [qActionUrl, setQActionUrl] = useState('')
+
   // Form Inputs
   const [newAddress, setNewAddress] = useState('')
   const [newTier, setNewTier] = useState<AllowlistEntry['tier']>('Tier 1 (Guaranteed)')
@@ -128,6 +193,61 @@ export default function AdminPage() {
     if (sessionKey === 'authenticated') {
       setIsAuthenticated(true)
     }
+
+    const savedQuests = localStorage.getItem('chimikinz_admin_quests')
+    if (savedQuests) {
+      try {
+        setQuests(JSON.parse(savedQuests))
+      } catch (e) {
+        // Fallback
+      }
+    }
+
+    const savedAL = localStorage.getItem('chimikinz_allowlist')
+    if (savedAL) {
+      try {
+        setAllowlist(JSON.parse(savedAL))
+      } catch (e) {
+        // Fallback
+      }
+    }
+  }, [])
+
+  const handleAddQuest = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!qTitle || !qDesc || !qActionLabel) return
+
+    const newQuest = {
+      id: `quest-${Date.now()}`,
+      title: qTitle.trim(),
+      points: Number(qPoints),
+      category: qCategory,
+      description: qDesc.trim(),
+      actionLabel: qActionLabel.trim(),
+      actionUrl: qActionUrl.trim() || undefined,
+    }
+
+    const nextQuests = [...quests, newQuest]
+    setQuests(nextQuests)
+    localStorage.setItem('chimikinz_admin_quests', JSON.stringify(nextQuests))
+
+    // Reset Form
+    setQTitle('')
+    setQPoints(150)
+    setQDesc('')
+    setQActionLabel('')
+    setQActionUrl('')
+
+    addLog(`Published new Quest "${newQuest.title}" (+${newQuest.points} PTS).`)
+  }
+
+  const handleDeleteQuest = (id: string) => {
+    const target = quests.find((q) => q.id === id)
+    const nextQuests = quests.filter((q) => q.id !== id)
+    setQuests(nextQuests)
+    localStorage.setItem('chimikinz_admin_quests', JSON.stringify(nextQuests))
+    addLog(`Deleted Quest "${target?.title || id}".`)
+  }
 
     const savedAL = localStorage.getItem('chimikinz_allowlist')
     if (savedAL) {
@@ -547,53 +667,176 @@ export default function AdminPage() {
 
             {/* TAB CONTENT 3: QUEST CONTROLLERS */}
             {activeTab === 'quests' && (
-              <div className="pixel-box-lg bg-card p-6 flex flex-col gap-6">
-                <h3 className="font-display text-sm uppercase">Quest Lifecycle & Status Controller</h3>
+              <div className="flex flex-col gap-6">
+                <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
+                  {/* Add Quest Form */}
+                  <div className="pixel-box-lg bg-card p-6 flex flex-col gap-4">
+                    <h3 className="font-display text-sm uppercase text-primary">
+                      + Add New Quest
+                    </h3>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {[
-                    { id: 'x-follow', title: 'Follow @chimikinzzz on X', points: 150 },
-                    { id: 'discord-join', title: 'Join Official Discord Nest', points: 200 },
-                    { id: 'daily-checkin', title: 'Daily Luck Claim', points: 50 },
-                    { id: 'gallery-share', title: 'Share Nest Gallery', points: 100 },
-                    { id: 'lore-trivia', title: 'Oddling Lore Trivia', points: 250 },
-                  ].map((q) => {
-                    const isActive = questStatus[q.id]
-                    return (
-                      <div
-                        key={q.id}
-                        className="pixel-box-sm bg-background p-4 flex items-center justify-between gap-4 border-2 border-foreground"
-                      >
-                        <div className="flex flex-col">
-                          <span className="font-display text-xs uppercase text-foreground">
-                            {q.title}
-                          </span>
-                          <span className="text-xs text-muted-foreground">Reward: ✦ {q.points} PTS</span>
+                    <form onSubmit={handleAddQuest} className="flex flex-col gap-4">
+                      <div className="flex flex-col gap-1">
+                        <label className="font-display text-[10px] uppercase text-muted-foreground">
+                          Quest Title
+                        </label>
+                        <input
+                          type="text"
+                          value={qTitle}
+                          onChange={(e) => setQTitle(e.target.value)}
+                          placeholder="e.g. Retweet Teaser Post"
+                          required
+                          className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="flex flex-col gap-1">
+                          <label className="font-display text-[10px] uppercase text-muted-foreground">
+                            Reward Points
+                          </label>
+                          <input
+                            type="number"
+                            min={10}
+                            max={1000}
+                            value={qPoints}
+                            onChange={(e) => setQPoints(Number(e.target.value))}
+                            required
+                            className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                          />
                         </div>
 
-                        <button
-                          type="button"
-                          onClick={() => toggleQuest(q.id)}
-                          className={cn(
-                            'pixel-box-sm px-3 py-1.5 font-display text-[10px] uppercase flex items-center gap-1.5 transition-all',
-                            isActive
-                              ? 'bg-accent text-accent-foreground'
-                              : 'bg-muted text-muted-foreground',
-                          )}
-                        >
-                          {isActive ? (
-                            <>
-                              <ToggleRight className="size-4" /> ACTIVE
-                            </>
-                          ) : (
-                            <>
-                              <ToggleLeft className="size-4" /> PAUSED
-                            </>
-                          )}
-                        </button>
+                        <div className="flex flex-col gap-1">
+                          <label className="font-display text-[10px] uppercase text-muted-foreground">
+                            Category
+                          </label>
+                          <select
+                            value={qCategory}
+                            onChange={(e) => setQCategory(e.target.value as any)}
+                            className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                          >
+                            <option value="Social">Social</option>
+                            <option value="Daily">Daily</option>
+                            <option value="Lore">Lore</option>
+                            <option value="Creative">Creative</option>
+                          </select>
+                        </div>
                       </div>
-                    )
-                  })}
+
+                      <div className="flex flex-col gap-1">
+                        <label className="font-display text-[10px] uppercase text-muted-foreground">
+                          Description
+                        </label>
+                        <input
+                          type="text"
+                          value={qDesc}
+                          onChange={(e) => setQDesc(e.target.value)}
+                          placeholder="Short task instructions..."
+                          required
+                          className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="flex flex-col gap-1">
+                          <label className="font-display text-[10px] uppercase text-muted-foreground">
+                            Button Label
+                          </label>
+                          <input
+                            type="text"
+                            value={qActionLabel}
+                            onChange={(e) => setQActionLabel(e.target.value)}
+                            placeholder="e.g. Retweet on X"
+                            required
+                            className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-1">
+                          <label className="font-display text-[10px] uppercase text-muted-foreground">
+                            Target Link (Optional)
+                          </label>
+                          <input
+                            type="text"
+                            value={qActionUrl}
+                            onChange={(e) => setQActionUrl(e.target.value)}
+                            placeholder="https://..."
+                            className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="pixel-box-sm pixel-press bg-primary text-primary-foreground py-3 font-display text-xs uppercase mt-2"
+                      >
+                        Publish New Quest
+                      </button>
+                    </form>
+                  </div>
+
+                  {/* Active Quests List */}
+                  <div className="pixel-box-lg bg-card p-6 flex flex-col gap-4">
+                    <h3 className="font-display text-sm uppercase">Active Quests ({quests.length})</h3>
+
+                    <div className="grid gap-4">
+                      {quests.map((q) => {
+                        const isActive = questStatus[q.id] !== false
+                        return (
+                          <div
+                            key={q.id}
+                            className="pixel-box-sm bg-background p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-2 border-foreground"
+                          >
+                            <div className="flex flex-col gap-1">
+                              <div className="flex items-center gap-2">
+                                <span className="font-display text-xs uppercase text-foreground">
+                                  {q.title}
+                                </span>
+                                <PixelTag className="bg-secondary text-secondary-foreground text-[9px]">
+                                  {q.category}
+                                </PixelTag>
+                              </div>
+                              <span className="text-xs text-muted-foreground">
+                                {q.description} &bull; Reward: <strong className="text-primary">✦ {q.points} PTS</strong>
+                              </span>
+                            </div>
+
+                            <div className="flex items-center gap-2 shrink-0">
+                              <button
+                                type="button"
+                                onClick={() => toggleQuest(q.id)}
+                                className={cn(
+                                  'pixel-box-sm px-3 py-1.5 font-display text-[10px] uppercase flex items-center gap-1.5 transition-all',
+                                  isActive
+                                    ? 'bg-accent text-accent-foreground'
+                                    : 'bg-muted text-muted-foreground',
+                                )}
+                              >
+                                {isActive ? (
+                                  <>
+                                    <ToggleRight className="size-4" /> ACTIVE
+                                  </>
+                                ) : (
+                                  <>
+                                    <ToggleLeft className="size-4" /> PAUSED
+                                  </>
+                                )}
+                              </button>
+
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteQuest(q.id)}
+                                className="pixel-box-sm bg-destructive text-destructive-foreground p-2 hover:scale-105 transition-transform"
+                                aria-label="Delete quest"
+                              >
+                                <Trash2 className="size-4" />
+                              </button>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
                 </div>
               </div>
             )}

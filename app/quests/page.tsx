@@ -117,6 +117,18 @@ export default function QuestsPage() {
   const [activeQuiz, setActiveQuiz] = useState(false)
   const [quizAnswer, setQuizAnswer] = useState<string | null>(null)
   const [justCompleted, setJustCompleted] = useState<string | null>(null)
+  const [questsList, setQuestsList] = useState<Quest[]>(QUESTS)
+
+  useEffect(() => {
+    const savedAdminQuests = localStorage.getItem('chimikinz_admin_quests')
+    if (savedAdminQuests) {
+      try {
+        setQuestsList(JSON.parse(savedAdminQuests))
+      } catch (e) {
+        // Fallback
+      }
+    }
+  }, [])
 
   const handleQuestComplete = (id: string, pts: number, url?: string) => {
     const targetUrl = id === 'x-follow' ? site.links.xFollowIntent : url
