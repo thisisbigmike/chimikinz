@@ -4,7 +4,6 @@ import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { PixelMarquee } from '@/components/pixel/pixel-marquee'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
 import { OddlingCard } from '@/components/oddling-card'
 import {
@@ -48,16 +47,6 @@ export default function GalleryPage() {
   return (
     <div className="min-h-screen bg-background font-sans antialiased text-foreground">
       <SiteHeader />
-      <PixelMarquee
-        items={[
-          'THE NEST',
-          '2,222 CHARMS',
-          'HAND-DRAWN ODDLINGS',
-          'APECHAIN',
-          'CATCH THE LUCK',
-        ]}
-        tone="gold"
-      />
 
       <main className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col gap-6">

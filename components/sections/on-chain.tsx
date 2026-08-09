@@ -8,7 +8,7 @@ import { brandArt } from '@/lib/oddlings'
 import { site } from '@/lib/site'
 
 const points = [
-  'Minted on ApeChain, where the bulls live',
+  'Minted on Ethereum mainnet',
   'Holders vote on which oddlings get animated first',
   'Charm ledger tracks every trait on-chain',
 ]
@@ -34,7 +34,7 @@ export function OnChain() {
             <SectionHeading
               eyebrow={`Home on ${site.chain}`}
               title="The oddlings picked a bull to ride"
-              body="ApeChain is fast, cheap and full of people who already understand not taking things too seriously. It felt like the right barn."
+              body="Ethereum is fast, secure and full of people who appreciate true hand-drawn web3 art. It felt like the right home."
             />
           </ScrollReveal>
 

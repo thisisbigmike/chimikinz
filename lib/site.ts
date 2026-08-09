@@ -1,7 +1,7 @@
 export const site = {
   name: 'Chimikinz',
-  supply: 2222,
-  chain: 'ApeChain',
+  supply: 4444,
+  chain: 'Ethereum',
   tagline: 'Hand-drawn oddlings. Every one carries a charm.',
   links: {
     x: 'https://x.com/chimikinzzz',
@@ -17,16 +17,16 @@ export const site = {
 } as const
 
 export const stats = [
-  { value: '2,222', label: 'Oddlings' },
+  { value: '4,444', label: 'Oddlings' },
   { value: '100%', label: 'Hand-drawn' },
-  { value: 'APE', label: 'Chain' },
+  { value: 'ETH', label: 'Chain' },
   { value: 'SOON', label: 'Mint' },
 ] as const
 
 export const marqueeItems = [
   'MINT COMING SOON',
-  '2,222 ODDLINGS',
-  'BUILT ON APECHAIN',
+  '4,444 ODDLINGS',
+  'BUILT ON ETHEREUM',
   'ONE CHARM EACH',
   'NO TWO ALIKE',
   'CATCH THE LUCK',
@@ -37,7 +37,7 @@ export const roadmap = [
     phase: 'Phase 01',
     title: 'The Scribble',
     status: 'done',
-    body: 'Every oddling drawn by hand — no generator, no filler. 2,222 charms sketched, inked and named.',
+    body: 'Every oddling drawn by hand — no generator, no filler. 4,444 charms sketched, inked and named.',
   },
   {
     phase: 'Phase 02',
@@ -49,7 +49,7 @@ export const roadmap = [
     phase: 'Phase 03',
     title: 'Share the Luck',
     status: 'next',
-    body: 'Mint opens on ApeChain. Holders get the charm ledger, community drops and a say in what comes next.',
+    body: 'Mint opens on Ethereum. Holders get the charm ledger, community drops and a say in what comes next.',
   },
   {
     phase: 'Phase 04',

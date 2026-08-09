@@ -2,7 +2,7 @@
 
 > **Hand-drawn oddlings. Every one carries a charm.**
 
-Chimikinz is a collection of 2,222 hand-drawn, unique oddlings built on **ApeChain**. No trait machines, no generic generators — every single creature is inked by hand and carries its own distinct charm.
+Chimikinz is a collection of 4,444 hand-drawn, unique oddlings built on **Ethereum**. No trait machines, no generic generators — every single creature is inked by hand and carries its own distinct charm.
 
 ---
 
@@ -10,7 +10,7 @@ Chimikinz is a collection of 2,222 hand-drawn, unique oddlings built on **ApeCha
 
 - 🎨 **100% Hand-Drawn**: Each oddling was sketched, inked, and named by hand by founder Metakiddo.
 - 🔮 **One Charm Each**: Whether it's a halo, a cracked skull, or a burger hat, each charm shapes the oddling's behavior and place in the lore.
-- ⚡ **Built on ApeChain**: Native NFT collection leveraging the ApeChain ecosystem.
+- ⚡ **Built on Ethereum**: Native NFT collection built on the Ethereum blockchain.
 - 📜 **Quests & Oddling Terminal**: Interactive quest system rewarding early oddling holders.
 - 🍀 **Pure Luck**: A small pile of good luck you can carry in your web3 wallet.
 
@@ -19,11 +19,11 @@ Chimikinz is a collection of 2,222 hand-drawn, unique oddlings built on **ApeCha
 ## 🚀 Project Roadmap
 
 - **Phase 01: The Scribble** *(Completed)*  
-  Every oddling drawn by hand — 2,222 charms sketched, inked, and named.
+  Every oddling drawn by hand — 4,444 charms sketched, inked, and named.
 - **Phase 02: Polish the Charm** *(Active)*  
   Lore finalized, traits balanced, terminal built, and Quests live.
 - **Phase 03: Share the Luck** *(Upcoming)*  
-  Mint opens on ApeChain. Holders receive the charm ledger, community drops, and governance input.
+  Mint opens on Ethereum. Holders receive the charm ledger, community drops, and governance input.
 - **Phase 04: Grow the Nest** *(Future)*  
   Merch, collaborations, animated shorts, and expanding the Chimikinz universe.
 

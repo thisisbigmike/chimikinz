@@ -19,15 +19,15 @@ const pixelBody = VT323({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Chimikinz — 2,222 Lucky Oddlings on ApeChain',
+    default: 'Chimikinz — 4,444 Lucky Oddlings on Ethereum',
     template: '%s · Chimikinz',
   },
   description:
-    'Chimikinz is a collection of 2,222 hand-drawn oddlings, each carrying a charm of its own. Collect one, catch the luck.',
+    'Chimikinz is a collection of 4,444 hand-drawn oddlings, each carrying a charm of its own. Collect one, catch the luck.',
   generator: 'v0.app',
-  keywords: ['Chimikinz', 'oddlings', 'ApeChain', 'NFT', 'pixel', 'collection'],
+  keywords: ['Chimikinz', 'oddlings', 'Ethereum', 'ETH', 'NFT', 'pixel', 'collection'],
   openGraph: {
-    title: 'Chimikinz — 2,222 Lucky Oddlings',
+    title: 'Chimikinz — 4,444 Lucky Oddlings',
     description:
       'Hand-drawn oddlings, each carrying a charm of its own. Collect one, catch the luck.',
     type: 'website',

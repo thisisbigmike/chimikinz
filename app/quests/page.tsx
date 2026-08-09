@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { PixelMarquee } from '@/components/pixel/pixel-marquee'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { site } from '@/lib/site'
@@ -147,27 +146,17 @@ export default function QuestsPage() {
   }
 
   const handleQuizSubmit = () => {
-    if (quizAnswer === '2222') {
+    if (quizAnswer === '4444') {
       completeQuest('lore-trivia')
       setActiveQuiz(false)
     } else {
-      alert('Not quite! Hint: Total supply is 2,222 oddlings.')
+      alert('Not quite! Hint: Total supply is 4,444 oddlings.')
     }
   }
 
   return (
     <div className="min-h-screen bg-background font-sans antialiased text-foreground">
       <SiteHeader />
-      <PixelMarquee
-        items={[
-          'EARN CHARM POINTS',
-          'COMMUNITY QUESTS',
-          'PRIORITY MINT SPOT',
-          '2,222 ODDLINGS',
-          'APECHAIN',
-        ]}
-        tone="gold"
-      />
 
       <main className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col gap-10">
         <ScrollReveal variant="fade-up">
@@ -355,11 +344,11 @@ export default function QuestsPage() {
               </div>
 
               <p className="text-xl">
-                How many total hand-drawn oddlings make up the full Chimikinz collection on ApeChain?
+                How many total hand-drawn oddlings make up the full Chimikinz collection on Ethereum?
               </p>
 
               <div className="flex flex-col gap-3">
-                {['1111', '2222', '5555', '10000'].map((option) => (
+                {['2222', '4444', '5555', '10000'].map((option) => (
                   <button
                     key={option}
                     type="button"
