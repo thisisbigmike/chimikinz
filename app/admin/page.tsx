@@ -26,6 +26,7 @@ import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
+import { fetchFirestoreLeaderboard } from '@/lib/firebase'
 
 // Default secure admin passcode (can be changed by admin)
 const DEFAULT_ADMIN_KEY = 'CHIMIKINZ-2026-ADMIN'
@@ -193,6 +194,22 @@ export default function AdminPage() {
     if (sessionKey === 'authenticated') {
       setIsAuthenticated(true)
     }
+
+    // Fetch live users from Firestore
+    fetchFirestoreLeaderboard(50).then((liveUsers) => {
+      if (liveUsers && liveUsers.length > 0) {
+        setUsers(
+          liveUsers.map((u) => ({
+            address: u.address,
+            points: u.points || 0,
+            questsCompleted: u.completedQuests?.length || 0,
+            joinedAt: u.updatedAt ? u.updatedAt.slice(0, 10) : '2026-08-09',
+            role: u.oddlingsCount > 0 ? 'Holder' : 'Member',
+          }))
+        )
+        addLog(`Loaded ${liveUsers.length} live user profiles from Firestore database.`)
+      }
+    })
 
     const savedQuests = localStorage.getItem('chimikinz_admin_quests')
     if (savedQuests) {

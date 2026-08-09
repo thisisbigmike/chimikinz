@@ -1,6 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import { syncUserToFirestore, subscribeToUserFirestore } from '@/lib/firebase'
 
 export type UserSession = {
   address: string
@@ -78,10 +79,39 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
+  const points = completedQuests.reduce(
+    (sum, qId) => sum + (QUEST_POINTS_MAP[qId] || 100),
+    0,
+  )
+
+  // Sync to Firestore whenever key user states update
+  useEffect(() => {
+    if (session?.address) {
+      syncUserToFirestore({
+        address: session.address,
+        method: session.method,
+        connectedAt: session.connectedAt,
+        oddlingsCount: session.oddlingsCount,
+        points,
+        completedQuests,
+        favorites,
+      })
+    }
+  }, [session, completedQuests, favorites, points])
+
   const setSession = (newSession: UserSession | null) => {
     setSessionState(newSession)
     if (newSession) {
       localStorage.setItem('chimikinz_user_session', JSON.stringify(newSession))
+      syncUserToFirestore({
+        address: newSession.address,
+        method: newSession.method,
+        connectedAt: newSession.connectedAt,
+        oddlingsCount: newSession.oddlingsCount,
+        points,
+        completedQuests,
+        favorites,
+      })
     } else {
       localStorage.removeItem('chimikinz_user_session')
     }
@@ -94,11 +124,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem('chimikinz_completed_quests', JSON.stringify(next))
     }
   }
-
-  const points = completedQuests.reduce(
-    (sum, qId) => sum + (QUEST_POINTS_MAP[qId] || 100),
-    0,
-  )
 
   const toggleFavorite = (oddlingId: number) => {
     const next = favorites.includes(oddlingId)
