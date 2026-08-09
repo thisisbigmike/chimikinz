@@ -1,0 +1,421 @@
+@import 'tailwindcss';
+@import 'shadcn/tailwind.css';
+
+@theme inline {
+  --font-sans: var(--font-body), 'Courier New', monospace;
+  --font-mono: var(--font-body), 'Courier New', monospace;
+  --font-display: var(--font-display), 'Courier New', monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--card);
+  --color-popover-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--primary);
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+}
+
+:root {
+  color-scheme: light;
+
+  /* ink — the hand-drawn linework of the art */
+  --foreground: #16110f;
+  --border: #16110f;
+  /* bone — warm paper the oddlings sit on */
+  --background: #f7efe0;
+  --card: #fffaf0;
+  --card-foreground: #16110f;
+  --muted: #eadfc9;
+  --muted-foreground: #6a5c4d;
+  /* hoodie orange */
+  --primary: #f0601c;
+  --primary-foreground: #fffaf0;
+  /* clover green */
+  --accent: #2e9e4f;
+  --accent-foreground: #fffaf0;
+  /* halo gold */
+  --secondary: #ffc61a;
+  --secondary-foreground: #16110f;
+
+  --destructive: #d1341c;
+
+  --radius: 0px;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    /* keep every corner square — the whole system is pixel-grid */
+    border-radius: 0 !important;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+  }
+
+  /* pixel art must never be smoothed */
+  img {
+    image-rendering: pixelated;
+  }
+
+  ::selection {
+    background: var(--secondary);
+    color: var(--foreground);
+  }
+
+  *:focus-visible {
+    outline: 4px solid var(--primary);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  /* Hard offset block shadow — the signature of the whole system. */
+  .pixel-box {
+    border: 4px solid var(--foreground);
+    box-shadow: 6px 6px 0 0 var(--foreground);
+  }
+  .pixel-box-lg {
+    border: 4px solid var(--foreground);
+    box-shadow: 10px 10px 0 0 var(--foreground);
+  }
+  .pixel-box-sm {
+    border: 3px solid var(--foreground);
+    box-shadow: 4px 4px 0 0 var(--foreground);
+  }
+
+  /* Press-down interaction: the box travels into its own shadow. */
+  .pixel-press {
+    transition:
+      transform 80ms steps(2),
+      box-shadow 80ms steps(2);
+  }
+  .pixel-press:hover {
+    transform: translate(3px, 3px);
+    box-shadow: 3px 3px 0 0 var(--foreground);
+  }
+  .pixel-press:active {
+    transform: translate(6px, 6px);
+    box-shadow: 0 0 0 0 var(--foreground);
+  }
+
+  .pixel-text-shadow {
+    text-shadow: 4px 4px 0 var(--foreground);
+  }
+  .pixel-text-shadow-primary {
+    text-shadow: 4px 4px 0 var(--primary);
+  }
+
+  /* Chunky 8px checker — reads as a pixel grid, not a gradient. */
+  .pixel-checker {
+    background-image:
+      linear-gradient(45deg, var(--muted) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--muted) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--muted) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--muted) 75%);
+    background-size: 16px 16px;
+    background-position:
+      0 0,
+      0 8px,
+      8px -8px,
+      -8px 0;
+  }
+
+  .marquee-track {
+    animation: marquee 34s linear infinite;
+  }
+
+  .oddling-bob {
+    animation: bob 3s steps(6) infinite alternate;
+  }
+
+  /* ================================================================
+     NEW ANIMATION UTILITIES
+     ================================================================ */
+
+  /* Wiggle on hover — oddling images jiggle when card is hovered */
+  .pixel-wiggle {
+    transition: transform 200ms steps(3);
+  }
+  .group:hover .pixel-wiggle,
+  .pixel-wiggle:hover {
+    animation: wiggle 400ms steps(4) 1;
+  }
+
+  /* Perspective tilt on hover — adds depth to cards and images */
+  .pixel-tilt {
+    transition: transform 300ms ease-out;
+    transform-style: preserve-3d;
+  }
+  .pixel-tilt:hover {
+    transform: perspective(800px) rotateY(-4deg) rotateX(2deg) scale(1.02);
+  }
+
+  /* Pulsing glow ring — nav links, active elements */
+  .pixel-glow {
+    position: relative;
+  }
+  .pixel-glow::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border: 3px solid var(--primary);
+    opacity: 0;
+    transition: opacity 200ms ease;
+    pointer-events: none;
+  }
+  .pixel-glow:hover::after {
+    opacity: 1;
+    animation: glowPulse 1.2s ease-in-out infinite;
+  }
+
+  /* Gold shimmer for headings */
+  .pixel-shimmer {
+    background: linear-gradient(
+      110deg,
+      currentColor 35%,
+      var(--secondary) 50%,
+      currentColor 65%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  /* Gentle float — slower, dreamy bob for CTA characters */
+  .pixel-float {
+    animation: float 4s ease-in-out infinite;
+  }
+  .pixel-float-delayed {
+    animation: float 4s ease-in-out 0.5s infinite;
+  }
+  .pixel-float-slow {
+    animation: float 5s ease-in-out 1s infinite;
+  }
+
+  /* Hover lift for panels / story cards */
+  .pixel-lift {
+    transition:
+      transform 200ms ease-out,
+      box-shadow 200ms ease-out;
+  }
+  .pixel-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 6px 10px 0 0 var(--foreground);
+  }
+
+  /* Active phase glow — pulsing border for roadmap */
+  .pixel-active-glow {
+    animation: activeGlow 2s ease-in-out infinite;
+  }
+
+  /* Subtle zoom on hover for team photos */
+  .pixel-zoom {
+    transition: transform 300ms ease-out;
+  }
+  .pixel-zoom:hover {
+    transform: scale(1.06);
+  }
+
+  /* Button attention pulse */
+  .pixel-pulse {
+    animation: buttonPulse 2.5s ease-in-out infinite;
+  }
+
+  /* Pixel burst — completion celebration */
+  .pixel-burst {
+    animation: pixelBurst 600ms steps(6) forwards;
+  }
+
+  /* Slide-down for mobile menu */
+  .pixel-slide-down {
+    animation: slideDown 200ms steps(4) forwards;
+    transform-origin: top;
+  }
+
+  /* Slide-up for modals */
+  .pixel-slide-up {
+    animation: slideUp 300ms steps(5) forwards;
+  }
+
+  /* Marquee pause on hover */
+  .marquee-container:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Diamond separator spin */
+  .pixel-diamond-spin {
+    transition: transform 300ms steps(4);
+  }
+  .marquee-container:hover .pixel-diamond-spin {
+    animation: diamondSpin 800ms steps(4) infinite;
+  }
+
+  /* Points counter animation */
+  .pixel-count-up {
+    animation: countPop 400ms steps(4) 1;
+  }
+
+  /* Reward tier unlock glow */
+  .pixel-unlock-glow {
+    animation: unlockGlow 1.5s ease-in-out infinite;
+  }
+
+  /* Arrow slide for CTAs */
+  .pixel-arrow {
+    display: inline-block;
+    transition: transform 200ms steps(3);
+  }
+  .group:hover .pixel-arrow {
+    transform: translateX(6px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track,
+    .oddling-bob,
+    .pixel-float,
+    .pixel-float-delayed,
+    .pixel-float-slow,
+    .pixel-shimmer,
+    .pixel-active-glow,
+    .pixel-pulse,
+    .pixel-burst,
+    .pixel-slide-down,
+    .pixel-slide-up,
+    .pixel-unlock-glow,
+    .pixel-count-up {
+      animation: none;
+    }
+    .pixel-press:hover,
+    .pixel-press:active,
+    .pixel-tilt:hover,
+    .pixel-lift:hover,
+    .pixel-zoom:hover {
+      transform: none;
+    }
+    .pixel-glow:hover::after {
+      animation: none;
+      opacity: 1;
+    }
+    .group:hover .pixel-wiggle,
+    .pixel-wiggle:hover {
+      animation: none;
+    }
+    .group:hover .pixel-arrow {
+      transform: none;
+    }
+  }
+}
+
+/* ================================================================
+   KEYFRAMES
+   ================================================================ */
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-12px); }
+}
+
+@keyframes wiggle {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(-4deg); }
+  50%  { transform: rotate(4deg); }
+  75%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+@keyframes activeGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 198, 26, 0.4); }
+  50%      { box-shadow: 0 0 0 6px rgba(255, 198, 26, 0.15); }
+}
+
+@keyframes buttonPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.03); }
+}
+
+@keyframes pixelBurst {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.15); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: scaleY(0); }
+  to   { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes diamondSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes countPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+@keyframes unlockGlow {
+  0%, 100% { box-shadow: 6px 6px 0 0 var(--foreground), 0 0 0 0 rgba(255, 198, 26, 0.3); }
+  50%      { box-shadow: 6px 6px 0 0 var(--foreground), 0 0 0 8px rgba(255, 198, 26, 0.1); }
+}
