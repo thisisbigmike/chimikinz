@@ -18,14 +18,19 @@ import {
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
+import { useUser } from '@/lib/context/user-context'
+
 export default function GalleryPage() {
+  const { favorites } = useUser()
   const [search, setSearch] = useState('')
   const [selectedRarity, setSelectedRarity] = useState<Rarity | 'All'>('All')
   const [selectedFamily, setSelectedFamily] = useState<string>('All')
+  const [onlyFavorites, setOnlyFavorites] = useState(false)
   const [selectedOddling, setSelectedOddling] = useState<Oddling | null>(null)
 
   const filteredOddlings = useMemo(() => {
     return oddlings.filter((item) => {
+      const matchesFav = !onlyFavorites || favorites.includes(item.id)
       const matchesRarity =
         selectedRarity === 'All' || item.rarity === selectedRarity
       const matchesFamily =
@@ -41,9 +46,9 @@ export default function GalleryPage() {
             t.value.toLowerCase().includes(query),
         )
 
-      return matchesRarity && matchesFamily && matchesSearch
+      return matchesFav && matchesRarity && matchesFamily && matchesSearch
     })
-  }, [search, selectedRarity, selectedFamily])
+  }, [search, selectedRarity, selectedFamily, onlyFavorites, favorites])
 
   return (
     <div className="min-h-screen bg-background font-sans antialiased text-foreground">
@@ -84,15 +89,27 @@ export default function GalleryPage() {
                 <div className="flex flex-wrap gap-2">
                   <button
                     type="button"
-                    onClick={() => setSelectedRarity('All')}
+                    onClick={() => setOnlyFavorites(false)}
                     className={cn(
                       'pixel-press border-3 border-foreground px-3 py-1.5 font-display text-[10px] uppercase',
-                      selectedRarity === 'All'
+                      !onlyFavorites && selectedRarity === 'All'
                         ? 'bg-foreground text-background'
                         : 'bg-background text-foreground hover:bg-muted',
                     )}
                   >
                     All ({oddlings.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setOnlyFavorites(!onlyFavorites)}
+                    className={cn(
+                      'pixel-press border-3 border-foreground px-3 py-1.5 font-display text-[10px] uppercase flex items-center gap-1',
+                      onlyFavorites
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-background text-foreground hover:bg-muted',
+                    )}
+                  >
+                    ♥ Saved ({favorites.length})
                   </button>
                   {rarities.map((r) => {
                     const count = oddlings.filter((o) => o.rarity === r).length
