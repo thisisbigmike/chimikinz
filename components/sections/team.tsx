@@ -8,15 +8,16 @@ import { team } from '@/lib/site'
 export function Team() {
   return (
     <section className="border-b-4 border-foreground">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
+      <div className="mx-auto flex max-w-7xl flex-col items-center px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <SectionHeading
+            align="center"
             eyebrow="The hands behind it"
             title="Two people, one sketchbook"
           />
         </ScrollReveal>
 
-        <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:max-w-3xl">
+        <ul className="mt-10 grid w-full max-w-3xl gap-6 sm:grid-cols-2">
           {team.map((member, i) => (
             <ScrollReveal key={member.name} variant="scale-up" delay={i * 150}>
               <li>
