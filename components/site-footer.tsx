@@ -7,6 +7,8 @@ import { ScrollReveal } from '@/components/scroll-reveal'
 import { brandArt } from '@/lib/oddlings'
 import { site } from '@/lib/site'
 
+import { useUser } from '@/lib/context/user-context'
+
 const columns = [
   {
     heading: 'Explore',
@@ -20,7 +22,7 @@ const columns = [
   {
     heading: 'Community',
     links: [
-      { label: 'X / Twitter', href: site.links.x, external: true },
+      { label: 'X / Twitter', href: site.links.x, external: true, isX: true },
       { label: 'Discord', href: site.links.discord, external: true },
       { label: 'Mint', href: site.links.mint, external: true },
     ],
@@ -28,6 +30,8 @@ const columns = [
 ]
 
 export function SiteFooter() {
+  const { openFollowModal } = useUser()
+
   return (
     <footer className="border-t-4 border-foreground bg-foreground text-background">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
@@ -58,7 +62,15 @@ export function SiteFooter() {
               <ul className="flex flex-col gap-3">
                 {column.links.map((link) => (
                   <li key={link.label}>
-                    {'external' in link && link.external ? (
+                    {'isX' in link && link.isX ? (
+                      <button
+                        type="button"
+                        onClick={openFollowModal}
+                        className="text-xl text-background/80 underline-offset-4 transition-colors duration-200 hover:text-secondary hover:underline text-left cursor-pointer"
+                      >
+                        {link.label}
+                      </button>
+                    ) : 'external' in link && link.external ? (
                       <a
                         href={link.href}
                         target="_blank"
