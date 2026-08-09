@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
