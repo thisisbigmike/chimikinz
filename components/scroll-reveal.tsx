@@ -75,7 +75,7 @@ export function ScrollReveal({
     <div
       ref={ref}
       className={cn(
-        'transition-all ease-out',
+        'transition-[transform,opacity] ease-out will-change-[transform,opacity]',
         !isVisible && variantStyles[variant],
         isVisible && 'translate-x-0 translate-y-0 scale-100 opacity-100',
         className,
@@ -157,7 +157,7 @@ export function ScrollRevealGroup({
         <div
           key={i}
           className={cn(
-            'transition-all ease-out',
+            'transition-[transform,opacity] ease-out will-change-[transform,opacity]',
             !isVisible && variantStyles[variant],
             isVisible && 'translate-x-0 translate-y-0 scale-100 opacity-100',
             childClassName,

@@ -72,7 +72,11 @@ export function PixelSparkles({
       rotationSpeed: (Math.random() - 0.5) * 1.5,
     }))
 
+    let isVisible = true
+
     const animate = () => {
+      if (!isVisible) return
+
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       for (const p of particlesRef.current) {
@@ -105,11 +109,29 @@ export function PixelSparkles({
       animationRef.current = requestAnimationFrame(animate)
     }
 
-    animate()
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const wasVisible = isVisible
+        isVisible = entry.isIntersecting
+        if (isVisible && !wasVisible) {
+          animationRef.current = requestAnimationFrame(animate)
+        }
+      },
+      { threshold: 0.05 }
+    )
+
+    observer.observe(canvas)
+
+    if (isVisible) {
+      animationRef.current = requestAnimationFrame(animate)
+    }
 
     return () => {
       window.removeEventListener('resize', resize)
-      cancelAnimationFrame(animationRef.current)
+      observer.disconnect()
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
     }
   }, [count, colors, speed])
 

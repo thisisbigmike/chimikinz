@@ -63,6 +63,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   * {
     @apply border-border;
     /* keep every corner square — the whole system is pixel-grid */
@@ -74,6 +78,7 @@
     font-size: 1.25rem;
     line-height: 1.5;
     -webkit-font-smoothing: none;
+    overflow-x: hidden;
   }
 
   h1,
@@ -118,6 +123,7 @@
 
   /* Press-down interaction: the box travels into its own shadow. */
   .pixel-press {
+    will-change: transform;
     transition:
       transform 80ms steps(2),
       box-shadow 80ms steps(2);
@@ -154,10 +160,14 @@
   }
 
   .marquee-track {
+    will-change: transform;
+    transform: translateZ(0);
     animation: marquee 34s linear infinite;
   }
 
   .oddling-bob {
+    will-change: transform;
+    transform: translateZ(0);
     animation: bob 3s steps(6) infinite alternate;
   }
 
@@ -218,17 +228,24 @@
 
   /* Gentle float — slower, dreamy bob for CTA characters */
   .pixel-float {
+    will-change: transform;
+    transform: translateZ(0);
     animation: float 4s ease-in-out infinite;
   }
   .pixel-float-delayed {
+    will-change: transform;
+    transform: translateZ(0);
     animation: float 4s ease-in-out 0.5s infinite;
   }
   .pixel-float-slow {
+    will-change: transform;
+    transform: translateZ(0);
     animation: float 5s ease-in-out 1s infinite;
   }
 
   /* Hover lift for panels / story cards */
   .pixel-lift {
+    will-change: transform;
     transition:
       transform 200ms ease-out,
       box-shadow 200ms ease-out;
@@ -245,7 +262,9 @@
 
   /* Subtle zoom on hover for team photos */
   .pixel-zoom {
+    will-change: transform;
     transition: transform 300ms ease-out;
+    backface-visibility: hidden;
   }
   .pixel-zoom:hover {
     transform: scale(1.06);
