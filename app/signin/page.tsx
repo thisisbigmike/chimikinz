@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils'
 
 import { useUser, type UserSession } from '@/lib/context/user-context'
 import { auth, twitterProvider, googleProvider, signInWithPopup } from '@/lib/firebase'
+import { signAuthMessage, getRealNFTBalance, getRealEthBalance } from '@/lib/contract'
 
 export default function SignInPage() {
   const { session, setSession, disconnect } = useUser()
@@ -29,8 +30,8 @@ export default function SignInPage() {
     try {
       let walletAddress = ''
 
-      // Attempt browser Web3 wallet if available (e.g. MetaMask)
-      if (typeof window !== 'undefined' && (window as any).ethereum && providerName === 'MetaMask') {
+      // Attempt real browser Web3 wallet if available (e.g. MetaMask, Coinbase Wallet)
+      if (typeof window !== 'undefined' && (window as any).ethereum) {
         const accounts = await (window as any).ethereum.request({
           method: 'eth_requestAccounts',
         })
@@ -39,26 +40,34 @@ export default function SignInPage() {
         }
       }
 
-      // Fallback generated realistic address if extension not present
       if (!walletAddress) {
-        await new Promise((res) => setTimeout(res, 900))
-        const randomHex = Array.from({ length: 8 }, () =>
-          Math.floor(Math.random() * 16).toString(16)
-        ).join('')
-        walletAddress = `0x71C9${randomHex.toUpperCase()}4f9A`
+        alert('Please install MetaMask or a compatible Web3 wallet to sign in with Ethereum.')
+        return
       }
+
+      // Request real cryptographic message signature (personal_sign)
+      const signature = await signAuthMessage(walletAddress)
+      if (!signature) {
+        alert('Authentication cancelled: Signature is required to verify ownership of your wallet.')
+        return
+      }
+
+      // Query real NFT holdings and ETH balance live from Ethereum smart contract
+      const realNFTs = await getRealNFTBalance(walletAddress)
+      const realEth = await getRealEthBalance(walletAddress)
 
       const newSession: UserSession = {
         address: walletAddress,
-        method: providerName,
+        method: `${providerName} (${realEth} ETH)`,
         connectedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        oddlingsCount: 1, // verified holder demo
+        oddlingsCount: realNFTs,
       }
 
       localStorage.setItem('chimikinz_user_session', JSON.stringify(newSession))
       setSession(newSession)
-    } catch (err) {
-      console.error('Wallet connect error:', err)
+    } catch (err: any) {
+      console.error('Wallet connection error:', err)
+      alert(err?.message || 'Failed to connect Web3 wallet.')
     } finally {
       setLoadingMethod(null)
     }
