@@ -111,20 +111,18 @@ function AnimatedPoints({ value }: { value: number }) {
 }
 
 import { useUser } from '@/lib/context/user-context'
+import { site } from '@/lib/site'
 
 export default function QuestsPage() {
-  const { completedQuests, completeQuest, points: totalPoints, openFollowModal } = useUser()
+  const { completedQuests, completeQuest, points: totalPoints } = useUser()
   const [activeQuiz, setActiveQuiz] = useState(false)
   const [quizAnswer, setQuizAnswer] = useState<string | null>(null)
   const [justCompleted, setJustCompleted] = useState<string | null>(null)
 
   const handleQuestComplete = (id: string, pts: number, url?: string) => {
-    if (id === 'x-follow') {
-      openFollowModal()
-      return
-    }
-    if (url && url.startsWith('http')) {
-      window.open(url, '_blank', 'noopener,noreferrer')
+    const targetUrl = id === 'x-follow' ? site.links.xFollowIntent : url
+    if (targetUrl && targetUrl.startsWith('http')) {
+      window.open(targetUrl, '_blank', 'noopener,noreferrer')
     }
     if (!completedQuests.includes(id)) {
       completeQuest(id, pts)

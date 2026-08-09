@@ -1,7 +1,6 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { FollowModal } from '@/components/follow-modal'
 
 export type UserSession = {
   address: string
@@ -22,9 +21,6 @@ type UserContextType = {
   dailyClaimed: boolean
   claimDailyLuck: () => number
   disconnect: () => void
-  isFollowModalOpen: boolean
-  openFollowModal: () => void
-  closeFollowModal: () => void
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
@@ -42,7 +38,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [completedQuests, setCompletedQuests] = useState<string[]>([])
   const [favorites, setFavorites] = useState<number[]>([])
   const [dailyClaimed, setDailyClaimed] = useState<boolean>(false)
-  const [isFollowModalOpen, setIsFollowModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
     // Load session
@@ -123,9 +118,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     return 50
   }
 
-  const openFollowModal = () => setIsFollowModalOpen(true)
-  const closeFollowModal = () => setIsFollowModalOpen(false)
-
   const disconnect = () => {
     setSession(null)
   }
@@ -144,13 +136,9 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         dailyClaimed,
         claimDailyLuck,
         disconnect,
-        isFollowModalOpen,
-        openFollowModal,
-        closeFollowModal,
       }}
     >
       {children}
-      <FollowModal />
     </UserContext.Provider>
   )
 }
