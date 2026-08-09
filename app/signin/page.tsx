@@ -93,22 +93,13 @@ export default function SignInPage() {
         setSession(newSession)
         return
       }
-    } catch (err) {
-      console.warn('Firebase Popup note (using realistic social fallback):', err)
+    } catch (err: any) {
+      console.warn('Firebase Popup error:', err)
+      alert(err?.message || 'Social sign-in failed. Please try again.')
+      setLoadingMethod(null)
+      return
     }
 
-    // Fallback handle if browser popups are blocked or demo mode
-    await new Promise((res) => setTimeout(res, 800))
-    const handle = socialName === 'Discord' ? 'OddlingSeeker#2222' : '@oddling_collector'
-    const newSession: UserSession = {
-      address: handle,
-      method: socialName,
-      connectedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      oddlingsCount: 0,
-    }
-
-    localStorage.setItem('chimikinz_user_session', JSON.stringify(newSession))
-    setSession(newSession)
     setLoadingMethod(null)
   }
 

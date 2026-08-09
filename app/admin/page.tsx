@@ -51,51 +51,9 @@ export default function AdminPage() {
   const [passcode, setPasscode] = useState('')
   const [passError, setPassError] = useState(false)
 
-  // Admin Data States
-  const [allowlist, setAllowlist] = useState<AllowlistEntry[]>([
-    {
-      address: '0x71C94F9A82B311E4',
-      tier: 'Tier 1 (Guaranteed)',
-      maxMints: 2,
-      addedAt: '2026-08-09 10:15',
-    },
-    {
-      address: '0x3A91E882C7B442F1',
-      tier: 'VIP OG',
-      maxMints: 3,
-      addedAt: '2026-08-09 11:30',
-    },
-    {
-      address: '0x992B45A17F8812C0',
-      tier: 'Tier 2 (FCFS)',
-      maxMints: 1,
-      addedAt: '2026-08-09 14:00',
-    },
-  ])
-
-  const [users, setUsers] = useState<UserRecord[]>([
-    {
-      address: '0x71C94F9A82B311E4',
-      points: 750,
-      questsCompleted: 4,
-      joinedAt: '2026-08-09',
-      role: 'Holder',
-    },
-    {
-      address: 'OddlingSeeker#2222',
-      points: 350,
-      questsCompleted: 2,
-      joinedAt: '2026-08-09',
-      role: 'Member',
-    },
-    {
-      address: '@oddling_collector',
-      points: 400,
-      questsCompleted: 2,
-      joinedAt: '2026-08-09',
-      role: 'Member',
-    },
-  ])
+  // Admin Data States (Loaded strictly from Cloud Firestore)
+  const [allowlist, setAllowlist] = useState<AllowlistEntry[]>([])
+  const [users, setUsers] = useState<UserRecord[]>([])
 
   // Quests Management State
   const [quests, setQuests] = useState<
