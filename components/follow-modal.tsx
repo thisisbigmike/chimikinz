@@ -10,7 +10,7 @@ export function FollowModal() {
   if (!isFollowModalOpen) return null
 
   const handleFollow = () => {
-    window.open(site.links.x, '_blank', 'noopener,noreferrer')
+    window.open(site.links.xFollowIntent, '_blank', 'noopener,noreferrer')
     completeQuest('x-follow', 150)
     closeFollowModal()
   }

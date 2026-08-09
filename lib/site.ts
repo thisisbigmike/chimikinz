@@ -5,6 +5,7 @@ export const site = {
   tagline: 'Hand-drawn oddlings. Every one carries a charm.',
   links: {
     x: 'https://x.com/chimikinzzz',
+    xFollowIntent: 'https://x.com/intent/follow?screen_name=chimikinzzz',
     discord: 'https://discord.gg/xTZ2zPwnX7',
     mint: 'https://chimikinz.nfts2.me',
   },
