@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { syncUserToFirestore, subscribeToUserFirestore } from '@/lib/firebase'
+import { syncUserToFirestore, subscribeToUserFirestore, getUserFromFirestore } from '@/lib/firebase'
 
 export type UserSession = {
   address: string
@@ -40,44 +40,75 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [favorites, setFavorites] = useState<number[]>([])
   const [dailyClaimed, setDailyClaimed] = useState<boolean>(false)
 
+  // Load saved session on startup
   useEffect(() => {
-    // Load session
     const savedSession = localStorage.getItem('chimikinz_user_session')
     if (savedSession) {
       try {
-        setSessionState(JSON.parse(savedSession))
+        const parsed = JSON.parse(savedSession)
+        setSessionState(parsed)
       } catch (e) {
         // Fallback
       }
     }
+  }, [])
 
-    // Load quests
-    const savedQuests = localStorage.getItem('chimikinz_completed_quests')
+  // Whenever session changes (user logs in or out), load account-specific data from Firestore & LocalStorage
+  useEffect(() => {
+    if (!session?.address) {
+      setCompletedQuests([])
+      setFavorites([])
+      setDailyClaimed(false)
+      return
+    }
+
+    const userKey = session.address.toLowerCase()
+
+    // 1. Load account-specific LocalStorage
+    const savedQuests = localStorage.getItem(`chimikinz_completed_quests_${userKey}`)
     if (savedQuests) {
       try {
         setCompletedQuests(JSON.parse(savedQuests))
-      } catch (e) {
-        // Fallback
-      }
+      } catch (e) {}
     }
 
-    // Load favorites
-    const savedFavs = localStorage.getItem('chimikinz_favorites')
+    const savedFavs = localStorage.getItem(`chimikinz_favorites_${userKey}`)
     if (savedFavs) {
       try {
         setFavorites(JSON.parse(savedFavs))
-      } catch (e) {
-        // Fallback
-      }
+      } catch (e) {}
     }
 
-    // Load daily claim date
     const today = new Date().toDateString()
-    const lastClaim = localStorage.getItem('chimikinz_last_daily_claim')
+    const lastClaim = localStorage.getItem(`chimikinz_last_daily_claim_${userKey}`)
     if (lastClaim === today) {
       setDailyClaimed(true)
     }
-  }, [])
+
+    // 2. Restore profile & points directly from Firestore database
+    getUserFromFirestore(userKey).then((firestoreUser) => {
+      if (firestoreUser) {
+        if (firestoreUser.completedQuests && firestoreUser.completedQuests.length > 0) {
+          setCompletedQuests(firestoreUser.completedQuests)
+          localStorage.setItem(`chimikinz_completed_quests_${userKey}`, JSON.stringify(firestoreUser.completedQuests))
+        }
+        if (firestoreUser.favorites && firestoreUser.favorites.length > 0) {
+          setFavorites(firestoreUser.favorites)
+          localStorage.setItem(`chimikinz_favorites_${userKey}`, JSON.stringify(firestoreUser.favorites))
+        }
+      }
+    })
+
+    // 3. Real-time Firestore listener
+    const unsubscribe = subscribeToUserFirestore(userKey, (data) => {
+      if (data) {
+        if (data.completedQuests) setCompletedQuests(data.completedQuests)
+        if (data.favorites) setFavorites(data.favorites)
+      }
+    })
+
+    return () => unsubscribe()
+  }, [session?.address])
 
   const points = completedQuests.reduce(
     (sum, qId) => sum + (QUEST_POINTS_MAP[qId] || 100),
@@ -87,6 +118,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   // Sync to Firestore whenever key user states update
   useEffect(() => {
     if (session?.address) {
+      const userKey = session.address.toLowerCase()
       syncUserToFirestore({
         address: session.address,
         method: session.method,
@@ -103,34 +135,33 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     setSessionState(newSession)
     if (newSession) {
       localStorage.setItem('chimikinz_user_session', JSON.stringify(newSession))
-      syncUserToFirestore({
-        address: newSession.address,
-        method: newSession.method,
-        connectedAt: newSession.connectedAt,
-        oddlingsCount: newSession.oddlingsCount,
-        points,
-        completedQuests,
-        favorites,
-      })
     } else {
       localStorage.removeItem('chimikinz_user_session')
+      setCompletedQuests([])
+      setFavorites([])
     }
   }
 
   const completeQuest = (id: string, pts: number) => {
+    if (!session?.address) return
+    const userKey = session.address.toLowerCase()
+
     if (!completedQuests.includes(id)) {
       const next = [...completedQuests, id]
       setCompletedQuests(next)
-      localStorage.setItem('chimikinz_completed_quests', JSON.stringify(next))
+      localStorage.setItem(`chimikinz_completed_quests_${userKey}`, JSON.stringify(next))
     }
   }
 
   const toggleFavorite = (oddlingId: number) => {
+    if (!session?.address) return
+    const userKey = session.address.toLowerCase()
+
     const next = favorites.includes(oddlingId)
       ? favorites.filter((id) => id !== oddlingId)
       : [...favorites, oddlingId]
     setFavorites(next)
-    localStorage.setItem('chimikinz_favorites', JSON.stringify(next))
+    localStorage.setItem(`chimikinz_favorites_${userKey}`, JSON.stringify(next))
   }
 
   const isFavorite = (oddlingId: number) => favorites.includes(oddlingId)

@@ -97,6 +97,24 @@ export async function syncUserToFirestore(userData: {
 }
 
 /**
+ * Fetches user profile, points, and completed quests directly from Firestore by wallet/email address
+ */
+export async function getUserFromFirestore(address: string): Promise<FirestoreUserData | null> {
+  if (!address) return null
+  try {
+    const userRef = doc(db, 'users', address.toLowerCase())
+    const snapshot = await getDoc(userRef)
+    if (snapshot.exists()) {
+      return snapshot.data() as FirestoreUserData
+    }
+    return null
+  } catch (error) {
+    console.warn('Firestore getUser note:', error)
+    return null
+  }
+}
+
+/**
  * Listens to real-time changes for a user profile in Firestore
  */
 export function subscribeToUserFirestore(
