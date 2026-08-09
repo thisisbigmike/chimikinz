@@ -249,16 +249,6 @@ export default function AdminPage() {
     addLog(`Deleted Quest "${target?.title || id}".`)
   }
 
-    const savedAL = localStorage.getItem('chimikinz_allowlist')
-    if (savedAL) {
-      try {
-        setAllowlist(JSON.parse(savedAL))
-      } catch (e) {
-        // Fallback
-      }
-    }
-  }, [])
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
     if (passcode.trim() === DEFAULT_ADMIN_KEY) {
