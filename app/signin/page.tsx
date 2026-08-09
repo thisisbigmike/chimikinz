@@ -120,6 +120,53 @@ export default function SignInPage() {
     }, 1200)
   }
 
+  const [linkingWallet, setLinkingWallet] = useState(false)
+
+  const handleLinkWallet = async () => {
+    if (!session) return
+    setLinkingWallet(true)
+
+    try {
+      if (typeof window === 'undefined' || !(window as any).ethereum) {
+        alert('Please install MetaMask or a compatible Web3 wallet to link your Ethereum address.')
+        return
+      }
+
+      const accounts = await (window as any).ethereum.request({
+        method: 'eth_requestAccounts',
+      })
+
+      if (!accounts || !accounts[0]) return
+      const walletAddr = accounts[0]
+
+      // Request cryptographic signature
+      const sig = await signAuthMessage(walletAddr)
+      if (!sig) {
+        alert('Signature required to link wallet.')
+        return
+      }
+
+      const realNFTs = await getRealNFTBalance(walletAddr)
+      const realEth = await getRealEthBalance(walletAddr)
+
+      const updatedSession: UserSession = {
+        ...session,
+        linkedWallet: walletAddr,
+        ethBalance: realEth,
+        oddlingsCount: Math.max(session.oddlingsCount, realNFTs),
+      }
+
+      localStorage.setItem('chimikinz_user_session', JSON.stringify(updatedSession))
+      setSession(updatedSession)
+      alert(`Wallet ${walletAddr.slice(0, 6)}...${walletAddr.slice(-4)} successfully linked!`)
+    } catch (err: any) {
+      console.error('Wallet linking error:', err)
+      alert(err?.message || 'Failed to link wallet.')
+    } finally {
+      setLinkingWallet(false)
+    }
+  }
+
   const handleDisconnect = () => {
     localStorage.removeItem('chimikinz_user_session')
     setSession(null)
@@ -141,39 +188,32 @@ export default function SignInPage() {
         <ScrollReveal variant="fade-up">
           <SectionHeading
             align="center"
-            eyebrow="Oddling Terminal Checkpoint"
-            title={session ? 'Terminal Authorized' : 'Connect Your Terminal'}
-            body={
+            subtitle={
               session
-                ? 'Your session is active. Access your holder perks, daily luck, and community rewards.'
-                : 'Sign in with your Web3 wallet or social profile to unlock the Chimikinz Nest.'
+                ? 'Your authenticated profile settings & linked Web3 identity.'
+                : 'Connect your Web3 wallet or social identity to save progress across the nest.'
             }
-          />
+          >
+            {session ? 'Nest Profile Settings' : 'Access Terminal'}
+          </SectionHeading>
         </ScrollReveal>
 
         {session ? (
-          /* CONNECTED STATE */
-          <ScrollReveal variant="scale-up" delay={100}>
-            <div className="pixel-box-lg bg-card p-6 sm:p-10 flex flex-col gap-8">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b-4 border-foreground pb-6">
-                <div className="flex items-center gap-4">
-                  <div className="relative size-16 bg-secondary border-4 border-foreground grid place-items-center">
-                    <Image
-                      src="/chimikinz/oddling-1.png"
-                      alt="Oddling Guard"
-                      fill
-                      className="pixel-float object-contain p-2"
-                    />
+          /* CONNECTED SESSION DASHBOARD & SETTINGS */
+          <ScrollReveal variant="scale-up">
+            <div className="pixel-box-lg bg-card p-6 sm:p-8 flex flex-col gap-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b-4 border-foreground pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="size-12 border-4 border-foreground bg-primary grid place-items-center">
+                    <ShieldCheck className="size-6 text-primary-foreground" />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="font-display text-[10px] uppercase text-muted-foreground">
-                      Authorized Identity ({session.method})
+                  <div>
+                    <span className="font-display text-xs uppercase text-muted-foreground">
+                      Active Account ({session.method})
                     </span>
-                    <span className="font-display text-lg sm:text-xl text-primary">
-                      {session.address.length > 20
-                        ? `${session.address.slice(0, 6)}...${session.address.slice(-4)}`
-                        : session.address}
-                    </span>
+                    <h2 className="font-display text-base sm:text-lg text-primary font-mono">
+                      {session.address}
+                    </h2>
                   </div>
                 </div>
 
@@ -212,6 +252,34 @@ export default function SignInPage() {
                     {session.oddlingsCount > 0 ? 'Holder Priority' : 'Community Member'}
                   </span>
                 </div>
+              </div>
+
+              {/* LINKED WALLET PROFILE SETTING CARD */}
+              <div className="pixel-box-sm bg-background p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-2 border-foreground">
+                <div className="flex flex-col gap-1">
+                  <span className="font-display text-xs uppercase text-foreground flex items-center gap-2">
+                    <Wallet className="size-4 text-primary" /> Web3 Ethereum Wallet Link
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {(session as any).linkedWallet
+                      ? `Linked Address: ${(session as any).linkedWallet} (${(session as any).ethBalance || '0.00'} ETH)`
+                      : 'No Ethereum wallet linked yet. Link a wallet to verify NFT holdings for mint priority.'}
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleLinkWallet}
+                  disabled={linkingWallet}
+                  className="pixel-box-sm pixel-press bg-accent text-accent-foreground px-4 py-2.5 font-display text-xs uppercase shrink-0 flex items-center gap-2"
+                >
+                  <Wallet className="size-4" />
+                  {linkingWallet
+                    ? 'Connecting...'
+                    : (session as any).linkedWallet
+                      ? 'Update Wallet'
+                      : 'Connect Wallet'}
+                </button>
               </div>
 
               {/* Action Buttons */}

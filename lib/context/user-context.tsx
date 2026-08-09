@@ -8,6 +8,8 @@ export type UserSession = {
   method: string
   connectedAt: string
   oddlingsCount: number
+  linkedWallet?: string
+  ethBalance?: string
 }
 
 type UserContextType = {

@@ -53,6 +53,8 @@ export type FirestoreUserData = {
   points: number
   completedQuests: string[]
   favorites: number[]
+  linkedWallet?: string
+  ethBalance?: string
   updatedAt: string
 }
 
@@ -69,6 +71,8 @@ export async function syncUserToFirestore(userData: {
   points?: number
   completedQuests?: string[]
   favorites?: number[]
+  linkedWallet?: string
+  ethBalance?: string
 }) {
   if (!userData.address) return
 
@@ -87,6 +91,8 @@ export async function syncUserToFirestore(userData: {
       points: userData.points ?? existingData.points ?? 0,
       completedQuests: userData.completedQuests ?? existingData.completedQuests ?? [],
       favorites: userData.favorites ?? existingData.favorites ?? [],
+      linkedWallet: userData.linkedWallet ?? existingData.linkedWallet ?? null,
+      ethBalance: userData.ethBalance ?? existingData.ethBalance ?? null,
       updatedAt: new Date().toISOString(),
     }
 
