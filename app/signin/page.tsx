@@ -12,31 +12,15 @@ import { ScrollReveal } from '@/components/scroll-reveal'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
-type UserSession = {
-  address: string
-  method: string
-  connectedAt: string
-  oddlingsCount: number
-}
+import { useUser, type UserSession } from '@/lib/context/user-context'
 
 export default function SignInPage() {
-  const [session, setSession] = useState<UserSession | null>(null)
+  const { session, setSession, disconnect } = useUser()
   const [loadingMethod, setLoadingMethod] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'wallet' | 'social'>('wallet')
   const [emailInput, setEmailInput] = useState('')
   const [emailSent, setEmailSent] = useState(false)
   const [copied, setCopied] = useState(false)
-
-  useEffect(() => {
-    const saved = localStorage.getItem('chimikinz_user_session')
-    if (saved) {
-      try {
-        setSession(JSON.parse(saved))
-      } catch {
-        // Fallback
-      }
-    }
-  }, [])
 
   const handleConnectWallet = async (providerName: string) => {
     setLoadingMethod(providerName)

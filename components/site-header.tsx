@@ -1,25 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { PixelLink } from '@/components/pixel/pixel-button'
+import { useUser } from '@/lib/context/user-context'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
-  const [session, setSession] = useState<{ address: string } | null>(null)
-
-  useEffect(() => {
-    const saved = localStorage.getItem('chimikinz_user_session')
-    if (saved) {
-      try {
-        setSession(JSON.parse(saved))
-      } catch {
-        // Fallback
-      }
-    }
-  }, [])
+  const { session, points, favorites } = useUser()
 
   return (
     <header className="sticky top-0 z-50 border-b-4 border-foreground bg-background">
@@ -50,6 +40,24 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
+          {points > 0 && (
+            <Link
+              href="/quests"
+              className="hidden md:inline-flex items-center gap-1 border-3 border-foreground bg-accent text-accent-foreground px-2.5 py-1 font-display text-[10px] uppercase"
+            >
+              <span>✦</span> {points} PTS
+            </Link>
+          )}
+
+          {favorites.length > 0 && (
+            <Link
+              href="/gallery"
+              className="hidden md:inline-flex items-center gap-1 border-3 border-foreground bg-secondary text-secondary-foreground px-2.5 py-1 font-display text-[10px] uppercase"
+            >
+              <span>♥</span> {favorites.length} Saved
+            </Link>
+          )}
+
           <Link
             href="/signin"
             className="pixel-box-sm pixel-press bg-secondary text-secondary-foreground px-3 py-1.5 font-display text-[10px] uppercase tracking-tight"

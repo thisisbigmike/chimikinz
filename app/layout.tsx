@@ -49,6 +49,8 @@ export const metadata: Metadata = {
   },
 }
 
+import { UserProvider } from '@/lib/context/user-context'
+
 export const viewport: Viewport = {
   colorScheme: 'light',
   themeColor: '#f0601c',
@@ -65,8 +67,10 @@ export default function RootLayout({
       className={`bg-background ${pixelDisplay.variable} ${pixelBody.variable}`}
     >
       <body className="antialiased">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <UserProvider>
+          {children}
+          {process.env.NODE_ENV === 'production' && <Analytics />}
+        </UserProvider>
       </body>
     </html>
   )

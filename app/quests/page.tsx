@@ -110,44 +110,28 @@ function AnimatedPoints({ value }: { value: number }) {
   )
 }
 
+import { useUser } from '@/lib/context/user-context'
+
 export default function QuestsPage() {
-  const [completedQuests, setCompletedQuests] = useState<string[]>([])
+  const { completedQuests, completeQuest, points: totalPoints } = useUser()
   const [activeQuiz, setActiveQuiz] = useState(false)
   const [quizAnswer, setQuizAnswer] = useState<string | null>(null)
   const [justCompleted, setJustCompleted] = useState<string | null>(null)
 
-  useEffect(() => {
-    const saved = localStorage.getItem('chimikinz_completed_quests')
-    if (saved) {
-      try {
-        setCompletedQuests(JSON.parse(saved))
-      } catch {
-        // Fallback
-      }
-    }
-  }, [])
-
-  const totalPoints = QUESTS.reduce(
-    (sum, q) => (completedQuests.includes(q.id) ? sum + q.points : sum),
-    0,
-  )
-
-  const completeQuest = (id: string, url?: string) => {
+  const handleQuestComplete = (id: string, pts: number, url?: string) => {
     if (url && url.startsWith('http')) {
       window.open(url, '_blank', 'noopener,noreferrer')
     }
     if (!completedQuests.includes(id)) {
-      const next = [...completedQuests, id]
-      setCompletedQuests(next)
+      completeQuest(id, pts)
       setJustCompleted(id)
-      localStorage.setItem('chimikinz_completed_quests', JSON.stringify(next))
-      setTimeout(() => setJustCompleted(null), 700)
+      setTimeout(() => setJustCompleted(null), 1500)
     }
   }
 
   const handleQuizSubmit = () => {
     if (quizAnswer === '4444') {
-      completeQuest('lore-trivia')
+      completeQuest('lore-trivia', 250)
       setActiveQuiz(false)
     } else {
       alert('Not quite! Hint: Total supply is 4,444 oddlings.')
@@ -267,10 +251,8 @@ export default function QuestsPage() {
                           onClick={() => {
                             if (quest.id === 'lore-trivia') {
                               setActiveQuiz(true)
-                            } else if (quest.actionUrl) {
-                              completeQuest(quest.id, quest.actionUrl)
                             } else {
-                              completeQuest(quest.id)
+                              handleQuestComplete(quest.id, quest.points, quest.actionUrl)
                             }
                           }}
                           className="pixel-box-sm pixel-press bg-primary text-primary-foreground px-4 py-2 font-display text-xs uppercase"

@@ -1,22 +1,43 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
+import { Sparkles, Check } from 'lucide-react'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { PixelTag } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { PixelSparkles } from '@/components/pixel-sparkles'
 import { brandArt } from '@/lib/oddlings'
 import { site, stats } from '@/lib/site'
+import { useUser } from '@/lib/context/user-context'
+import { cn } from '@/lib/utils'
 
 export function Hero() {
+  const { dailyClaimed, claimDailyLuck, points } = useUser()
+  const [justClaimed, setJustClaimed] = useState(false)
+
+  const handleClaim = () => {
+    if (dailyClaimed) return
+    claimDailyLuck()
+    setJustClaimed(true)
+    setTimeout(() => setJustClaimed(false), 1500)
+  }
+
   return (
     <section className="border-b-4 border-foreground">
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:py-20">
         <div className="flex flex-col items-start gap-6">
           <ScrollReveal variant="pixel-pop" delay={0}>
-            <PixelTag className="bg-accent text-accent-foreground">
-              {site.supply.toLocaleString()} lucky oddlings
-            </PixelTag>
+            <div className="flex flex-wrap items-center gap-2">
+              <PixelTag className="bg-accent text-accent-foreground">
+                {site.supply.toLocaleString()} lucky oddlings
+              </PixelTag>
+              {points > 0 && (
+                <PixelTag className="bg-secondary text-secondary-foreground">
+                  ✦ {points} Charm PTS
+                </PixelTag>
+              )}
+            </div>
           </ScrollReveal>
 
           {/* The signature element: the wordmark itself. */}
@@ -41,9 +62,29 @@ export function Hero() {
               <PixelLink href={site.links.mint} external size="lg">
                 Mint on {site.chain}
               </PixelLink>
-              <PixelLink href="/gallery" variant="bone" size="lg">
-                See the oddlings
-              </PixelLink>
+
+              <button
+                type="button"
+                onClick={handleClaim}
+                disabled={dailyClaimed}
+                className={cn(
+                  'pixel-box-sm pixel-press px-5 py-3 font-display text-xs uppercase flex items-center gap-2 transition-all duration-200',
+                  dailyClaimed
+                    ? 'bg-muted text-muted-foreground cursor-default'
+                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/90',
+                  justClaimed && 'pixel-burst scale-105 bg-accent text-accent-foreground',
+                )}
+              >
+                {dailyClaimed ? (
+                  <>
+                    <Check className="size-4" /> Luck Claimed Today
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="size-4 animate-spin" /> Claim Daily Luck (+50 PTS)
+                  </>
+                )}
+              </button>
             </div>
           </ScrollReveal>
 

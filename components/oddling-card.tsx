@@ -1,6 +1,10 @@
+'use client'
+
 import Image from 'next/image'
+import { Heart } from 'lucide-react'
 import { PixelTag } from '@/components/pixel/pixel-panel'
 import { type Oddling, rarityStyle } from '@/lib/oddlings'
+import { useUser } from '@/lib/context/user-context'
 import { cn } from '@/lib/utils'
 
 export function OddlingCard({
@@ -12,8 +16,11 @@ export function OddlingCard({
   priority?: boolean
   showTraits?: boolean
 }) {
+  const { isFavorite, toggleFavorite } = useUser()
+  const fav = isFavorite(oddling.id)
+
   return (
-    <article className="group pixel-box pixel-press flex flex-col bg-card">
+    <article className="group pixel-box pixel-press flex flex-col bg-card relative">
       <div className="pixel-checker relative aspect-square overflow-hidden border-b-4 border-foreground">
         <Image
           src={oddling.image}
@@ -32,6 +39,21 @@ export function OddlingCard({
         >
           {oddling.rarity}
         </span>
+
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            toggleFavorite(oddling.id)
+          }}
+          aria-label={fav ? 'Remove from favorites' : 'Add to favorites'}
+          className={cn(
+            'absolute right-2 top-2 size-8 border-2 border-foreground grid place-items-center transition-all duration-200 z-10',
+            fav ? 'bg-primary text-primary-foreground scale-110' : 'bg-background/90 text-foreground hover:bg-secondary',
+          )}
+        >
+          <Heart className={cn('size-4', fav && 'fill-current')} />
+        </button>
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-4">
