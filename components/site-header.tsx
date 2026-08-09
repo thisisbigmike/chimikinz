@@ -40,16 +40,16 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          {points > 0 && (
+          {session && points > 0 && (
             <Link
               href="/quests"
               className="hidden md:inline-flex items-center gap-1 border-3 border-foreground bg-accent text-accent-foreground px-2.5 py-1 font-display text-[10px] uppercase"
             >
-              <span>✦</span> {points} PTS
+              {points} PTS
             </Link>
           )}
 
-          {favorites.length > 0 && (
+          {session && favorites.length > 0 && (
             <Link
               href="/gallery"
               className="hidden md:inline-flex items-center gap-1 border-3 border-foreground bg-secondary text-secondary-foreground px-2.5 py-1 font-display text-[10px] uppercase"
@@ -63,7 +63,7 @@ export function SiteHeader() {
             className="pixel-box-sm pixel-press bg-secondary text-secondary-foreground px-3 py-1.5 font-display text-[10px] uppercase tracking-tight"
           >
             {session
-              ? `● ${session.address.slice(0, 5)}...`
+              ? `${session.address.slice(0, 5)}...`
               : 'Sign In'}
           </Link>
 
@@ -134,7 +134,7 @@ export function SiteHeader() {
                 onClick={() => setOpen(false)}
                 className="block px-5 py-4 font-display text-[11px] uppercase tracking-tight transition-colors hover:bg-secondary/30 text-primary"
               >
-                {session ? `● Session: ${session.address.slice(0, 8)}...` : 'Terminal Sign In'}
+                {session ? `Session: ${session.address.slice(0, 8)}...` : 'Terminal Sign In'}
               </Link>
             </li>
             <li className="p-4">
