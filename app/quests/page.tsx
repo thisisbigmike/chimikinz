@@ -23,7 +23,7 @@ type Quest = {
 const QUESTS: Quest[] = [
   {
     id: 'x-follow',
-    title: 'Follow @chimikinzonape on X',
+    title: 'Follow @chimikinzzz on X',
     points: 150,
     category: 'Social',
     description: 'Keep up with daily hand-drawn previews and mint announcements.',

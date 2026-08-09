@@ -4,7 +4,7 @@ export const site = {
   chain: 'ApeChain',
   tagline: 'Hand-drawn oddlings. Every one carries a charm.',
   links: {
-    x: 'https://x.com/chimikinzonape',
+    x: 'https://x.com/chimikinzzz',
     discord: 'https://discord.gg/xTZ2zPwnX7',
     mint: 'https://chimikinz.nfts2.me',
   },

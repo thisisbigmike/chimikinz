@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Chimikinz — 2,222 Lucky Oddlings',
     description: 'Hand-drawn oddlings, each carrying a charm of its own.',
-    creator: '@chimikinzonape',
+    creator: '@chimikinzzz',
   },
   icons: {
     icon: [

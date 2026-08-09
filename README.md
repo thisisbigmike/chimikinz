@@ -69,6 +69,6 @@ This web application powering the Chimikinz brand, gallery, and quest platform i
 
 ## 🔗 Official Links
 
-- **X (Twitter)**: [@chimikinzonape](https://x.com/chimikinzonape)
+- **X (Twitter)**: [@chimikinzzz](https://x.com/chimikinzzz)
 - **Discord**: [Join the Nest](https://discord.gg/xTZ2zPwnX7)
 - **Mint Site**: [chimikinz.nfts2.me](https://chimikinz.nfts2.me)
