@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Wallet, Globe, KeyRound, Zap, ShieldCheck, Mail, MessageSquare } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
@@ -170,7 +171,7 @@ export default function SignInPage() {
                 </div>
 
                 <PixelTag className="bg-accent text-accent-foreground">
-                  ● Terminal Online ({session.connectedAt})
+                  Terminal Online ({session.connectedAt})
                 </PixelTag>
               </div>
 
@@ -191,7 +192,7 @@ export default function SignInPage() {
                   </span>
                   <span className="font-display text-sm uppercase text-primary">
                     {session.oddlingsCount > 0
-                      ? `✦ ${session.oddlingsCount} Oddling Held`
+                      ? `${session.oddlingsCount} Oddling Held`
                       : '0 Oddlings'}
                   </span>
                 </div>
@@ -226,7 +227,7 @@ export default function SignInPage() {
                     onClick={copyAddress}
                     className="pixel-box-sm pixel-press bg-secondary text-secondary-foreground px-4 py-3 font-display text-xs uppercase"
                   >
-                    {copied ? '✓ Copied' : 'Copy Address'}
+                    {copied ? 'Copied' : 'Copy Address'}
                   </button>
                 </div>
 
@@ -250,25 +251,25 @@ export default function SignInPage() {
                   type="button"
                   onClick={() => setActiveTab('wallet')}
                   className={cn(
-                    'flex-1 py-3 font-display text-xs uppercase transition-all duration-200',
+                    'flex-1 py-3 font-display text-xs uppercase transition-all duration-200 flex items-center justify-center gap-2',
                     activeTab === 'wallet'
                       ? 'bg-foreground text-background shadow-sm'
                       : 'text-muted-foreground hover:text-foreground',
                   )}
                 >
-                  🦊 Web3 Wallet
+                  <Wallet className="size-4" /> Web3 Wallet
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveTab('social')}
                   className={cn(
-                    'flex-1 py-3 font-display text-xs uppercase transition-all duration-200',
+                    'flex-1 py-3 font-display text-xs uppercase transition-all duration-200 flex items-center justify-center gap-2',
                     activeTab === 'social'
                       ? 'bg-foreground text-background shadow-sm'
                       : 'text-muted-foreground hover:text-foreground',
                   )}
                 >
-                  🌐 Social / Email
+                  <Globe className="size-4" /> Social / Email
                 </button>
               </div>
 
@@ -281,34 +282,39 @@ export default function SignInPage() {
 
                   <div className="grid gap-4 sm:grid-cols-2 mt-2">
                     {[
-                      { name: 'MetaMask', icon: '🦊', desc: 'Browser Extension & Mobile' },
-                      { name: 'WalletConnect', icon: '⚡', desc: 'Scan with Any Mobile App' },
-                      { name: 'Coinbase Wallet', icon: '🛡️', desc: 'Coinbase App & SDK' },
-                      { name: 'Ethereum Passkey', icon: '🔑', desc: 'Passkey & Hardware Keys' },
-                    ].map((w) => (
-                      <button
-                        key={w.name}
-                        type="button"
-                        onClick={() => handleConnectWallet(w.name)}
-                        disabled={loadingMethod !== null}
-                        className="pixel-box-sm pixel-press bg-background p-5 flex items-center gap-4 text-left transition-all hover:bg-secondary/40 disabled:opacity-50"
-                      >
-                        <span className="text-3xl">{w.icon}</span>
-                        <div className="flex flex-col">
-                          <span className="font-display text-sm uppercase text-foreground">
-                            {w.name}
-                          </span>
-                          <span className="text-lg text-muted-foreground leading-tight">
-                            {w.desc}
-                          </span>
-                        </div>
-                        {loadingMethod === w.name && (
-                          <span className="ml-auto font-display text-xs uppercase text-primary animate-pulse">
-                            Connecting...
-                          </span>
-                        )}
-                      </button>
-                    ))}
+                      { name: 'MetaMask', icon: Wallet, desc: 'Browser Extension & Mobile' },
+                      { name: 'WalletConnect', icon: Zap, desc: 'Scan with Any Mobile App' },
+                      { name: 'Coinbase Wallet', icon: ShieldCheck, desc: 'Coinbase App & SDK' },
+                      { name: 'Ethereum Passkey', icon: KeyRound, desc: 'Passkey & Hardware Keys' },
+                    ].map((w) => {
+                      const IconComponent = w.icon
+                      return (
+                        <button
+                          key={w.name}
+                          type="button"
+                          onClick={() => handleConnectWallet(w.name)}
+                          disabled={loadingMethod !== null}
+                          className="pixel-box-sm pixel-press bg-background p-5 flex items-center gap-4 text-left transition-all hover:bg-secondary/40 disabled:opacity-50"
+                        >
+                          <div className="size-10 border-2 border-foreground bg-secondary/30 grid place-items-center shrink-0">
+                            <IconComponent className="size-5 text-foreground" />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="font-display text-sm uppercase text-foreground">
+                              {w.name}
+                            </span>
+                            <span className="text-lg text-muted-foreground leading-tight">
+                              {w.desc}
+                            </span>
+                          </div>
+                          {loadingMethod === w.name && (
+                            <span className="ml-auto font-display text-xs uppercase text-primary animate-pulse">
+                              Connecting...
+                            </span>
+                          )}
+                        </button>
+                      )
+                    })}
                   </div>
                 </div>
               ) : (
@@ -325,7 +331,7 @@ export default function SignInPage() {
                       disabled={loadingMethod !== null}
                       className="pixel-box-sm pixel-press bg-[#5865F2] text-white p-4 flex items-center justify-center gap-3 font-display text-xs uppercase hover:opacity-90 disabled:opacity-50"
                     >
-                      <span>👾</span> Continue with Discord
+                      <MessageSquare className="size-4" /> Continue with Discord
                       {loadingMethod === 'Discord' && '...'}
                     </button>
 
@@ -335,7 +341,10 @@ export default function SignInPage() {
                       disabled={loadingMethod !== null}
                       className="pixel-box-sm pixel-press bg-foreground text-background p-4 flex items-center justify-center gap-3 font-display text-xs uppercase hover:opacity-90 disabled:opacity-50"
                     >
-                      <span>𝕏</span> Continue with X
+                      <svg className="size-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                      </svg>
+                      Continue with X
                       {loadingMethod === 'X (Twitter)' && '...'}
                     </button>
                   </div>
@@ -347,14 +356,17 @@ export default function SignInPage() {
                   </div>
 
                   <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3">
-                    <input
-                      type="email"
-                      value={emailInput}
-                      onChange={(e) => setEmailInput(e.target.value)}
-                      placeholder="Enter your email address..."
-                      required
-                      className="flex-1 border-4 border-foreground bg-background px-4 py-3 font-display text-xs focus:outline-none focus:ring-4 focus:ring-primary"
-                    />
+                    <div className="relative flex-1">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                      <input
+                        type="email"
+                        value={emailInput}
+                        onChange={(e) => setEmailInput(e.target.value)}
+                        placeholder="Enter your email address..."
+                        required
+                        className="w-full border-4 border-foreground bg-background pl-10 pr-4 py-3 font-display text-xs focus:outline-none focus:ring-4 focus:ring-primary"
+                      />
+                    </div>
                     <button
                       type="submit"
                       disabled={emailSent}

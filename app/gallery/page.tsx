@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Image from 'next/image'
+import { Search } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
@@ -189,7 +190,9 @@ export default function GalleryPage() {
             </ul>
           ) : (
             <div className="pixel-box bg-card p-12 text-center flex flex-col items-center justify-center gap-4">
-              <span className="font-display text-3xl">🔍</span>
+              <div className="size-12 border-2 border-foreground bg-secondary/30 grid place-items-center">
+                <Search className="size-6 text-foreground" />
+              </div>
               <h3 className="font-display text-lg uppercase">No Oddlings Found</h3>
               <p className="text-xl text-muted-foreground">
                 No charm matches your query. Try resetting your search or filters.
