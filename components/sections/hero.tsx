@@ -80,9 +80,7 @@ export function Hero() {
                     <Check className="size-4" /> Luck Claimed Today
                   </>
                 ) : (
-                  <>
-                    <Sparkles className="size-4 animate-spin" /> Claim Daily Luck (+50 PTS)
-                  </>
+                  <>Claim Daily Luck (+50 PTS)</>
                 )}
               </button>
             </div>
