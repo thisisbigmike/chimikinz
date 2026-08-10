@@ -455,16 +455,16 @@ export default function AdminPage() {
 
             {/* TAB CONTENT 1: ALLOWLIST MANAGER */}
             {activeTab === 'allowlist' && (
-              <div className="flex flex-col gap-6">
-                <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
+              <div className="flex flex-col gap-6 w-full max-w-full overflow-hidden">
+                <div className="grid gap-6 lg:grid-cols-[1fr_2fr] w-full max-w-full">
                   {/* Add Entry Form */}
-                  <div className="pixel-box-lg bg-card p-6 flex flex-col gap-4">
-                    <h3 className="font-display text-sm uppercase text-primary">
+                  <div className="pixel-box-lg bg-card p-4 sm:p-6 flex flex-col gap-4 w-full max-w-full overflow-hidden">
+                    <h3 className="font-display text-xs sm:text-sm uppercase text-primary break-words leading-tight">
                       + Add Address to Allowlist
                     </h3>
 
-                    <form onSubmit={handleAddAllowlist} className="flex flex-col gap-4">
-                      <div className="flex flex-col gap-1">
+                    <form onSubmit={handleAddAllowlist} className="flex flex-col gap-4 w-full max-w-full">
+                      <div className="flex flex-col gap-1 w-full min-w-0">
                         <label className="font-display text-[10px] uppercase text-muted-foreground">
                           Wallet Address / ENS
                         </label>
@@ -474,18 +474,18 @@ export default function AdminPage() {
                           onChange={(e) => setNewAddress(e.target.value)}
                           placeholder="0x... or name.eth"
                           required
-                          className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                       </div>
 
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1 w-full min-w-0">
                         <label className="font-display text-[10px] uppercase text-muted-foreground">
                           Priority Tier
                         </label>
                         <select
                           value={newTier}
                           onChange={(e) => setNewTier(e.target.value as any)}
-                          className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                          className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
                         >
                           <option value="Tier 1 (Guaranteed)">Tier 1 (Guaranteed Mint)</option>
                           <option value="Tier 2 (FCFS)">Tier 2 (FCFS Mint)</option>
@@ -493,7 +493,7 @@ export default function AdminPage() {
                         </select>
                       </div>
 
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1 w-full min-w-0">
                         <label className="font-display text-[10px] uppercase text-muted-foreground">
                           Max Mints Allowed
                         </label>
@@ -503,13 +503,13 @@ export default function AdminPage() {
                           max={10}
                           value={newMints}
                           onChange={(e) => setNewMints(Number(e.target.value))}
-                          className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                          className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
                         />
                       </div>
 
                       <button
                         type="submit"
-                        className="pixel-box-sm pixel-press bg-primary text-primary-foreground py-3 font-display text-xs uppercase mt-2"
+                        className="pixel-box-sm pixel-press bg-primary text-primary-foreground py-3 px-3 font-display text-xs uppercase mt-2 w-full whitespace-normal break-words text-center leading-snug"
                       >
                         Add Allowlist Entry
                       </button>
@@ -517,7 +517,7 @@ export default function AdminPage() {
                   </div>
 
                   {/* Allowlist Table */}
-                  <div className="pixel-box-lg bg-card p-6 flex flex-col gap-4">
+                  <div className="pixel-box-lg bg-card p-4 sm:p-6 flex flex-col gap-4 w-full max-w-full overflow-hidden">
                     <div className="flex items-center justify-between gap-4">
                       <h3 className="font-display text-sm uppercase">Active Allowlist ({allowlist.length})</h3>
                       <button
@@ -635,16 +635,16 @@ export default function AdminPage() {
 
             {/* TAB CONTENT 3: QUEST CONTROLLERS */}
             {activeTab === 'quests' && (
-              <div className="flex flex-col gap-6">
-                <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
+              <div className="flex flex-col gap-6 w-full max-w-full overflow-hidden">
+                <div className="grid gap-6 lg:grid-cols-[1fr_2fr] w-full max-w-full">
                   {/* Add Quest Form */}
-                  <div className="pixel-box-lg bg-card p-6 flex flex-col gap-4">
-                    <h3 className="font-display text-sm uppercase text-primary">
+                  <div className="pixel-box-lg bg-card p-4 sm:p-6 flex flex-col gap-4 w-full max-w-full overflow-hidden">
+                    <h3 className="font-display text-xs sm:text-sm uppercase text-primary break-words leading-tight">
                       + Add New Quest
                     </h3>
 
-                    <form onSubmit={handleAddQuest} className="flex flex-col gap-4">
-                      <div className="flex flex-col gap-1">
+                    <form onSubmit={handleAddQuest} className="flex flex-col gap-4 w-full max-w-full">
+                      <div className="flex flex-col gap-1 w-full min-w-0">
                         <label className="font-display text-[10px] uppercase text-muted-foreground">
                           Quest Title
                         </label>
@@ -654,12 +654,12 @@ export default function AdminPage() {
                           onChange={(e) => setQTitle(e.target.value)}
                           placeholder="e.g. Retweet Teaser Post"
                           required
-                          className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                          className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="flex flex-col gap-1">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full min-w-0">
+                        <div className="flex flex-col gap-1 w-full min-w-0">
                           <label className="font-display text-[10px] uppercase text-muted-foreground">
                             Reward Points
                           </label>
@@ -670,18 +670,18 @@ export default function AdminPage() {
                             value={qPoints}
                             onChange={(e) => setQPoints(Number(e.target.value))}
                             required
-                            className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                            className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
                           />
                         </div>
 
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1 w-full min-w-0">
                           <label className="font-display text-[10px] uppercase text-muted-foreground">
                             Category
                           </label>
                           <select
                             value={qCategory}
                             onChange={(e) => setQCategory(e.target.value as any)}
-                            className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                            className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
                           >
                             <option value="Social">Social</option>
                             <option value="Daily">Daily</option>
@@ -691,7 +691,7 @@ export default function AdminPage() {
                         </div>
                       </div>
 
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1 w-full min-w-0">
                         <label className="font-display text-[10px] uppercase text-muted-foreground">
                           Description
                         </label>
@@ -701,12 +701,12 @@ export default function AdminPage() {
                           onChange={(e) => setQDesc(e.target.value)}
                           placeholder="Short task instructions..."
                           required
-                          className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                          className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="flex flex-col gap-1">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full min-w-0">
+                        <div className="flex flex-col gap-1 w-full min-w-0">
                           <label className="font-display text-[10px] uppercase text-muted-foreground">
                             Button Label
                           </label>
@@ -716,11 +716,11 @@ export default function AdminPage() {
                             onChange={(e) => setQActionLabel(e.target.value)}
                             placeholder="e.g. Retweet on X"
                             required
-                            className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                            className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
                           />
                         </div>
 
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1 w-full min-w-0">
                           <label className="font-display text-[10px] uppercase text-muted-foreground">
                             Target Link (Optional)
                           </label>
@@ -729,14 +729,14 @@ export default function AdminPage() {
                             value={qActionUrl}
                             onChange={(e) => setQActionUrl(e.target.value)}
                             placeholder="https://..."
-                            className="border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                            className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
                           />
                         </div>
                       </div>
 
                       <button
                         type="submit"
-                        className="pixel-box-sm pixel-press bg-primary text-primary-foreground py-3 font-display text-xs uppercase mt-2"
+                        className="pixel-box-sm pixel-press bg-primary text-primary-foreground py-3 px-3 font-display text-xs uppercase mt-2 w-full whitespace-normal break-words text-center leading-snug"
                       >
                         Publish New Quest
                       </button>
