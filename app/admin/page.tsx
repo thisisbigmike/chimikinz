@@ -19,6 +19,8 @@ import {
   LogOut,
   AlertCircle,
   FileSpreadsheet,
+  Zap,
+  ScrollText,
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
@@ -366,8 +368,8 @@ export default function AdminPage() {
           <div className="flex flex-col gap-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b-4 border-foreground pb-6">
               <div>
-                <PixelTag className="bg-primary text-primary-foreground mb-2">
-                  ✦ Master Security Access Active
+                <PixelTag className="bg-primary text-primary-foreground mb-2 flex items-center gap-1">
+                  <Shield className="size-3" /> Master Security Access Active
                 </PixelTag>
                 <h1 className="font-display text-2xl sm:text-3xl uppercase">
                   Chimikinz Admin Control Center
@@ -430,10 +432,10 @@ export default function AdminPage() {
             {/* Navigation Tabs */}
             <div className="grid grid-cols-2 sm:grid-cols-4 border-4 border-foreground bg-muted p-1 gap-1">
               {[
-                { id: 'allowlist', icon: '🛡️', fullLabel: 'Allowlist Manager', shortLabel: 'Allowlist' },
-                { id: 'users', icon: '👥', fullLabel: 'User Profiles & Points', shortLabel: 'Profiles' },
-                { id: 'quests', icon: '⚡', fullLabel: 'Quest Controllers', shortLabel: 'Quests' },
-                { id: 'audit', icon: '📜', fullLabel: 'System Audit Log', shortLabel: 'Audit Log' },
+                { id: 'allowlist', Icon: Shield, fullLabel: 'Allowlist Manager', shortLabel: 'Allowlist' },
+                { id: 'users', Icon: Users, fullLabel: 'User Profiles & Points', shortLabel: 'Profiles' },
+                { id: 'quests', Icon: Zap, fullLabel: 'Quest Controllers', shortLabel: 'Quests' },
+                { id: 'audit', Icon: ScrollText, fullLabel: 'System Audit Log', shortLabel: 'Audit Log' },
               ].map((t) => (
                 <button
                   key={t.id}
@@ -446,7 +448,7 @@ export default function AdminPage() {
                       : 'text-muted-foreground hover:text-foreground',
                   )}
                 >
-                  <span className="shrink-0">{t.icon}</span>
+                  <t.Icon className="size-3.5 shrink-0" />
                   <span className="hidden sm:inline">{t.fullLabel}</span>
                   <span className="sm:hidden">{t.shortLabel}</span>
                 </button>
