@@ -427,25 +427,28 @@ export default function AdminPage() {
             </div>
 
             {/* Navigation Tabs */}
-            <div className="flex border-4 border-foreground bg-muted p-1">
+            {/* Navigation Tabs */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 border-4 border-foreground bg-muted p-1 gap-1">
               {[
-                { id: 'allowlist', label: '🛡️ Allowlist / Whitelist Manager' },
-                { id: 'users', label: '👥 User Profiles & Points' },
-                { id: 'quests', label: '⚡ Quest Controllers' },
-                { id: 'audit', label: '📜 System Audit Log' },
+                { id: 'allowlist', icon: '🛡️', fullLabel: 'Allowlist Manager', shortLabel: 'Allowlist' },
+                { id: 'users', icon: '👥', fullLabel: 'User Profiles & Points', shortLabel: 'Profiles' },
+                { id: 'quests', icon: '⚡', fullLabel: 'Quest Controllers', shortLabel: 'Quests' },
+                { id: 'audit', icon: '📜', fullLabel: 'System Audit Log', shortLabel: 'Audit Log' },
               ].map((t) => (
                 <button
                   key={t.id}
                   type="button"
                   onClick={() => setActiveTab(t.id as any)}
                   className={cn(
-                    'flex-1 py-3 font-display text-xs uppercase transition-all duration-200',
+                    'py-3 px-2 font-display text-[10px] sm:text-xs uppercase transition-all duration-200 text-center flex items-center justify-center gap-1.5 leading-tight',
                     activeTab === t.id
                       ? 'bg-foreground text-background shadow-sm'
                       : 'text-muted-foreground hover:text-foreground',
                   )}
                 >
-                  {t.label}
+                  <span className="shrink-0">{t.icon}</span>
+                  <span className="hidden sm:inline">{t.fullLabel}</span>
+                  <span className="sm:hidden">{t.shortLabel}</span>
                 </button>
               ))}
             </div>
