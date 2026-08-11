@@ -111,24 +111,3 @@ export async function getRealTotalMinted(): Promise<number> {
     return 0
   }
 }
-
-/**
- * Requests real wallet message signature for cryptographically verified Web3 auth
- */
-export async function signAuthMessage(address: string): Promise<string | null> {
-  if (typeof window === 'undefined' || !(window as any).ethereum) return null
-
-  try {
-    const message = `Sign in to Chimikinz\n\nWallet: ${address}\nTimestamp: ${new Date().toISOString()}`
-    const hexMessage = `0x${Buffer.from(message, 'utf8').toString('hex')}`
-    
-    const signature = await (window as any).ethereum.request({
-      method: 'personal_sign',
-      params: [hexMessage, address],
-    })
-    return signature
-  } catch (error) {
-    console.error('Wallet signature request failed:', error)
-    return null
-  }
-}

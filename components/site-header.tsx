@@ -3,13 +3,11 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { PixelLink } from '@/components/pixel/pixel-button'
-import { useUser } from '@/lib/context/user-context'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
-  const { session, points, favorites } = useUser()
 
   return (
     <header className="sticky top-0 z-50 border-b-4 border-foreground bg-background">
@@ -40,33 +38,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          {session && points > 0 && (
-            <Link
-              href="/quests"
-              className="hidden md:inline-flex items-center gap-1 border-3 border-foreground bg-accent text-accent-foreground px-2.5 py-1 font-display text-[10px] uppercase"
-            >
-              {points} PTS
-            </Link>
-          )}
-
-          {session && favorites.length > 0 && (
-            <Link
-              href="/gallery"
-              className="hidden md:inline-flex items-center gap-1 border-3 border-foreground bg-secondary text-secondary-foreground px-2.5 py-1 font-display text-[10px] uppercase"
-            >
-              <span>♥</span> {favorites.length} Saved
-            </Link>
-          )}
-
-          <Link
-            href="/signin"
-            className="pixel-box-sm pixel-press bg-secondary text-secondary-foreground px-3 py-1.5 font-display text-[10px] uppercase tracking-tight"
-          >
-            {session
-              ? `${session.address.slice(0, 5)}...`
-              : 'Sign In'}
-          </Link>
-
           <PixelLink
             href={site.links.mint}
             external
@@ -128,15 +99,6 @@ export function SiteHeader() {
                 </Link>
               </li>
             ))}
-            <li className="border-b-4 border-foreground">
-              <Link
-                href="/signin"
-                onClick={() => setOpen(false)}
-                className="block px-5 py-4 font-display text-[11px] uppercase tracking-tight transition-colors hover:bg-secondary/30 text-primary"
-              >
-                {session ? `Session: ${session.address.slice(0, 8)}...` : 'Terminal Sign In'}
-              </Link>
-            </li>
             <li className="p-4">
               <PixelLink
                 href={site.links.mint}

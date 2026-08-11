@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Heart } from 'lucide-react'
 import { PixelTag } from '@/components/pixel/pixel-panel'
 import { type Oddling, rarityStyle } from '@/lib/oddlings'
-import { useUser } from '@/lib/context/user-context'
+import { useFavorites } from '@/lib/context/favorites-context'
 import { cn } from '@/lib/utils'
 
 export function OddlingCard({
@@ -16,7 +16,7 @@ export function OddlingCard({
   priority?: boolean
   showTraits?: boolean
 }) {
-  const { isFavorite, toggleFavorite } = useUser()
+  const { isFavorite, toggleFavorite } = useFavorites()
   const fav = isFavorite(oddling.id)
 
   return (

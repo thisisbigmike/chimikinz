@@ -11,7 +11,6 @@ export const site = {
   },
   nav: [
     { label: 'Oddlings', href: '/gallery' },
-    { label: 'Quests', href: '/quests' },
     { label: 'Story', href: '/#story' },
     { label: 'Roadmap', href: '/#roadmap' },
   ],
@@ -44,7 +43,7 @@ export const roadmap = [
     phase: 'Phase 02',
     title: 'Polish the Charm',
     status: 'active',
-    body: 'Traits balanced, lore written, the terminal built. Quests go live so early oddlings get rewarded first.',
+    body: 'Traits balanced, lore written, the terminal built. Allowlist opens so early oddlings get rewarded first.',
   },
   {
     phase: 'Phase 03',
@@ -71,6 +70,6 @@ export const team = [
     name: 'CHIMIJEE',
     role: 'Vibes & Events',
     image: '/chimikinz/chimijee.jpeg',
-    body: 'Runs the community, the quests and the noise.',
+    body: 'Runs the community, events and the noise.',
   },
 ] as const

@@ -12,7 +12,6 @@ const columns = [
     heading: 'Explore',
     links: [
       { label: 'Oddlings', href: '/gallery' },
-      { label: 'Quests', href: '/quests' },
       { label: 'Story', href: '/#story' },
       { label: 'Roadmap', href: '/#roadmap' },
     ],

@@ -18,10 +18,10 @@ import {
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
-import { useUser } from '@/lib/context/user-context'
+import { useFavorites } from '@/lib/context/favorites-context'
 
 export default function GalleryPage() {
-  const { favorites } = useUser()
+  const { favorites } = useFavorites()
   const [search, setSearch] = useState('')
   const [selectedRarity, setSelectedRarity] = useState<Rarity | 'All'>('All')
   const [selectedFamily, setSelectedFamily] = useState<string>('All')

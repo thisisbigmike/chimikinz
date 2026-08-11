@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   },
 }
 
-import { UserProvider } from '@/lib/context/user-context'
+import { FavoritesProvider } from '@/lib/context/favorites-context'
 
 export const viewport: Viewport = {
   colorScheme: 'light',
@@ -67,10 +67,10 @@ export default function RootLayout({
       className={`bg-background ${pixelDisplay.variable} ${pixelBody.variable}`}
     >
       <body className="antialiased">
-        <UserProvider>
+        <FavoritesProvider>
           {children}
           {process.env.NODE_ENV === 'production' && <Analytics />}
-        </UserProvider>
+        </FavoritesProvider>
       </body>
     </html>
   )
