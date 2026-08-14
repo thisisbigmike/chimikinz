@@ -101,6 +101,13 @@ export function SiteFooter() {
           <p>
             &copy; {new Date().getFullYear()} {site.name}. All charms reserved.
           </p>
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="pixel-box-sm pixel-press bg-secondary text-secondary-foreground px-4 py-2 font-display text-xs uppercase flex items-center gap-2 hover:bg-secondary/90 transition-all self-start sm:self-auto"
+          >
+            <span>✋</span> Push Me To Top <span>👆</span>
+          </button>
           <p>Drawn by hand on {site.chain}.</p>
         </div>
       </div>

@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Chimikinz — 2,222 Lucky Oddlings',
+    title: 'Chimikinz — 4,444 Lucky Oddlings',
     description: 'Hand-drawn oddlings, each carrying a charm of its own.',
     creator: '@chimikinzzz',
   },
@@ -50,6 +50,7 @@ export const metadata: Metadata = {
 }
 
 import { FavoritesProvider } from '@/lib/context/favorites-context'
+import { ScrollToTopHands } from '@/components/scroll-to-top-hands'
 
 export const viewport: Viewport = {
   colorScheme: 'light',
@@ -69,6 +70,7 @@ export default function RootLayout({
       <body className="antialiased">
         <FavoritesProvider>
           {children}
+          <ScrollToTopHands />
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </FavoritesProvider>
       </body>

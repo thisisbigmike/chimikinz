@@ -3,6 +3,8 @@ export const site = {
   supply: 4444,
   chain: 'Ethereum',
   tagline: 'Hand-drawn oddlings. Every one carries a charm.',
+  world: 'Clover Cove',
+  launch: 'August 2026',
   links: {
     x: 'https://x.com/chimikinzzz',
     xFollowIntent: 'https://x.com/intent/follow?screen_name=chimikinzzz',
