@@ -213,7 +213,7 @@ export const featuredOddlings = oddlings.filter((o) =>
 )
 
 export const brandArt = {
-  group: '/chimikinz/oddling-2.png',
+  group: '/chimikinz/chimikins-logo-group.jpg',
   builder: '/chimikinz/oddling-3.png',
   bull: '/chimikinz/oddling-5.png',
 }

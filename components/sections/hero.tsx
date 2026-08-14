@@ -71,7 +71,7 @@ export function Hero() {
             <PixelSparkles count={16} speed={0.6} />
             <Image
               src={brandArt.group}
-              alt="Four Chimikinz oddlings huddled together, the one in front wearing an orange clover hoodie"
+              alt="The Chimikins logo above the full cast of oddlings gathered together for a group portrait"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               priority
