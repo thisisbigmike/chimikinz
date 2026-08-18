@@ -144,6 +144,13 @@
     text-shadow: 4px 4px 0 var(--primary);
   }
 
+  /* The hand-drawn art is smooth line work, not pixel art — opt it out of the
+     global `image-rendering: pixelated` so it stays clean at every size. */
+  .art-smooth,
+  .art-smooth img {
+    image-rendering: auto;
+  }
+
   /* Chunky 8px checker — reads as a pixel grid, not a gradient. */
   .pixel-checker {
     background-image:

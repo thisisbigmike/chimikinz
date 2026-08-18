@@ -1,332 +1,286 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
-import { Search } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
-import { OddlingCard } from '@/components/oddling-card'
+import { ScrollReveal } from '@/components/scroll-reveal'
 import {
-  oddlings,
-  rarities,
-  families,
-  type Oddling,
-  type Rarity,
-  rarityStyle,
-} from '@/lib/oddlings'
-import { site } from '@/lib/site'
+  artCategories,
+  artwork,
+  type ArtCategory,
+  type ArtPiece,
+} from '@/lib/art'
 import { cn } from '@/lib/utils'
 
-import { useFavorites } from '@/lib/context/favorites-context'
+type Filter = ArtCategory | 'all'
 
 export default function GalleryPage() {
-  const { favorites } = useFavorites()
-  const [search, setSearch] = useState('')
-  const [selectedRarity, setSelectedRarity] = useState<Rarity | 'All'>('All')
-  const [selectedFamily, setSelectedFamily] = useState<string>('All')
-  const [onlyFavorites, setOnlyFavorites] = useState(false)
-  const [selectedOddling, setSelectedOddling] = useState<Oddling | null>(null)
+  const [filter, setFilter] = useState<Filter>('all')
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
-  const filteredOddlings = useMemo(() => {
-    return oddlings.filter((item) => {
-      const matchesFav = !onlyFavorites || favorites.includes(item.id)
-      const matchesRarity =
-        selectedRarity === 'All' || item.rarity === selectedRarity
-      const matchesFamily =
-        selectedFamily === 'All' || item.family === selectedFamily
-      const query = search.toLowerCase().trim()
-      const matchesSearch =
-        !query ||
-        item.name.toLowerCase().includes(query) ||
-        item.charm.toLowerCase().includes(query) ||
-        item.traits.some(
-          (t) =>
-            t.label.toLowerCase().includes(query) ||
-            t.value.toLowerCase().includes(query),
-        )
+  const pieces = useMemo(
+    () =>
+      filter === 'all'
+        ? artwork
+        : artwork.filter((piece) => piece.category === filter),
+    [filter],
+  )
 
-      return matchesFav && matchesRarity && matchesFamily && matchesSearch
-    })
-  }, [search, selectedRarity, selectedFamily, onlyFavorites, favorites])
+  const active = openIndex === null ? null : (pieces[openIndex] ?? null)
+
+  const step = useCallback(
+    (delta: number) => {
+      setOpenIndex((current) => {
+        if (current === null) return current
+        // Wrap around so arrowing past either end keeps browsing.
+        return (current + delta + pieces.length) % pieces.length
+      })
+    },
+    [pieces.length],
+  )
+
+  // Arrow keys page through the open piece; Escape closes it.
+  useEffect(() => {
+    if (openIndex === null) return
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') setOpenIndex(null)
+      if (event.key === 'ArrowRight') step(1)
+      if (event.key === 'ArrowLeft') step(-1)
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [openIndex, step])
+
+  // Don't let the page scroll behind the lightbox.
+  useEffect(() => {
+    if (openIndex === null) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [openIndex])
 
   return (
     <div className="min-h-screen bg-background font-sans antialiased text-foreground">
       <SiteHeader />
 
-      <main className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col gap-6">
-          <SectionHeading
-            eyebrow="The Nest"
-            title="Explore the Oddlings"
-            body="Every oddling is drawn by hand with its own charm and traits. Search by name, filter by rarity or family."
-          />
+      <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-8">
+          <ScrollReveal variant="fade-up">
+            <SectionHeading
+              eyebrow="The Gallery"
+              title="Every drawing, one wall"
+              body="Scenes from Clover Cove, portraits of the Chimis and the reference sheets they were built from. Tap any piece to see it full size."
+            />
+          </ScrollReveal>
 
-          {/* Controls Bar */}
-          <div className="pixel-box bg-card p-6 flex flex-col gap-6">
-            {/* Search Input */}
-            <div className="flex flex-col gap-2">
-              <label htmlFor="search-input" className="font-display text-xs uppercase">
-                Search Oddlings
-              </label>
-              <input
-                id="search-input"
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search name, charm, or trait..."
-                className="w-full border-4 border-foreground bg-background px-4 py-3 font-display text-sm focus:outline-none focus:ring-4 focus:ring-primary"
-              />
-            </div>
-
-            {/* Filters Group */}
-            <div className="grid gap-6 md:grid-cols-2">
-              {/* Rarity Filter */}
-              <div className="flex flex-col gap-2">
-                <span className="font-display text-[11px] uppercase text-muted-foreground">
-                  Rarity
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setOnlyFavorites(false)}
-                    className={cn(
-                      'pixel-press border-3 border-foreground px-3 py-1.5 font-display text-[10px] uppercase',
-                      !onlyFavorites && selectedRarity === 'All'
-                        ? 'bg-foreground text-background'
-                        : 'bg-background text-foreground hover:bg-muted',
-                    )}
-                  >
-                    All ({oddlings.length})
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setOnlyFavorites(!onlyFavorites)}
-                    className={cn(
-                      'pixel-press border-3 border-foreground px-3 py-1.5 font-display text-[10px] uppercase flex items-center gap-1',
-                      onlyFavorites
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-background text-foreground hover:bg-muted',
-                    )}
-                  >
-                    ♥ Saved ({favorites.length})
-                  </button>
-                  {rarities.map((r) => {
-                    const count = oddlings.filter((o) => o.rarity === r).length
-                    return (
-                      <button
-                        key={r}
-                        type="button"
-                        onClick={() => setSelectedRarity(r)}
-                        className={cn(
-                          'pixel-press border-3 border-foreground px-3 py-1.5 font-display text-[10px] uppercase',
-                          selectedRarity === r
-                            ? 'bg-foreground text-background'
-                            : 'bg-background text-foreground hover:bg-muted',
-                        )}
-                      >
-                        {r} ({count})
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-
-              {/* Family Filter */}
-              <div className="flex flex-col gap-2">
-                <span className="font-display text-[11px] uppercase text-muted-foreground">
-                  Family
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedFamily('All')}
-                    className={cn(
-                      'pixel-press border-3 border-foreground px-3 py-1.5 font-display text-[10px] uppercase',
-                      selectedFamily === 'All'
-                        ? 'bg-foreground text-background'
-                        : 'bg-background text-foreground hover:bg-muted',
-                    )}
-                  >
-                    All
-                  </button>
-                  {families.map((fam) => (
-                    <button
-                      key={fam}
-                      type="button"
-                      onClick={() => setSelectedFamily(fam)}
-                      className={cn(
-                        'pixel-press border-3 border-foreground px-3 py-1.5 font-display text-[10px] uppercase',
-                        selectedFamily === fam
-                          ? 'bg-foreground text-background'
-                          : 'bg-background text-foreground hover:bg-muted',
-                      )}
-                    >
-                      {fam}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Results Summary */}
-          <div className="flex items-center justify-between font-display text-xs uppercase text-muted-foreground pt-2">
-            <span>
-              Showing {filteredOddlings.length} of {oddlings.length} revealed
+          {/* Shelf filter */}
+          <div className="pixel-box flex flex-col gap-4 bg-card p-5 sm:p-6">
+            <span className="font-display text-[11px] uppercase text-muted-foreground">
+              Shelves
             </span>
-            {(selectedRarity !== 'All' ||
-              selectedFamily !== 'All' ||
-              search) && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSearch('')
-                  setSelectedRarity('All')
-                  setSelectedFamily('All')
-                }}
-                className="underline hover:text-primary"
+            <div className="flex flex-wrap gap-2">
+              <FilterButton
+                active={filter === 'all'}
+                onClick={() => setFilter('all')}
               >
-                Clear Filters
-              </button>
-            )}
+                Everything ({artwork.length})
+              </FilterButton>
+              {artCategories.map((category) => {
+                const count = artwork.filter(
+                  (piece) => piece.category === category.id,
+                ).length
+                return (
+                  <FilterButton
+                    key={category.id}
+                    active={filter === category.id}
+                    onClick={() => setFilter(category.id)}
+                  >
+                    {category.label} ({count})
+                  </FilterButton>
+                )
+              })}
+            </div>
+            <p className="text-xl text-muted-foreground">
+              {filter === 'all'
+                ? 'The full wall, newest shelves first.'
+                : artCategories.find((c) => c.id === filter)?.blurb}
+            </p>
           </div>
 
-          {/* Oddlings Grid */}
-          {filteredOddlings.length > 0 ? (
-            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {filteredOddlings.map((oddling) => (
-                <li
-                  key={oddling.id}
-                  onClick={() => setSelectedOddling(oddling)}
-                  className="cursor-pointer"
-                >
-                  <OddlingCard oddling={oddling} />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div className="pixel-box bg-card p-12 text-center flex flex-col items-center justify-center gap-4">
-              <div className="size-12 border-2 border-foreground bg-secondary/30 grid place-items-center">
-                <Search className="size-6 text-foreground" />
-              </div>
-              <h3 className="font-display text-lg uppercase">No Oddlings Found</h3>
-              <p className="text-xl text-muted-foreground">
-                No charm matches your query. Try resetting your search or filters.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setSearch('')
-                  setSelectedRarity('All')
-                  setSelectedFamily('All')
-                }}
-                className="pixel-box-sm bg-primary text-primary-foreground px-4 py-2 font-display text-xs uppercase"
+          {/* The wall */}
+          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {pieces.map((piece, index) => (
+              <ScrollReveal
+                key={piece.id}
+                variant="scale-up"
+                delay={Math.min(index, 8) * 60}
               >
-                Reset All Filters
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Oddling Detail Modal */}
-        {selectedOddling && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/80 p-4"
-            onClick={() => setSelectedOddling(null)}
-          >
-            <div
-              className="pixel-box-lg bg-card w-full max-w-2xl p-6 sm:p-8 flex flex-col gap-6 relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button
-                type="button"
-                onClick={() => setSelectedOddling(null)}
-                className="absolute top-4 right-4 pixel-box-sm bg-primary text-primary-foreground w-10 h-10 font-display text-sm grid place-items-center"
-              >
-                X
-              </button>
-
-              <div className="grid gap-6 sm:grid-cols-2 items-center">
-                <div className="pixel-checker relative aspect-square border-4 border-foreground bg-background">
-                  <Image
-                    src={selectedOddling.image}
-                    alt={selectedOddling.name}
-                    fill
-                    className="object-contain p-4"
-                  />
-                  <span
-                    className={cn(
-                      'absolute top-0 left-0 border-b-4 border-r-4 border-foreground px-3 py-1 font-display text-xs uppercase',
-                      rarityStyle[selectedOddling.rarity],
-                    )}
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(index)}
+                    className="pixel-box pixel-lift group flex w-full flex-col bg-card text-left"
                   >
-                    {selectedOddling.rarity}
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-4">
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-display text-xs text-muted-foreground">
-                        #{String(selectedOddling.id).padStart(4, '0')}
-                      </span>
-                      <PixelTag className="bg-secondary">
-                        {selectedOddling.family}
+                    <div className="pixel-checker art-smooth relative aspect-square overflow-hidden border-b-4 border-foreground">
+                      <Image
+                        src={piece.src}
+                        alt={piece.alt}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className={cn(
+                          'pixel-zoom',
+                          piece.fit === 'cover'
+                            ? 'object-cover'
+                            : 'object-contain p-3',
+                        )}
+                      />
+                      <PixelTag className="absolute left-0 top-0 border-l-0 border-t-0 bg-secondary text-secondary-foreground">
+                        {
+                          artCategories.find((c) => c.id === piece.category)
+                            ?.label
+                        }
                       </PixelTag>
                     </div>
-                    <h2 className="font-display text-2xl uppercase mt-1">
-                      {selectedOddling.name}
-                    </h2>
-                  </div>
-
-                  <div className="border-t-4 border-b-4 border-foreground py-3">
-                    <span className="font-display text-[10px] uppercase text-muted-foreground block mb-1">
-                      Charm Lore
-                    </span>
-                    <p className="text-2xl leading-snug text-foreground">
-                      "{selectedOddling.charm}"
-                    </p>
-                  </div>
-
-                  <div>
-                    <span className="font-display text-[10px] uppercase text-muted-foreground block mb-2">
-                      Traits
-                    </span>
-                    <ul className="grid grid-cols-2 gap-2">
-                      {selectedOddling.traits.map((t) => (
-                        <li
-                          key={t.label}
-                          className="pixel-box-sm bg-background p-2 text-center"
-                        >
-                          <span className="block font-display text-[9px] uppercase text-muted-foreground">
-                            {t.label}
-                          </span>
-                          <span className="block font-display text-xs uppercase text-foreground">
-                            {t.value}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <a
-                    href={site.links.mint}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pixel-box pixel-press bg-primary text-primary-foreground text-center py-3 font-display text-xs uppercase mt-2"
-                  >
-                    Mint on {site.chain} &rarr;
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+                    <div className="flex flex-col gap-1 p-5">
+                      <h2 className="font-display text-sm uppercase transition-transform duration-200 group-hover:-translate-y-0.5">
+                        {piece.title}
+                      </h2>
+                      <p className="text-pretty text-xl leading-snug text-muted-foreground">
+                        {piece.caption}
+                      </p>
+                    </div>
+                  </button>
+                </li>
+              </ScrollReveal>
+            ))}
+          </ul>
+        </div>
       </main>
 
+      {active ? (
+        <Lightbox
+          piece={active}
+          position={`${(openIndex ?? 0) + 1} / ${pieces.length}`}
+          onClose={() => setOpenIndex(null)}
+          onPrev={() => step(-1)}
+          onNext={() => step(1)}
+        />
+      ) : null}
+
       <SiteFooter />
+    </div>
+  )
+}
+
+function FilterButton({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean
+  onClick: () => void
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={cn(
+        'pixel-press border-[3px] border-foreground px-3 py-1.5 font-display text-[10px] uppercase',
+        active
+          ? 'bg-foreground text-background'
+          : 'bg-background text-foreground hover:bg-muted',
+      )}
+    >
+      {children}
+    </button>
+  )
+}
+
+function Lightbox({
+  piece,
+  position,
+  onClose,
+  onPrev,
+  onNext,
+}: {
+  piece: ArtPiece
+  position: string
+  onClose: () => void
+  onPrev: () => void
+  onNext: () => void
+}) {
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={piece.title}
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/85 p-4"
+    >
+      <div
+        onClick={(event) => event.stopPropagation()}
+        className="pixel-box-lg relative flex w-full max-w-4xl flex-col bg-card"
+      >
+        <div className="flex items-center justify-between gap-3 border-b-4 border-foreground bg-foreground px-4 py-3">
+          <span className="font-display text-[10px] uppercase text-background">
+            {piece.title}
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="font-display text-[10px] uppercase text-background/60">
+              {position}
+            </span>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="pixel-press grid size-8 place-items-center border-[3px] border-background bg-primary font-display text-[10px] text-primary-foreground"
+            >
+              X
+            </button>
+          </div>
+        </div>
+
+        <div className="pixel-checker art-smooth relative aspect-square max-h-[62vh] w-full sm:aspect-[4/3]">
+          <Image
+            src={piece.src}
+            alt={piece.alt}
+            fill
+            sizes="(min-width: 1024px) 900px, 100vw"
+            priority
+            className="object-contain p-4"
+          />
+        </div>
+
+        <div className="flex flex-col gap-4 border-t-4 border-foreground p-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-pretty text-xl text-muted-foreground">
+            {piece.caption}
+          </p>
+          <div className="flex shrink-0 gap-2">
+            <button
+              type="button"
+              onClick={onPrev}
+              className="pixel-box-sm pixel-press bg-card px-4 py-2 font-display text-[10px] uppercase"
+            >
+              &larr; Prev
+            </button>
+            <button
+              type="button"
+              onClick={onNext}
+              className="pixel-box-sm pixel-press bg-primary px-4 py-2 font-display text-[10px] uppercase text-primary-foreground"
+            >
+              Next &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
