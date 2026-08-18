@@ -43,8 +43,8 @@ export function Hero() {
               <PixelLink href={site.links.mint} external size="lg">
                 Mint on {site.chain}
               </PixelLink>
-              <PixelLink href="/gallery" variant="secondary" size="lg">
-                Explore Nest
+              <PixelLink href="/gallery" variant="gold" size="lg">
+                Explore Gallery
               </PixelLink>
             </div>
           </ScrollReveal>

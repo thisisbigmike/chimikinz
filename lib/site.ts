@@ -10,11 +10,14 @@ export const site = {
     xFollowIntent: 'https://x.com/intent/follow?screen_name=chimikinzzz',
     discord: 'https://discord.gg/xTZ2zPwnX7',
     mint: 'https://chimikinz.nfts2.me',
+    /** Storefront the Collections page sends holders to once a drop is live. */
+    opensea: 'https://opensea.io/collection/chimikinz',
   },
   nav: [
-    { label: 'Oddlings', href: '/gallery' },
-    { label: 'Story', href: '/#story' },
-    { label: 'Roadmap', href: '/#roadmap' },
+    { label: 'Home', href: '/' },
+    { label: 'Gallery', href: '/gallery' },
+    { label: 'Collections', href: '/collections' },
+    { label: 'Vision', href: '/vision' },
   ],
 } as const
 

@@ -11,9 +11,10 @@ const columns = [
   {
     heading: 'Explore',
     links: [
-      { label: 'Oddlings', href: '/gallery' },
+      { label: 'Gallery', href: '/gallery' },
+      { label: 'Collections', href: '/collections' },
+      { label: 'Vision', href: '/vision' },
       { label: 'Story', href: '/#story' },
-      { label: 'Roadmap', href: '/#roadmap' },
     ],
   },
   {

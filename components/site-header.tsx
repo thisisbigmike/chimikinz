@@ -1,8 +1,10 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { PixelLink } from '@/components/pixel/pixel-button'
+import { brandImages } from '@/lib/art'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
@@ -17,10 +19,16 @@ export function SiteHeader() {
           className="group flex items-center gap-3 font-display text-sm uppercase tracking-tight sm:text-base"
         >
           <span
-            className="grid size-9 shrink-0 place-items-center border-4 border-foreground bg-primary text-primary-foreground transition-transform duration-200 group-hover:scale-110"
+            className="art-smooth relative grid size-9 shrink-0 place-items-center overflow-hidden border-4 border-foreground bg-primary transition-transform duration-200 group-hover:scale-110"
             aria-hidden="true"
           >
-            <span className="font-display text-xs">C</span>
+            <Image
+              src={brandImages.logoHead}
+              alt=""
+              fill
+              sizes="36px"
+              className="object-contain p-0.5"
+            />
           </span>
           {site.name}
         </Link>
