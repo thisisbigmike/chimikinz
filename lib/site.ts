@@ -12,11 +12,24 @@ export const site = {
     mint: 'https://chimikinz.nfts2.me',
   },
   nav: [
-    { label: 'Oddlings', href: '/gallery' },
-    { label: 'Story', href: '/#story' },
-    { label: 'Roadmap', href: '/#roadmap' },
+    { label: 'Home', href: '/' },
+    { label: 'Gallery', href: '/gallery' },
+    { label: 'Collections', href: '/collections' },
+    { label: 'Vision', href: '/vision' },
   ],
 } as const
+
+/**
+ * The launch switch for the Collections page.
+ *
+ * While this is `false` every collection card opens the "Coming soon" modal.
+ * Flip it to `true` on launch day and the same cards send people straight to
+ * the `opensea` URL on each collection in `lib/collections.ts`.
+ *
+ * Typed as `boolean` on purpose — a literal `false` would make TypeScript
+ * treat the live branch as dead code.
+ */
+export const launched: boolean = false
 
 export const stats = [
   { value: '4,444', label: 'Oddlings' },

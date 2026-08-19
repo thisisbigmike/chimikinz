@@ -1,18 +1,28 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Press_Start_2P, VT323 } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
-const pixelDisplay = Press_Start_2P({
+/**
+ * Press Start 2P and VT323, self-hosted from app/fonts.
+ *
+ * These were previously fetched from Google Fonts at build time, but that
+ * loader has a short timeout and would silently fall back to Courier New
+ * whenever the network was slow — which quietly broke the whole look.
+ * Serving the woff2 files ourselves makes the typefaces deterministic.
+ */
+const pixelDisplay = localFont({
+  src: './fonts/press-start-2p-latin.woff2',
   weight: '400',
-  subsets: ['latin'],
+  style: 'normal',
   variable: '--font-display',
   display: 'swap',
 })
 
-const pixelBody = VT323({
+const pixelBody = localFont({
+  src: './fonts/vt323-latin.woff2',
   weight: '400',
-  subsets: ['latin'],
+  style: 'normal',
   variable: '--font-body',
   display: 'swap',
 })

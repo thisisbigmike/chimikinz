@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { site } from '@/lib/site'
@@ -8,6 +9,11 @@ import { cn } from '@/lib/utils'
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
+
+  /** Home only lights up on an exact match; the rest match their section. */
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
     <header className="sticky top-0 z-50 border-b-4 border-foreground bg-background">
@@ -30,7 +36,11 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="pixel-glow border-4 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-tight transition-colors hover:border-foreground hover:bg-secondary"
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              className={cn(
+                'pixel-glow border-4 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-tight transition-colors hover:border-foreground hover:bg-secondary',
+                isActive(item.href) && 'border-foreground bg-secondary',
+              )}
             >
               {item.label}
             </Link>
@@ -93,7 +103,11 @@ export function SiteHeader() {
                 <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block px-5 py-4 font-display text-[11px] uppercase tracking-tight transition-colors hover:bg-secondary/30"
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  className={cn(
+                    'block px-5 py-4 font-display text-[11px] uppercase tracking-tight transition-colors hover:bg-secondary/30',
+                    isActive(item.href) && 'bg-secondary',
+                  )}
                 >
                   {item.label}
                 </Link>

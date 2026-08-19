@@ -144,6 +144,12 @@
     text-shadow: 4px 4px 0 var(--primary);
   }
 
+  /* The gallery art is smooth line illustration, not pixel art — opt it out
+     of the global `image-rendering: pixelated` so downscaling stays clean. */
+  .art-smooth {
+    image-rendering: auto;
+  }
+
   /* Chunky 8px checker — reads as a pixel grid, not a gradient. */
   .pixel-checker {
     background-image:
