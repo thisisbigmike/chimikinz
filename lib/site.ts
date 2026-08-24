@@ -13,9 +13,9 @@ export const site = {
   },
   nav: [
     { label: 'Home', href: '/' },
+    { label: 'Chimis', href: '/chimis' },
     { label: 'Gallery', href: '/gallery' },
-    { label: 'Collections', href: '/collections' },
-    { label: 'Vision', href: '/vision' },
+    { label: 'Journey', href: '/journey' },
   ],
 } as const
 

@@ -1,9 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import { SectionHeading } from '@/components/pixel/pixel-panel'
+import Link from 'next/link'
+import { PixelLink } from '@/components/pixel/pixel-button'
+import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { chimis } from '@/lib/chimis'
+import { mainChimis } from '@/lib/chimis'
 
 export function MeetTheChimis() {
   return (
@@ -14,36 +16,63 @@ export function MeetTheChimis() {
             align="center"
             eyebrow="Meet the Chimis"
             title="Four feelings, four friends"
+            body="The ones who arrived first and decided what Clover Cove was going to be like."
+            className="mx-auto"
           />
         </ScrollReveal>
 
         <ul className="mt-10 grid w-full gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {chimis.map((chimi, i) => (
-            <ScrollReveal key={chimi.name} variant="scale-up" delay={i * 150}>
-              <li>
-                <article className="group pixel-box flex h-full flex-col bg-card">
-                  <div className="pixel-checker relative aspect-square overflow-hidden border-b-4 border-foreground">
+          {mainChimis.map((chimi, i) => (
+            <ScrollReveal key={chimi.slug} variant="scale-up" delay={i * 150}>
+              <li className="h-full">
+                <Link
+                  href={`/chimis#${chimi.slug}`}
+                  className="group pixel-box pixel-press flex h-full flex-col bg-card"
+                >
+                  <div
+                    className="relative aspect-square overflow-hidden border-b-4 border-foreground"
+                    style={{ backgroundColor: `${chimi.accent}22` }}
+                  >
                     <Image
-                      src={chimi.image}
+                      src={chimi.thumb}
                       alt={chimi.name}
                       fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                      className="pixel-zoom object-contain p-4"
+                      className="art-smooth pixel-zoom object-contain p-3"
                     />
+                    <PixelTag
+                      className="absolute left-0 top-0 border-l-0 border-t-0 text-background"
+                      style={{ backgroundColor: chimi.accent }}
+                    >
+                      {chimi.emotion}
+                    </PixelTag>
                   </div>
-                  <div className="flex flex-col gap-2 p-5">
+
+                  <div className="flex flex-1 flex-col gap-2 p-5">
                     <h3 className="font-display text-sm uppercase transition-transform duration-200 group-hover:-translate-y-0.5">
-                      🍀 {chimi.name}
+                      {chimi.name}
                     </h3>
                     <p className="text-pretty text-xl leading-snug text-muted-foreground">
-                      {chimi.body}
+                      {chimi.personality}
                     </p>
+                    <span className="mt-auto pt-2 font-display text-[9px] uppercase text-primary">
+                      Read {chimi.name}&apos;s story{' '}
+                      <span className="pixel-arrow">&rarr;</span>
+                    </span>
                   </div>
-                </article>
+                </Link>
               </li>
             </ScrollReveal>
           ))}
         </ul>
+
+        <ScrollReveal variant="fade-up" delay={300}>
+          <div className="mt-10">
+            <PixelLink href="/chimis" variant="ink" size="lg">
+              Meet them properly
+            </PixelLink>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )

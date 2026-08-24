@@ -1,18 +1,22 @@
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { PixelMarquee } from '@/components/pixel/pixel-marquee'
 import { Hero } from '@/components/sections/hero'
 import { CloverCoveBanner } from '@/components/sections/clover-cove-banner'
 import { Lore } from '@/components/sections/lore'
 import { MeetTheChimis } from '@/components/sections/meet-the-chimis'
-import { EntryTiles } from '@/components/sections/entry-tiles'
-import { FeaturedOddlings } from '@/components/sections/featured-oddlings'
-import { Story } from '@/components/sections/story'
-import { OnChain } from '@/components/sections/on-chain'
-import { Roadmap } from '@/components/sections/roadmap'
-import { Team } from '@/components/sections/team'
-import { TheBeginning } from '@/components/sections/the-beginning'
+import { MotionShowcase } from '@/components/sections/motion-showcase'
+import { FeaturedArt } from '@/components/sections/featured-art'
+import { LatestDiscovery } from '@/components/sections/latest-discovery'
+import { SocialLinks } from '@/components/sections/social-links'
 import { Cta } from '@/components/sections/cta'
+import { marqueeItems } from '@/lib/site'
 
+/**
+ * The way in to Clover Cove. Reads as a place rather than a pitch:
+ * arrive → what this is → the world → who lives there → what it looks
+ * like moving → the art → what turned up this week → come in.
+ */
 export default function Home() {
   return (
     <div className="min-h-screen bg-background font-sans antialiased text-foreground">
@@ -21,18 +25,15 @@ export default function Home() {
         <Hero />
         <CloverCoveBanner />
         <Lore />
+        <PixelMarquee items={marqueeItems} />
         <MeetTheChimis />
-        <EntryTiles />
-        <FeaturedOddlings />
-        <Story />
-        <OnChain />
-        <Roadmap />
-        <Team />
-        <TheBeginning />
+        <MotionShowcase />
+        <FeaturedArt />
+        <LatestDiscovery />
+        <SocialLinks />
         <Cta />
       </main>
       <SiteFooter />
     </div>
   )
 }
-

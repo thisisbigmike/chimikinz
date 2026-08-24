@@ -49,9 +49,12 @@ export function PixelPanel({
 /** Small square-cornered label chip. */
 export function PixelTag({
   className,
+  style,
   children,
 }: {
   className?: string
+  /** Lets a caller tint the chip with a per-character accent colour. */
+  style?: React.CSSProperties
   children: React.ReactNode
 }) {
   return (
@@ -60,6 +63,7 @@ export function PixelTag({
         'inline-flex items-center border-[3px] border-foreground px-2 py-1 font-display text-[9px] uppercase leading-none tracking-tight',
         className,
       )}
+      style={style}
     >
       {children}
     </span>

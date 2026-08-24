@@ -1,33 +1,55 @@
 'use client'
 
 import Image from 'next/image'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
+import { ChimiOfTheMoment } from '@/components/chimi-of-the-moment'
+import { PixelTag } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import {
-  artGroups,
+  activeCategories,
   artwork,
-  artworkByGroup,
   chimiMark,
   fullSrc,
   thumbSrc,
+  type ArtCategory,
+  type Artwork,
 } from '@/lib/artwork'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
 export default function GalleryPage() {
-  /** Index into `artwork` — the lightbox walks the flat list. */
+  const [filter, setFilter] = useState<ArtCategory | 'all'>('all')
+  /** Index into the *filtered* list — the lightbox walks what you can see. */
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const categories = useMemo(() => activeCategories(), [])
+
+  const visible = useMemo(
+    () =>
+      filter === 'all'
+        ? artwork
+        : artwork.filter((piece) => piece.category === filter),
+    [filter],
+  )
 
   const close = useCallback(() => setOpenIndex(null), [])
 
-  const step = useCallback((delta: number) => {
-    setOpenIndex((current) => {
-      if (current === null) return current
-      return (current + delta + artwork.length) % artwork.length
-    })
+  const step = useCallback(
+    (delta: number) => {
+      setOpenIndex((current) => {
+        if (current === null) return current
+        return (current + delta + visible.length) % visible.length
+      })
+    },
+    [visible.length],
+  )
+
+  /** Opening a specific piece (e.g. from the randomizer) clears the filter. */
+  const openPiece = useCallback((piece: Artwork) => {
+    setFilter('all')
+    setOpenIndex(artwork.findIndex((a) => a.slug === piece.slug))
   }, [])
 
   useEffect(() => {
@@ -49,31 +71,40 @@ export default function GalleryPage() {
     }
   }, [openIndex, close, step])
 
-  const open = openIndex === null ? null : artwork[openIndex]
+  const open = openIndex === null ? null : visible[openIndex]
 
   return (
     <div className="min-h-screen bg-background font-sans antialiased text-foreground">
       <SiteHeader />
 
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-10">
           {/* Header */}
           <div className="flex flex-wrap items-center justify-between gap-8">
             <ScrollReveal variant="fade-up">
-              <SectionHeading
-                eyebrow="The gallery"
-                title="Everything we've drawn"
-                body={`Every piece from the ${site.world} sketchbook — the four who started it, the oddlings that followed, and the days they got up to something. Click any piece to open it.`}
-              />
+              <div className="flex flex-col gap-4">
+                <PixelTag className="bg-secondary text-secondary-foreground">
+                  The archive
+                </PixelTag>
+                <h1 className="text-balance font-display text-3xl uppercase leading-[1.15] sm:text-4xl">
+                  <span className="pixel-text-shadow-primary">
+                    Chimi Gallery
+                  </span>
+                </h1>
+                <p className="max-w-xl text-pretty text-2xl leading-snug text-muted-foreground">
+                  Everything drawn in {site.world} so far. Let it pick one for
+                  you, or scroll the whole thing.
+                </p>
+              </div>
             </ScrollReveal>
 
             <ScrollReveal variant="scale-up" delay={150}>
-              <div className="pixel-box-lg pixel-checker relative size-36 shrink-0 bg-card sm:size-44">
+              <div className="pixel-box-lg pixel-checker relative size-32 shrink-0 bg-card sm:size-40">
                 <Image
                   src={chimiMark}
                   alt=""
                   fill
-                  sizes="176px"
+                  sizes="160px"
                   priority
                   className="art-smooth pixel-float object-contain p-3"
                 />
@@ -81,84 +112,101 @@ export default function GalleryPage() {
             </ScrollReveal>
           </div>
 
-          <div className="flex items-center gap-3 font-display text-xs uppercase text-muted-foreground">
-            <span className="h-1 flex-1 bg-foreground/20" />
-            <span>{artwork.length} pieces</span>
-            <span className="h-1 flex-1 bg-foreground/20" />
+          {/* Chimi of the moment */}
+          <ScrollReveal variant="fade-up" delay={100}>
+            <ChimiOfTheMoment onOpen={openPiece} />
+          </ScrollReveal>
+
+          {/* Filters */}
+          <div className="flex flex-col gap-4 border-t-4 border-foreground pt-6">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setFilter('all')
+                  setOpenIndex(null)
+                }}
+                className={cn(
+                  'pixel-box-sm pixel-press px-3 py-2 font-display text-[10px] uppercase',
+                  filter === 'all'
+                    ? 'bg-foreground text-background'
+                    : 'bg-card hover:bg-secondary',
+                )}
+              >
+                All ({artwork.length})
+              </button>
+
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  type="button"
+                  onClick={() => {
+                    setFilter(category.id)
+                    setOpenIndex(null)
+                  }}
+                  className={cn(
+                    'pixel-box-sm pixel-press px-3 py-2 font-display text-[10px] uppercase',
+                    filter === category.id
+                      ? 'bg-foreground text-background'
+                      : 'bg-card hover:bg-secondary',
+                  )}
+                >
+                  {category.label} ({category.count})
+                </button>
+              ))}
+            </div>
+
+            <p className="font-display text-[9px] uppercase text-muted-foreground">
+              Showing {visible.length}{' '}
+              {visible.length === 1 ? 'piece' : 'pieces'}
+            </p>
           </div>
 
-          {/* The wall, one section per group */}
-          {artGroups.map((group) => {
-            const pieces = artworkByGroup(group.id)
-            if (pieces.length === 0) return null
-
-            return (
-              <section key={group.id} className="flex flex-col gap-6">
-                <ScrollReveal variant="fade-up">
-                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 border-b-4 border-foreground pb-4">
-                    <h2 className="font-display text-lg uppercase sm:text-xl">
-                      {group.label}
-                    </h2>
-                    <PixelTag className="bg-secondary text-secondary-foreground">
-                      {pieces.length}
-                    </PixelTag>
-                    <p className="w-full text-pretty text-xl text-muted-foreground sm:w-auto sm:flex-1">
-                      {group.blurb}
-                    </p>
-                  </div>
-                </ScrollReveal>
-
-                <ul className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-                  {pieces.map((piece, i) => (
-                    <ScrollReveal
-                      key={piece.slug}
-                      variant="scale-up"
-                      delay={(i % 4) * 80}
-                      // Wide pieces keep their own height instead of
-                      // stretching to match the square cards beside them.
-                      className={cn(piece.wide && 'col-span-2 self-start')}
+          {/* The wall */}
+          <ul className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+            {visible.map((piece, i) => (
+              <ScrollReveal
+                key={piece.slug}
+                variant="scale-up"
+                delay={(i % 4) * 70}
+                // Wide pieces keep their own height rather than stretching
+                // to match the square cards beside them.
+                className={cn(piece.wide && 'col-span-2 self-start')}
+              >
+                <li className="h-full">
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(i)}
+                    aria-label={`Open ${piece.title}`}
+                    className="group pixel-box pixel-press flex h-full w-full flex-col bg-card"
+                  >
+                    <div
+                      className={cn(
+                        'pixel-checker relative w-full overflow-hidden border-b-4 border-foreground',
+                        piece.wide ? 'aspect-[3/1]' : 'aspect-square',
+                      )}
                     >
-                      <li className="h-full">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setOpenIndex(
-                              artwork.findIndex((a) => a.slug === piece.slug),
-                            )
-                          }
-                          aria-label={`Open ${piece.title}`}
-                          className="group pixel-box pixel-press flex h-full w-full flex-col bg-card"
-                        >
-                          <div
-                            className={cn(
-                              'pixel-checker relative w-full overflow-hidden border-b-4 border-foreground',
-                              piece.wide ? 'aspect-[3/1]' : 'aspect-square',
-                            )}
-                          >
-                            <Image
-                              src={thumbSrc(piece.slug)}
-                              alt={piece.alt}
-                              fill
-                              sizes={
-                                piece.wide
-                                  ? '(min-width: 1024px) 50vw, 100vw'
-                                  : '(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw'
-                              }
-                              className="art-smooth object-cover transition-transform duration-300 group-hover:scale-105"
-                            />
-                          </div>
-                          <span className="flex items-center justify-between gap-2 p-3 text-left font-display text-[10px] uppercase">
-                            {piece.title}
-                            <span className="pixel-arrow text-primary">+</span>
-                          </span>
-                        </button>
-                      </li>
-                    </ScrollReveal>
-                  ))}
-                </ul>
-              </section>
-            )
-          })}
+                      <Image
+                        src={thumbSrc(piece.slug)}
+                        alt={piece.alt}
+                        fill
+                        sizes={
+                          piece.wide
+                            ? '(min-width: 1024px) 50vw, 100vw'
+                            : '(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw'
+                        }
+                        className="art-smooth object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                    <span className="flex items-center justify-between gap-2 p-3 text-left font-display text-[10px] uppercase">
+                      {piece.title}
+                      <span className="pixel-arrow text-primary">+</span>
+                    </span>
+                  </button>
+                </li>
+              </ScrollReveal>
+            ))}
+          </ul>
         </div>
       </main>
 
@@ -205,7 +253,7 @@ export default function GalleryPage() {
                   &larr;
                 </button>
                 <span className="font-display text-[10px] uppercase text-muted-foreground">
-                  {(openIndex ?? 0) + 1} / {artwork.length}
+                  {(openIndex ?? 0) + 1} / {visible.length}
                 </span>
                 <button
                   type="button"

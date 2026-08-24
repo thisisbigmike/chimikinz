@@ -11,11 +11,11 @@ const columns = [
   {
     heading: 'Explore',
     links: [
+      { label: 'The Chimis', href: '/chimis' },
       { label: 'Gallery', href: '/gallery' },
+      { label: 'The Journey', href: '/journey' },
+      // Kept off the main nav until the OpenSea drop is live.
       { label: 'Collections', href: '/collections' },
-      { label: 'Vision', href: '/vision' },
-      { label: 'Story', href: '/#story' },
-      { label: 'Roadmap', href: '/#roadmap' },
     ],
   },
   {

@@ -249,6 +249,22 @@
     animation: float 5s ease-in-out 1s infinite;
   }
 
+  /* Hovering a motion card holds its loop still, so you can actually look
+     at the drawing. */
+  .motion-card:hover .pixel-float,
+  .motion-card:hover .pixel-float-slow,
+  .motion-card:hover .pixel-sway,
+  .motion-card:hover .oddling-bob {
+    animation-play-state: paused;
+  }
+
+  /* Gentle side-to-side — used by the home motion strip */
+  .pixel-sway {
+    will-change: transform;
+    transform: translateZ(0);
+    animation: sway 5s ease-in-out infinite;
+  }
+
   /* Hover lift for panels / story cards */
   .pixel-lift {
     will-change: transform;
@@ -335,6 +351,7 @@
     .pixel-float,
     .pixel-float-delayed,
     .pixel-float-slow,
+    .pixel-sway,
     .pixel-shimmer,
     .pixel-active-glow,
     .pixel-pulse,
@@ -391,6 +408,11 @@
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-10px); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50%      { transform: translateX(6px) rotate(1.5deg); }
 }
 
 @keyframes shimmer {
