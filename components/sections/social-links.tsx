@@ -25,7 +25,7 @@ const channels = [
 
 export function SocialLinks() {
   return (
-    <section className="relative overflow-hidden border-b-4 border-foreground bg-muted">
+    <section className="relative overflow-hidden border-b-4 border-border bg-muted">
       <PixelSparkles count={18} speed={0.5} />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:py-20">

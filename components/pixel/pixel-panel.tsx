@@ -30,7 +30,7 @@ export function PixelPanel({
   return (
     <div className={cn('pixel-box', tones[tone], className)}>
       {title ? (
-        <div className="flex items-center gap-2 border-b-4 border-foreground bg-foreground px-4 py-2">
+        <div className="flex items-center gap-2 border-b-4 border-border bg-foreground px-4 py-2">
           <span className="flex gap-1" aria-hidden="true">
             <span className="size-2 bg-primary" />
             <span className="size-2 bg-secondary" />
@@ -60,7 +60,7 @@ export function PixelTag({
   return (
     <span
       className={cn(
-        'inline-flex items-center border-[3px] border-foreground px-2 py-1 font-display text-[9px] uppercase leading-none tracking-tight',
+        'inline-flex items-center border-[3px] border-border px-2 py-1 font-display text-[9px] uppercase leading-none tracking-tight',
         className,
       )}
       style={style}

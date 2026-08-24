@@ -63,8 +63,13 @@ import { FavoritesProvider } from '@/lib/context/favorites-context'
 import { ScrollToTopHands } from '@/components/scroll-to-top-hands'
 
 export const viewport: Viewport = {
-  colorScheme: 'light',
-  themeColor: '#f0601c',
+  // The tokens in globals.css theme themselves with light-dark(), so the
+  // document has to advertise both schemes or the browser pins it light.
+  colorScheme: 'light dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fff6e5' },
+    { media: '(prefers-color-scheme: dark)', color: '#141416' },
+  ],
 }
 
 export default function RootLayout({

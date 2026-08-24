@@ -20,7 +20,7 @@ export default function ChimisPage() {
 
       <main>
         {/* Intro */}
-        <section className="border-b-4 border-foreground">
+        <section className="border-b-4 border-border">
           <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
             <ScrollReveal variant="pixel-pop">
               <PixelTag className="bg-secondary text-secondary-foreground">
@@ -53,7 +53,7 @@ export default function ChimisPage() {
                       className="pixel-box-sm pixel-press inline-flex items-center gap-2 bg-card px-3 py-2 font-display text-[10px] uppercase"
                     >
                       <span
-                        className="size-3 shrink-0 border-2 border-foreground"
+                        className="size-3 shrink-0 border-2 border-border"
                         style={{ backgroundColor: chimi.accent }}
                         aria-hidden="true"
                       />
@@ -73,7 +73,7 @@ export default function ChimisPage() {
 
         {/* Rare personalities — renders only once one exists */}
         {rareChimis.length > 0 ? (
-          <section className="border-b-4 border-foreground bg-muted">
+          <section className="border-b-4 border-border bg-muted">
             <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
               <ScrollReveal variant="fade-up">
                 <SectionHeading
@@ -94,7 +94,7 @@ export default function ChimisPage() {
             ))}
           </section>
         ) : (
-          <section className="border-b-4 border-foreground bg-muted">
+          <section className="border-b-4 border-border bg-muted">
             <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 px-4 py-14 text-center sm:px-6 lg:py-20">
               <ScrollReveal variant="fade-up">
                 <PixelTag className="bg-card">More to come</PixelTag>

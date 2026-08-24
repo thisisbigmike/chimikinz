@@ -21,7 +21,7 @@ export function OddlingCard({
 
   return (
     <article className="group pixel-box pixel-press flex flex-col bg-card relative">
-      <div className="pixel-checker relative aspect-square overflow-hidden border-b-4 border-foreground">
+      <div className="pixel-checker relative aspect-square overflow-hidden border-b-4 border-border">
         <Image
           src={oddling.image}
           alt={`${oddling.name}, a Chimikinz oddling`}
@@ -32,7 +32,7 @@ export function OddlingCard({
         />
         <span
           className={cn(
-            'absolute left-0 top-0 border-b-4 border-r-4 border-foreground px-2 py-1 font-display text-[9px] uppercase leading-none transition-transform duration-200',
+            'absolute left-0 top-0 border-b-4 border-r-4 border-border px-2 py-1 font-display text-[9px] uppercase leading-none transition-transform duration-200',
             'group-hover:scale-110',
             rarityStyle[oddling.rarity],
           )}
@@ -48,7 +48,7 @@ export function OddlingCard({
           }}
           aria-label={fav ? 'Remove from favorites' : 'Add to favorites'}
           className={cn(
-            'absolute right-2 top-2 size-8 border-2 border-foreground grid place-items-center transition-all duration-200 z-10',
+            'absolute right-2 top-2 size-8 border-2 border-border grid place-items-center transition-all duration-200 z-10',
             fav ? 'bg-primary text-primary-foreground scale-110' : 'bg-background/90 text-foreground hover:bg-secondary',
           )}
         >

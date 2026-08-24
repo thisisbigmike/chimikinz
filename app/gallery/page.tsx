@@ -118,7 +118,7 @@ export default function GalleryPage() {
           </ScrollReveal>
 
           {/* Filters */}
-          <div className="flex flex-col gap-4 border-t-4 border-foreground pt-6">
+          <div className="flex flex-col gap-4 border-t-4 border-border pt-6">
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
@@ -182,7 +182,7 @@ export default function GalleryPage() {
                   >
                     <div
                       className={cn(
-                        'pixel-checker relative w-full overflow-hidden border-b-4 border-foreground',
+                        'pixel-checker relative w-full overflow-hidden border-b-4 border-border',
                         piece.wide ? 'aspect-[3/1]' : 'aspect-square',
                       )}
                     >
@@ -216,14 +216,14 @@ export default function GalleryPage() {
           role="dialog"
           aria-modal="true"
           aria-label={open.title}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/90 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-night/90 p-4"
           onClick={close}
         >
           <div
             className="pixel-box-lg pixel-slide-up relative flex w-full max-w-3xl flex-col bg-card"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="pixel-checker relative aspect-square w-full border-b-4 border-foreground sm:aspect-[4/3]">
+            <div className="pixel-checker relative aspect-square w-full border-b-4 border-border sm:aspect-[4/3]">
               <Image
                 src={fullSrc(open.slug)}
                 alt={open.alt}

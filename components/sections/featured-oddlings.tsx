@@ -8,7 +8,7 @@ import { featuredOddlings } from '@/lib/oddlings'
 
 export function FeaturedOddlings() {
   return (
-    <section className="border-b-4 border-foreground bg-muted">
+    <section className="border-b-4 border-border bg-muted">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <div className="flex flex-wrap items-end justify-between gap-6">

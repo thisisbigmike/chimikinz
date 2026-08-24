@@ -10,7 +10,7 @@ import { site, stats } from '@/lib/site'
 
 export function Hero() {
   return (
-    <section className="border-b-4 border-foreground">
+    <section className="border-b-4 border-border">
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:py-20">
         <div className="flex flex-col items-start gap-6">
           <ScrollReveal variant="pixel-pop" delay={0}>

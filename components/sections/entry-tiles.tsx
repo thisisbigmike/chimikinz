@@ -41,7 +41,7 @@ const tiles = [
 
 export function EntryTiles() {
   return (
-    <section className="border-b-4 border-foreground">
+    <section className="border-b-4 border-border">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <SectionHeading
@@ -57,7 +57,7 @@ export function EntryTiles() {
             const inner = (
               <>
                 <div
-                  className={`pixel-checker relative aspect-[4/3] border-b-4 border-foreground ${tile.tone}`}
+                  className={`pixel-checker relative aspect-[4/3] border-b-4 border-border ${tile.tone}`}
                 >
                   <Image
                     src={tile.image}

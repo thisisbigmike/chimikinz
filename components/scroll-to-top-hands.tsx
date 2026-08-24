@@ -87,7 +87,7 @@ export function ScrollToTopHands() {
           )}
         >
           {/* Animated Oddling Avatar */}
-          <div className="relative size-7 shrink-0 overflow-hidden border-2 border-foreground bg-card">
+          <div className="relative size-7 shrink-0 overflow-hidden border-2 border-border bg-card">
             <Image
               src={brandArt.builder}
               alt=""
@@ -138,13 +138,13 @@ export function ScrollToTopHands() {
               handPose === 2 && '-translate-y-16 rotate-[-10deg] scale-105',
             )}
           >
-            <div className="pixel-box bg-secondary text-foreground p-3 border-4 border-foreground shadow-lg flex items-center gap-2">
+            <div className="pixel-box bg-secondary text-foreground p-3 border-4 border-border shadow-lg flex items-center gap-2">
               <span className="text-3xl">✋</span>
               <span className="font-display text-xs uppercase bg-foreground text-background px-2 py-0.5">
                 PUSH UP!
               </span>
             </div>
-            <div className="w-4 h-32 bg-primary border-x-4 border-foreground" />
+            <div className="w-4 h-32 bg-primary border-x-4 border-border" />
           </div>
 
           {/* Right Oddling Hand */}
@@ -156,18 +156,18 @@ export function ScrollToTopHands() {
               handPose === 2 && 'translate-y-0 rotate-[5deg]',
             )}
           >
-            <div className="pixel-box bg-accent text-accent-foreground p-3 border-4 border-foreground shadow-lg flex items-center gap-2">
+            <div className="pixel-box bg-accent text-accent-foreground p-3 border-4 border-border shadow-lg flex items-center gap-2">
               <span className="font-display text-xs uppercase bg-foreground text-background px-2 py-0.5">
                 PULL TOP!
               </span>
               <span className="text-3xl">🤚</span>
             </div>
-            <div className="w-4 h-32 bg-secondary border-x-4 border-foreground" />
+            <div className="w-4 h-32 bg-secondary border-x-4 border-border" />
           </div>
 
           {/* Center Mascot Helper & Sparkles */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 pixel-box bg-card p-3 border-4 border-foreground shadow-2xl flex items-center gap-3 animate-bounce">
-            <div className="relative size-10 shrink-0 border-2 border-foreground bg-accent">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 pixel-box bg-card p-3 border-4 border-border shadow-2xl flex items-center gap-3 animate-bounce">
+            <div className="relative size-10 shrink-0 border-2 border-border bg-accent">
               <Image
                 src={brandArt.builder}
                 alt=""

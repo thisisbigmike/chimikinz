@@ -6,7 +6,7 @@ import { site } from '@/lib/site'
 
 export function TheBeginning() {
   return (
-    <section className="border-b-4 border-foreground">
+    <section className="border-b-4 border-border">
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 px-4 py-14 text-center sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <PixelHeading as="h2" className="text-2xl sm:text-3xl">

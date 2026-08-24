@@ -9,10 +9,10 @@ import { site } from '@/lib/site'
 
 export function Cta() {
   return (
-    <section className="relative border-t-4 border-foreground bg-primary text-primary-foreground overflow-hidden">
+    <section className="relative border-t-4 border-border bg-primary text-primary-foreground overflow-hidden">
       <PixelSparkles
         count={30}
-        colors={['#ffc61a', '#fffaf0', '#2e9e4f', '#f0601c']}
+        colors={['#ff8a4c', '#7ec88b', '#fff6e5', '#141416']}
         speed={0.8}
       />
 

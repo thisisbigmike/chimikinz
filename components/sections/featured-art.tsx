@@ -26,7 +26,7 @@ const featured = featuredSlugs
 
 export function FeaturedArt() {
   return (
-    <section className="border-b-4 border-foreground">
+    <section className="border-b-4 border-border">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <div className="flex flex-wrap items-end justify-between gap-6">
@@ -52,7 +52,7 @@ export function FeaturedArt() {
                     'group pixel-box pixel-press flex h-full flex-col bg-card',
                   )}
                 >
-                  <div className="pixel-checker relative aspect-square w-full overflow-hidden border-b-4 border-foreground">
+                  <div className="pixel-checker relative aspect-square w-full overflow-hidden border-b-4 border-border">
                     <Image
                       src={thumbSrc(piece.slug)}
                       alt={piece.alt}

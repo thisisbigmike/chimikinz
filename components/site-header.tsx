@@ -16,14 +16,14 @@ export function SiteHeader() {
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
-    <header className="sticky top-0 z-50 border-b-4 border-foreground bg-background">
+    <header className="sticky top-0 z-50 border-b-4 border-border bg-background">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link
           href="/"
           className="group flex items-center gap-3 font-display text-sm uppercase tracking-tight sm:text-base"
         >
           <span
-            className="grid size-9 shrink-0 place-items-center border-4 border-foreground bg-primary text-primary-foreground transition-transform duration-200 group-hover:scale-110"
+            className="grid size-9 shrink-0 place-items-center border-4 border-border bg-primary text-primary-foreground transition-transform duration-200 group-hover:scale-110"
             aria-hidden="true"
           >
             <span className="font-display text-xs">C</span>
@@ -38,8 +38,8 @@ export function SiteHeader() {
               href={item.href}
               aria-current={isActive(item.href) ? 'page' : undefined}
               className={cn(
-                'pixel-glow border-4 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-tight transition-colors hover:border-foreground hover:bg-secondary',
-                isActive(item.href) && 'border-foreground bg-secondary',
+                'pixel-glow border-4 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-tight transition-colors hover:border-border hover:bg-secondary',
+                isActive(item.href) && 'border-border bg-secondary',
               )}
             >
               {item.label}
@@ -95,11 +95,11 @@ export function SiteHeader() {
         <nav
           id="mobile-nav"
           aria-label="Mobile"
-          className="pixel-slide-down border-t-4 border-foreground bg-card lg:hidden"
+          className="pixel-slide-down border-t-4 border-border bg-card lg:hidden"
         >
           <ul className="flex flex-col">
             {site.nav.map((item) => (
-              <li key={item.href} className="border-b-4 border-foreground">
+              <li key={item.href} className="border-b-4 border-border">
                 <Link
                   href={item.href}
                   onClick={() => setOpen(false)}

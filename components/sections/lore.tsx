@@ -6,7 +6,7 @@ import { site } from '@/lib/site'
 
 export function Lore() {
   return (
-    <section className="border-b-4 border-foreground">
+    <section className="border-b-4 border-border">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-8 px-4 py-14 text-center sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <SectionHeading

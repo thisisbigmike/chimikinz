@@ -176,8 +176,8 @@ export default function AdminPage() {
 
         {!isAuthenticated ? (
           /* AUTH GATE LOCK */
-          <div className="mt-8 max-w-md mx-auto pixel-box-lg bg-card p-8 flex flex-col items-center text-center gap-6 border-4 border-foreground">
-            <div className="size-16 bg-primary/20 text-primary border-4 border-foreground grid place-items-center">
+          <div className="mt-8 max-w-md mx-auto pixel-box-lg bg-card p-8 flex flex-col items-center text-center gap-6 border-4 border-border">
+            <div className="size-16 bg-primary/20 text-primary border-4 border-border grid place-items-center">
               <Lock className="size-8" />
             </div>
 
@@ -200,7 +200,7 @@ export default function AdminPage() {
                   onChange={(e) => setPasscode(e.target.value)}
                   placeholder="Enter key..."
                   className={cn(
-                    'w-full border-4 border-foreground bg-background px-4 py-3 font-display text-sm focus:outline-none focus:ring-4 focus:ring-primary',
+                    'w-full border-4 border-border bg-background px-4 py-3 font-display text-sm focus:outline-none focus:ring-4 focus:ring-primary',
                     passError && 'border-destructive bg-destructive/10'
                   )}
                 />
@@ -278,7 +278,7 @@ export default function AdminPage() {
             </div>
 
             {/* Navigation Tabs */}
-            <div className="grid grid-cols-3 border-4 border-foreground bg-muted p-1 gap-1">
+            <div className="grid grid-cols-3 border-4 border-border bg-muted p-1 gap-1">
               {[
                 { id: 'allowlist', Icon: Shield, fullLabel: 'Allowlist Manager', shortLabel: 'Allowlist' },
                 { id: 'users', Icon: Users, fullLabel: 'User Profiles', shortLabel: 'Profiles' },
@@ -323,7 +323,7 @@ export default function AdminPage() {
                           onChange={(e) => setNewAddress(e.target.value)}
                           placeholder="0x... or name.eth"
                           required
-                          className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full min-w-0 border-3 border-border bg-background px-3 py-2 font-display text-xs focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                       </div>
 
@@ -334,7 +334,7 @@ export default function AdminPage() {
                         <select
                           value={newTier}
                           onChange={(e) => setNewTier(e.target.value as any)}
-                          className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                          className="w-full min-w-0 border-3 border-border bg-background px-3 py-2 font-display text-xs focus:outline-none"
                         >
                           <option value="Tier 1 (Guaranteed)">Tier 1 (Guaranteed Mint)</option>
                           <option value="Tier 2 (FCFS)">Tier 2 (FCFS Mint)</option>
@@ -352,7 +352,7 @@ export default function AdminPage() {
                           max={10}
                           value={newMints}
                           onChange={(e) => setNewMints(Number(e.target.value))}
-                          className="w-full min-w-0 border-3 border-foreground bg-background px-3 py-2 font-display text-xs focus:outline-none"
+                          className="w-full min-w-0 border-3 border-border bg-background px-3 py-2 font-display text-xs focus:outline-none"
                         />
                       </div>
 
@@ -378,7 +378,7 @@ export default function AdminPage() {
                       </button>
                     </div>
 
-                    <div className="overflow-x-auto border-3 border-foreground">
+                    <div className="overflow-x-auto border-3 border-border">
                       <table className="w-full text-left font-display text-xs border-collapse">
                         <thead>
                           <tr className="bg-foreground text-background">
@@ -429,12 +429,12 @@ export default function AdminPage() {
                       value={userSearch}
                       onChange={(e) => setUserSearch(e.target.value)}
                       placeholder="Search address..."
-                      className="w-full border-3 border-foreground bg-background pl-9 pr-3 py-2 font-display text-xs focus:outline-none"
+                      className="w-full border-3 border-border bg-background pl-9 pr-3 py-2 font-display text-xs focus:outline-none"
                     />
                   </div>
                 </div>
 
-                <div className="overflow-x-auto border-3 border-foreground">
+                <div className="overflow-x-auto border-3 border-border">
                   <table className="w-full text-left font-display text-xs border-collapse">
                     <thead>
                       <tr className="bg-foreground text-background">
@@ -466,7 +466,7 @@ export default function AdminPage() {
               <div className="pixel-box-lg bg-card p-6 flex flex-col gap-4">
                 <h3 className="font-display text-sm uppercase">System Activity & Security Audit Log</h3>
 
-                <div className="bg-black text-green-400 p-4 font-mono text-xs border-4 border-foreground rounded-none space-y-1 h-64 overflow-y-auto">
+                <div className="bg-black text-green-400 p-4 font-mono text-xs border-4 border-border rounded-none space-y-1 h-64 overflow-y-auto">
                   {auditLogs.map((log, index) => (
                     <div key={index}>&gt; {log}</div>
                   ))}

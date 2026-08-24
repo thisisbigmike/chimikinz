@@ -65,7 +65,7 @@ export default function CollectionsPage() {
                     onClick={() => open(collection)}
                     className="pixel-box pixel-press pixel-lift flex flex-1 flex-col bg-card text-left"
                   >
-                    <div className="pixel-checker relative aspect-[4/3] w-full overflow-hidden border-b-4 border-foreground">
+                    <div className="pixel-checker relative aspect-[4/3] w-full overflow-hidden border-b-4 border-border">
                       <Image
                         src={collection.cover}
                         alt={collection.name}
@@ -74,7 +74,7 @@ export default function CollectionsPage() {
                         priority={i === 0}
                         className="art-smooth pixel-wiggle object-contain p-5"
                       />
-                      <span className="absolute left-0 top-0 border-b-4 border-r-4 border-foreground bg-primary px-3 py-1 font-display text-[9px] uppercase leading-none text-primary-foreground">
+                      <span className="absolute left-0 top-0 border-b-4 border-r-4 border-border bg-primary px-3 py-1 font-display text-[9px] uppercase leading-none text-primary-foreground">
                         {collection.status}
                       </span>
                     </div>

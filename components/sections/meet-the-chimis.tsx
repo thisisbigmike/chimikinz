@@ -9,7 +9,7 @@ import { mainChimis } from '@/lib/chimis'
 
 export function MeetTheChimis() {
   return (
-    <section className="border-b-4 border-foreground bg-muted">
+    <section className="border-b-4 border-border bg-muted">
       <div className="mx-auto flex max-w-7xl flex-col items-center px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <SectionHeading
@@ -30,7 +30,7 @@ export function MeetTheChimis() {
                   className="group pixel-box pixel-press flex h-full flex-col bg-card"
                 >
                   <div
-                    className="relative aspect-square overflow-hidden border-b-4 border-foreground"
+                    className="relative aspect-square overflow-hidden border-b-4 border-border"
                     style={{ backgroundColor: `${chimi.accent}22` }}
                   >
                     <Image
@@ -41,7 +41,7 @@ export function MeetTheChimis() {
                       className="art-smooth pixel-zoom object-contain p-3"
                     />
                     <PixelTag
-                      className="absolute left-0 top-0 border-l-0 border-t-0 text-background"
+                      className="absolute left-0 top-0 border-l-0 border-t-0 text-night"
                       style={{ backgroundColor: chimi.accent }}
                     >
                       {chimi.emotion}

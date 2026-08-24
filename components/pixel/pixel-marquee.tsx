@@ -23,7 +23,7 @@ export function PixelMarquee({
   return (
     <div
       className={cn(
-        'marquee-container flex overflow-hidden border-y-4 border-foreground py-3',
+        'marquee-container flex overflow-hidden border-y-4 border-border py-3',
         tones[tone],
         className,
       )}

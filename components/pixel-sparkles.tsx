@@ -28,7 +28,7 @@ interface Particle {
 
 export function PixelSparkles({
   count = 24,
-  colors = ['#f0601c', '#ffc61a', '#2e9e4f', '#16110f'],
+  colors = ['#ffdb6b', '#7ec88b', '#8ecdf5', '#ffc5d6'],
   speed = 1,
   className,
 }: PixelSparklesProps) {

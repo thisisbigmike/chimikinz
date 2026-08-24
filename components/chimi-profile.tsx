@@ -20,7 +20,7 @@ export function ChimiProfile({
   return (
     <section
       id={chimi.slug}
-      className="scroll-mt-24 border-b-4 border-foreground"
+      className="scroll-mt-24 border-b-4 border-border"
     >
       <div className="mx-auto grid max-w-7xl items-start gap-10 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:py-20">
         {/* Artwork */}
@@ -64,7 +64,7 @@ export function ChimiProfile({
             <div className="flex flex-col gap-3">
               <div className="flex flex-wrap items-center gap-3">
                 <PixelTag
-                  className="text-background"
+                  className="text-night"
                   style={{ backgroundColor: chimi.accent }}
                 >
                   {chimi.emotion}
@@ -85,7 +85,7 @@ export function ChimiProfile({
               </p>
             </div>
 
-            <div className="flex flex-col gap-4 border-t-4 border-foreground pt-5">
+            <div className="flex flex-col gap-4 border-t-4 border-border pt-5">
               {chimi.story.map((paragraph) => (
                 <p
                   key={paragraph.slice(0, 32)}
@@ -119,7 +119,7 @@ export function ChimiProfile({
             <div className="pixel-box bg-card p-5">
               <div className="flex items-center gap-3">
                 <span
-                  className="size-4 shrink-0 border-2 border-foreground"
+                  className="size-4 shrink-0 border-2 border-border"
                   style={{ backgroundColor: chimi.accent }}
                   aria-hidden="true"
                 />

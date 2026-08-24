@@ -30,12 +30,12 @@ const columns = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t-4 border-foreground bg-foreground text-background">
+    <footer className="border-t-4 border-border bg-night text-cream">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <ScrollReveal variant="fade-up" delay={0}>
           <div className="flex flex-col gap-4">
             <p className="font-display text-lg uppercase">{site.name}</p>
-            <p className="max-w-xs text-pretty text-xl text-background/70">
+            <p className="max-w-xs text-pretty text-xl text-cream/70">
               {site.tagline}
             </p>
             <div className="relative size-28">
@@ -64,14 +64,14 @@ export function SiteFooter() {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xl text-background/80 underline-offset-4 transition-colors duration-200 hover:text-secondary hover:underline"
+                        className="text-xl text-cream/80 underline-offset-4 transition-colors duration-200 hover:text-secondary hover:underline"
                       >
                         {link.label}
                       </a>
                     ) : (
                       <Link
                         href={link.href}
-                        className="text-xl text-background/80 underline-offset-4 transition-colors duration-200 hover:text-secondary hover:underline"
+                        className="text-xl text-cream/80 underline-offset-4 transition-colors duration-200 hover:text-secondary hover:underline"
                       >
                         {link.label}
                       </Link>
@@ -88,7 +88,7 @@ export function SiteFooter() {
             <h2 className="font-display text-[10px] uppercase text-secondary">
               Catch the luck
             </h2>
-            <p className="text-xl text-background/70">
+            <p className="text-xl text-cream/70">
               {site.supply.toLocaleString()} oddlings, minting on {site.chain}.
             </p>
             <PixelLink href={site.links.discord} external variant="gold">
@@ -98,8 +98,8 @@ export function SiteFooter() {
         </ScrollReveal>
       </div>
 
-      <div className="border-t-4 border-background/20">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-lg text-background/60 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="border-t-4 border-cream/20">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-lg text-cream/60 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p>
             &copy; {new Date().getFullYear()} {site.name}. All charms reserved.
           </p>

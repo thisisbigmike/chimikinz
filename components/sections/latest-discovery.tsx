@@ -10,11 +10,11 @@ import { site } from '@/lib/site'
 
 export function LatestDiscovery() {
   return (
-    <section className="border-b-4 border-foreground">
+    <section className="border-b-4 border-border">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <div className="pixel-box-lg grid items-stretch bg-card md:grid-cols-[1fr_1.1fr]">
-            <div className="pixel-checker relative aspect-[4/3] w-full overflow-hidden border-b-4 border-foreground md:aspect-auto md:min-h-[380px] md:border-b-0 md:border-r-4">
+            <div className="pixel-checker relative aspect-[4/3] w-full overflow-hidden border-b-4 border-border md:aspect-auto md:min-h-[380px] md:border-b-0 md:border-r-4">
               <Image
                 src={fullSrc(latestDiscovery.slug)}
                 alt={latestDiscovery.title}

@@ -1,10 +1,39 @@
 @import 'tailwindcss';
 @import 'shadcn/tailwind.css';
 
+/**
+ * `dark:` utilities follow the OS unless the page pins a mode with
+ * `data-theme` on <html>. Everything else themes itself through the
+ * light-dark() tokens below, so this exists only so any `dark:` class
+ * stays in step with an explicit toggle instead of ignoring it.
+ */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:not([data-theme='light'] *)) {
+      @slot;
+    }
+  }
+  &:where([data-theme='dark'] *) {
+    @slot;
+  }
+}
+
 @theme inline {
   --font-sans: var(--font-body), 'Courier New', monospace;
   --font-mono: var(--font-body), 'Courier New', monospace;
   --font-display: var(--font-display), 'Courier New', monospace;
+
+  /* The eight brand colours, reachable directly when a piece of UI wants a
+     named Clover Cove colour rather than a semantic role — `bg-blossom`,
+     `text-dream`, `border-sky`. Badges are the main customer. */
+  --color-clover: var(--clover);
+  --color-cream: var(--cream);
+  --color-sky: var(--sky);
+  --color-blossom: var(--blossom);
+  --color-sunbeam: var(--sunbeam);
+  --color-dream: var(--dream);
+  --color-ember: var(--ember);
+  --color-night: var(--night);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -21,10 +50,10 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--primary-foreground);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--border);
-  --color-ring: var(--primary);
+  --color-ring: var(--ring);
 
   --radius-sm: 0px;
   --radius-md: 0px;
@@ -35,31 +64,80 @@
   --radius-4xl: 0px;
 }
 
+/**
+ * Clover Cove, light and dark.
+ *
+ * The eight brand colours are fixed — they are the same paint in both
+ * modes, so they are plain values. Only the semantic roles swap, and they
+ * swap through light-dark(): first value light, second value dark. One
+ * definition per role instead of two blocks to keep in sync.
+ *
+ * Which mode wins:
+ *   no data-theme      follows the OS
+ *   data-theme=light   pinned light
+ *   data-theme=dark    pinned dark
+ *
+ * Pinning works because light-dark() reads `color-scheme`, so the two
+ * one-line rules at the bottom are the entire toggle mechanism.
+ */
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 
-  /* ink — the hand-drawn linework of the art */
-  --foreground: #16110f;
-  --border: #16110f;
-  /* bone — warm paper the oddlings sit on */
-  --background: #f7efe0;
-  --card: #fffaf0;
-  --card-foreground: #16110f;
-  --muted: #eadfc9;
-  --muted-foreground: #6a5c4d;
-  /* hoodie orange */
-  --primary: #f0601c;
-  --primary-foreground: #fffaf0;
-  /* clover green */
-  --accent: #2e9e4f;
-  --accent-foreground: #fffaf0;
-  /* halo gold */
-  --secondary: #ffc61a;
-  --secondary-foreground: #16110f;
+  /* Brand palette */
+  --clover: #7ec88b; /* hope, growth, life */
+  --cream: #fff6e5; /* warmth, comfort, positivity */
+  --sky: #8ecdf5; /* calm, imagination, freedom */
+  --blossom: #ffc5d6; /* love, kindness, softness */
+  --sunbeam: #ffdb6b; /* joy, energy, light */
+  --dream: #b6a5f7; /* dreams, mystery, creativity */
+  --ember: #ff8a4c; /* the warm pop */
+  --night: #141416; /* depth, balance, focus */
 
-  --destructive: #d1341c;
+  /* Surfaces — cream paper by day, Cove night by dark */
+  --background: light-dark(#fff6e5, #141416);
+  --card: light-dark(#fffcf4, #1e1e22);
+  --muted: light-dark(#f3e8d4, #2a2a30);
+
+  /* Ink */
+  --foreground: light-dark(#141416, #fff6e5);
+  --card-foreground: var(--foreground);
+  --muted-foreground: light-dark(#6b6459, #a9a296);
+
+  /* Linework and the hard offset shadow. Ink-on-cream in light. In dark
+     they split: a quiet edge plus a black drop, because reusing the cream
+     foreground would outline every box on the page in bright cream. */
+  --line: light-dark(#141416, #3a3a42);
+  --shade: light-dark(#141416, #000000);
+  --border: var(--line);
+
+  /* Roles, per the brand board's button hierarchy: Sunbeam leads, Clover
+     supports, Ember is the pop. Every brand colour is a pastel, so ink is
+     the only text that sits on one — which is true in both modes, and why
+     these foregrounds do not swap. */
+  --primary: var(--sunbeam);
+  --primary-foreground: var(--night);
+  --secondary: var(--clover);
+  --secondary-foreground: var(--night);
+  --accent: var(--ember);
+  --accent-foreground: var(--night);
+
+  --destructive: light-dark(#d1341c, #ff6b52);
+  /* Its own value rather than the shared ink foreground: destructive is
+     the one role that is not a pastel, so it needs contrasting text. */
+  --destructive-foreground: light-dark(#fff6e5, #141416);
+  /* Focus has to beat the pastels, so it borrows the ink rather than a
+     brand colour. */
+  --ring: light-dark(#141416, #fff6e5);
 
   --radius: 0px;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 @layer base {
@@ -101,7 +179,7 @@
   }
 
   *:focus-visible {
-    outline: 4px solid var(--primary);
+    outline: 4px solid var(--ring);
     outline-offset: 3px;
   }
 }
@@ -109,16 +187,16 @@
 @layer utilities {
   /* Hard offset block shadow — the signature of the whole system. */
   .pixel-box {
-    border: 4px solid var(--foreground);
-    box-shadow: 6px 6px 0 0 var(--foreground);
+    border: 4px solid var(--line);
+    box-shadow: 6px 6px 0 0 var(--shade);
   }
   .pixel-box-lg {
-    border: 4px solid var(--foreground);
-    box-shadow: 10px 10px 0 0 var(--foreground);
+    border: 4px solid var(--line);
+    box-shadow: 10px 10px 0 0 var(--shade);
   }
   .pixel-box-sm {
-    border: 3px solid var(--foreground);
-    box-shadow: 4px 4px 0 0 var(--foreground);
+    border: 3px solid var(--line);
+    box-shadow: 4px 4px 0 0 var(--shade);
   }
 
   /* Press-down interaction: the box travels into its own shadow. */
@@ -130,15 +208,15 @@
   }
   .pixel-press:hover {
     transform: translate(3px, 3px);
-    box-shadow: 3px 3px 0 0 var(--foreground);
+    box-shadow: 3px 3px 0 0 var(--shade);
   }
   .pixel-press:active {
     transform: translate(6px, 6px);
-    box-shadow: 0 0 0 0 var(--foreground);
+    box-shadow: 0 0 0 0 var(--shade);
   }
 
   .pixel-text-shadow {
-    text-shadow: 4px 4px 0 var(--foreground);
+    text-shadow: 4px 4px 0 var(--shade);
   }
   .pixel-text-shadow-primary {
     text-shadow: 4px 4px 0 var(--primary);
@@ -207,7 +285,7 @@
     content: '';
     position: absolute;
     inset: -3px;
-    border: 3px solid var(--primary);
+    border: 3px solid var(--accent);
     opacity: 0;
     transition: opacity 200ms ease;
     pointer-events: none;
@@ -222,7 +300,7 @@
     background: linear-gradient(
       110deg,
       currentColor 35%,
-      var(--secondary) 50%,
+      var(--cream) 50%,
       currentColor 65%
     );
     background-size: 250% 100%;
@@ -274,7 +352,7 @@
   }
   .pixel-lift:hover {
     transform: translateY(-4px);
-    box-shadow: 6px 10px 0 0 var(--foreground);
+    box-shadow: 6px 10px 0 0 var(--shade);
   }
 
   /* Active phase glow — pulsing border for roadmap */
@@ -426,8 +504,8 @@
 }
 
 @keyframes activeGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 198, 26, 0.4); }
-  50%      { box-shadow: 0 0 0 6px rgba(255, 198, 26, 0.15); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 219, 107, 0.4); }
+  50%      { box-shadow: 0 0 0 6px rgba(255, 219, 107, 0.15); }
 }
 
 @keyframes buttonPulse {
@@ -463,6 +541,6 @@
 }
 
 @keyframes unlockGlow {
-  0%, 100% { box-shadow: 6px 6px 0 0 var(--foreground), 0 0 0 0 rgba(255, 198, 26, 0.3); }
-  50%      { box-shadow: 6px 6px 0 0 var(--foreground), 0 0 0 8px rgba(255, 198, 26, 0.1); }
+  0%, 100% { box-shadow: 6px 6px 0 0 var(--shade), 0 0 0 0 rgba(255, 219, 107, 0.3); }
+  50%      { box-shadow: 6px 6px 0 0 var(--shade), 0 0 0 8px rgba(255, 219, 107, 0.1); }
 }

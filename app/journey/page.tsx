@@ -27,7 +27,7 @@ export default function JourneyPage() {
 
       <main>
         {/* Intro */}
-        <section className="border-b-4 border-foreground">
+        <section className="border-b-4 border-border">
           <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
             <ScrollReveal variant="pixel-pop">
               <PixelTag className="bg-accent text-accent-foreground">
@@ -85,7 +85,7 @@ export default function JourneyPage() {
               key={chapter.slug}
               id={chapter.slug}
               className={cn(
-                'scroll-mt-24 border-b-4 border-foreground',
+                'scroll-mt-24 border-b-4 border-border',
                 chapter.status === 'now' && 'bg-muted',
               )}
             >
@@ -136,7 +136,7 @@ export default function JourneyPage() {
                       {chapter.lead}
                     </p>
 
-                    <div className="flex flex-col gap-4 border-t-4 border-foreground pt-5">
+                    <div className="flex flex-col gap-4 border-t-4 border-border pt-5">
                       {chapter.body.map((paragraph) => (
                         <p
                           key={paragraph.slice(0, 32)}
@@ -154,7 +154,7 @@ export default function JourneyPage() {
         })}
 
         {/* Closing */}
-        <section className="border-b-4 border-foreground">
+        <section className="border-b-4 border-border">
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
             <ScrollReveal variant="fade-up">
               <h2 className="text-balance font-display text-xl uppercase sm:text-2xl">

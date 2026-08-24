@@ -37,7 +37,7 @@ export function ComingSoonModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="coming-soon-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/80 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-night/80 p-4"
       onClick={onClose}
     >
       <div
@@ -53,7 +53,7 @@ export function ComingSoonModal({
           X
         </button>
 
-        <div className="pixel-checker relative size-32 border-4 border-foreground bg-background">
+        <div className="pixel-checker relative size-32 border-4 border-border bg-background">
           <Image
             src="/chimikinz/oddling-6.png"
             alt=""

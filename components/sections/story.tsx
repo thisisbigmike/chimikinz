@@ -25,7 +25,7 @@ export function Story() {
   return (
     <section
       id="story"
-      className="scroll-mt-24 border-b-4 border-foreground bg-muted"
+      className="scroll-mt-24 border-b-4 border-border bg-muted"
     >
       <div className="mx-auto grid max-w-7xl items-start gap-12 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:py-20">
         <div className="flex flex-col gap-8">

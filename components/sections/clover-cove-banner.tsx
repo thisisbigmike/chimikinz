@@ -7,7 +7,7 @@ import { site } from '@/lib/site'
 
 export function CloverCoveBanner() {
   return (
-    <section className="border-b-4 border-foreground bg-muted">
+    <section className="border-b-4 border-border bg-muted">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
         <ScrollReveal variant="pixel-pop">
           <PixelTag className="bg-accent text-accent-foreground">

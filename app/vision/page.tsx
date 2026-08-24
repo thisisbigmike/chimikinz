@@ -32,7 +32,7 @@ export default function VisionPage() {
 
       <main>
         {/* Statement */}
-        <section className="border-b-4 border-foreground">
+        <section className="border-b-4 border-border">
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:py-20">
             <div className="flex flex-col items-start gap-6">
               <ScrollReveal variant="pixel-pop">
@@ -78,7 +78,7 @@ export default function VisionPage() {
         </section>
 
         {/* Pillars — what the project stands on */}
-        <section className="border-b-4 border-foreground bg-muted">
+        <section className="border-b-4 border-border bg-muted">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
             <ScrollReveal variant="fade-up">
               <SectionHeading
@@ -116,32 +116,32 @@ export default function VisionPage() {
         </section>
 
         {/* Goals — what we want to achieve */}
-        <section className="border-b-4 border-foreground bg-foreground text-background">
+        <section className="border-b-4 border-border bg-night text-cream">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
             <ScrollReveal variant="fade-up">
               <SectionHeading
                 eyebrow="What we want to achieve"
                 title="The goals, in order"
-                className="[&_p]:text-background/70"
+                className="[&_p]:text-cream/70"
               />
             </ScrollReveal>
 
             <ol className="mt-10 grid gap-6 lg:grid-cols-3">
               {goals.map((goal, i) => (
                 <ScrollReveal key={goal.title} variant="fade-up" delay={i * 150}>
-                  <li className="flex h-full flex-col gap-4 border-4 border-background bg-background/5 p-5">
+                  <li className="flex h-full flex-col gap-4 border-4 border-cream bg-cream/5 p-5">
                     <div className="flex items-center justify-between gap-2">
                       <span className="font-display text-[10px] uppercase text-secondary">
                         {goal.horizon}
                       </span>
-                      <PixelTag className="border-background bg-background/10">
+                      <PixelTag className="border-cream bg-cream/10">
                         {String(i + 1).padStart(2, '0')}
                       </PixelTag>
                     </div>
                     <h3 className="font-display text-sm uppercase">
                       {goal.title}
                     </h3>
-                    <p className="text-pretty text-xl leading-snug text-background/70">
+                    <p className="text-pretty text-xl leading-snug text-cream/70">
                       {goal.body}
                     </p>
                   </li>
@@ -152,7 +152,7 @@ export default function VisionPage() {
         </section>
 
         {/* Values */}
-        <section className="border-b-4 border-foreground">
+        <section className="border-b-4 border-border">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
             <ScrollReveal variant="fade-up">
               <SectionHeading
@@ -189,7 +189,7 @@ export default function VisionPage() {
         </section>
 
         {/* Closing */}
-        <section className="border-b-4 border-foreground bg-muted">
+        <section className="border-b-4 border-border bg-muted">
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
             <ScrollReveal variant="fade-up">
               <p className="text-pretty text-2xl leading-snug text-foreground">

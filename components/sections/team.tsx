@@ -7,7 +7,7 @@ import { team } from '@/lib/site'
 
 export function Team() {
   return (
-    <section className="border-b-4 border-foreground">
+    <section className="border-b-4 border-border">
       <div className="mx-auto flex max-w-7xl flex-col items-center px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <SectionHeading
@@ -22,7 +22,7 @@ export function Team() {
             <ScrollReveal key={member.name} variant="scale-up" delay={i * 150}>
               <li>
                 <article className="group pixel-box flex h-full flex-col bg-card">
-                  <div className="pixel-checker relative aspect-square overflow-hidden border-b-4 border-foreground">
+                  <div className="pixel-checker relative aspect-square overflow-hidden border-b-4 border-border">
                     <Image
                       src={member.image}
                       alt={`${member.name}, ${member.role}`}

@@ -55,7 +55,7 @@ export const chimis: Chimi[] = [
     ],
     art: '/chimikinz/art/full/clov.webp',
     thumb: '/chimikinz/art/thumb/clov.webp',
-    accent: '#f0601c',
+    accent: '#ff8a4c',
     kind: 'main',
   },
   {
@@ -82,7 +82,7 @@ export const chimis: Chimi[] = [
     ],
     art: '/chimikinz/art/full/moss.webp',
     thumb: '/chimikinz/art/thumb/moss.webp',
-    accent: '#2e9e4f',
+    accent: '#7ec88b',
     kind: 'main',
   },
   {
@@ -109,7 +109,7 @@ export const chimis: Chimi[] = [
     ],
     art: '/chimikinz/art/full/whim.webp',
     thumb: '/chimikinz/art/thumb/whim.webp',
-    accent: '#e2679f',
+    accent: '#ffc5d6',
     kind: 'main',
   },
   {
@@ -136,7 +136,7 @@ export const chimis: Chimi[] = [
     ],
     art: '/chimikinz/art/full/zipp.webp',
     thumb: '/chimikinz/art/thumb/zipp.webp',
-    accent: '#38a6d6',
+    accent: '#8ecdf5',
     kind: 'main',
   },
 

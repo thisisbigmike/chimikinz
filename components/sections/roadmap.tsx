@@ -15,7 +15,7 @@ export function Roadmap() {
   return (
     <section
       id="roadmap"
-      className="scroll-mt-24 border-b-4 border-foreground bg-foreground text-background"
+      className="scroll-mt-24 border-b-4 border-border bg-foreground text-background"
     >
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
@@ -41,7 +41,7 @@ export function Roadmap() {
                     <span className="font-display text-[10px] uppercase text-secondary">
                       {item.phase}
                     </span>
-                    <PixelTag className={cn('border-foreground', status.className)}>
+                    <PixelTag className={cn('border-border', status.className)}>
                       {status.label}
                     </PixelTag>
                   </div>
