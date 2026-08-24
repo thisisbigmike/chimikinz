@@ -38,7 +38,7 @@ export function SiteFooter() {
             <p className="max-w-xs text-pretty text-xl text-cream/70">
               {site.tagline}
             </p>
-            <div className="relative size-28">
+            <div className="art-ground pixel-box-sm relative size-28 p-1">
               <Image
                 src={brandArt.builder}
                 alt=""

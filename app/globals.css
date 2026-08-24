@@ -121,6 +121,18 @@
   --accent: var(--ember);
   --accent-foreground: var(--night);
 
+  /**
+   * The mat artwork sits on, and the checker squares over it.
+   *
+   * These do NOT swap with the theme. Some of the brand art is line work
+   * with its background knocked out — the logo group is 43% transparent,
+   * the chimi mark and `oddling-3` are 72% — and that art is black ink
+   * drawn for cream paper. On a dark ground it has nothing to read
+   * against, so the paper stays paper in both modes.
+   */
+  --art-ground: #fff6e5;
+  --art-checker: #f0e2c8;
+
   --destructive: light-dark(#d1341c, #ff6b52);
   /* Its own value rather than the shared ink foreground: destructive is
      the one role that is not a pastel, so it needs contrasting text. */
@@ -241,16 +253,28 @@
   /* Chunky 8px checker — reads as a pixel grid, not a gradient. */
   .pixel-checker {
     background-image:
-      linear-gradient(45deg, var(--muted) 25%, transparent 25%),
-      linear-gradient(-45deg, var(--muted) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, var(--muted) 75%),
-      linear-gradient(-45deg, transparent 75%, var(--muted) 75%);
-    background-size: 16px 16px;
+      linear-gradient(45deg, var(--art-checker) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--art-checker) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--art-checker) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--art-checker) 75%),
+      linear-gradient(var(--art-ground), var(--art-ground));
+    background-size:
+      16px 16px,
+      16px 16px,
+      16px 16px,
+      16px 16px,
+      auto;
     background-position:
       0 0,
       0 8px,
       8px -8px,
-      -8px 0;
+      -8px 0,
+      0 0;
+  }
+
+  /* The same paper, flat — for art wells that are not checkered. */
+  .art-ground {
+    background-color: var(--art-ground);
   }
 
   /* The hint stays on the loops below: they animate continuously, so the

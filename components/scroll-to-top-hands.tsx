@@ -109,7 +109,7 @@ export function ScrollToTopHands() {
           )}
         >
           {/* Animated Oddling Avatar */}
-          <div className="relative size-7 shrink-0 overflow-hidden border-2 border-border bg-card">
+          <div className="art-ground relative size-7 shrink-0 overflow-hidden border-2 border-border">
             <Image
               src={brandArt.builder}
               alt=""
