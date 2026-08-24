@@ -22,7 +22,7 @@ export function Team() {
             <ScrollReveal key={member.name} variant="scale-up" delay={i * 150}>
               <li>
                 <article className="group pixel-box flex h-full flex-col bg-card">
-                  <div className="pixel-checker relative aspect-square overflow-hidden border-b-4 border-border">
+                  <div className="art-ground relative aspect-square overflow-hidden border-b-4 border-border">
                     <Image
                       src={member.image}
                       alt={`${member.name}, ${member.role}`}

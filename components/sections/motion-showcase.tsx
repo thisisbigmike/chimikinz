@@ -24,7 +24,7 @@ export function MotionShowcase() {
             <ScrollReveal key={piece.slug} variant="scale-up" delay={i * 120}>
               <li className="h-full">
                 <figure className="motion-card pixel-box flex h-full flex-col bg-card">
-                  <div className="pixel-checker relative aspect-square w-full overflow-hidden border-b-4 border-border">
+                  <div className="art-ground relative aspect-square w-full overflow-hidden border-b-4 border-border">
                     <Image
                       src={piece.motionSrc ?? piece.still}
                       alt={piece.alt}

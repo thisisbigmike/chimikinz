@@ -56,7 +56,7 @@ export function Story() {
         </div>
 
         <ScrollReveal variant="scale-up" delay={200}>
-          <div className="pixel-box-lg pixel-checker pixel-tilt relative aspect-square bg-card lg:sticky lg:top-28 overflow-hidden">
+          <div className="pixel-box-lg art-ground pixel-tilt relative aspect-square bg-card lg:sticky lg:top-28 overflow-hidden">
             <Image
               src={brandArt.builder}
               alt="A Chimikinz oddling lying on the floor at a laptop, a tiny winged charm resting on its head"

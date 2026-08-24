@@ -99,7 +99,7 @@ export default function GalleryPage() {
             </ScrollReveal>
 
             <ScrollReveal variant="scale-up" delay={150}>
-              <div className="pixel-box-lg pixel-checker relative size-32 shrink-0 bg-card sm:size-40">
+              <div className="pixel-box-lg art-ground relative size-32 shrink-0 bg-card sm:size-40">
                 <Image
                   src={chimiMark}
                   alt=""
@@ -182,7 +182,7 @@ export default function GalleryPage() {
                   >
                     <div
                       className={cn(
-                        'pixel-checker relative w-full overflow-hidden border-b-4 border-border',
+                        'art-ground relative w-full overflow-hidden border-b-4 border-border',
                         piece.wide ? 'aspect-[3/1]' : 'aspect-square',
                       )}
                     >
@@ -223,7 +223,7 @@ export default function GalleryPage() {
             className="pixel-box-lg pixel-slide-up relative flex w-full max-w-3xl flex-col bg-card"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="pixel-checker relative aspect-square w-full border-b-4 border-border sm:aspect-[4/3]">
+            <div className="art-ground relative aspect-square w-full border-b-4 border-border sm:aspect-[4/3]">
               <Image
                 src={fullSrc(open.slug)}
                 alt={open.alt}

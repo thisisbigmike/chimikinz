@@ -57,7 +57,7 @@ export function EntryTiles() {
             const inner = (
               <>
                 <div
-                  className={`pixel-checker relative aspect-[4/3] border-b-4 border-border ${tile.tone}`}
+                  className={`art-ground relative aspect-[4/3] border-b-4 border-border ${tile.tone}`}
                 >
                   <Image
                     src={tile.image}

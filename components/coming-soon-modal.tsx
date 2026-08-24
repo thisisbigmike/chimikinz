@@ -53,7 +53,7 @@ export function ComingSoonModal({
           X
         </button>
 
-        <div className="pixel-checker relative size-32 border-4 border-border bg-background">
+        <div className="art-ground relative size-32 border-4 border-border bg-background">
           <Image
             src="/chimikinz/oddling-6.png"
             alt=""

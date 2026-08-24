@@ -67,7 +67,7 @@ export function Hero() {
         </div>
 
         <ScrollReveal variant="scale-up" delay={150}>
-          <div className="pixel-box-lg pixel-checker pixel-tilt relative aspect-square w-full bg-card overflow-hidden">
+          <div className="pixel-box-lg art-ground pixel-tilt relative aspect-square w-full bg-card overflow-hidden">
             <PixelSparkles count={16} speed={0.6} />
             <Image
               src={brandArt.group}

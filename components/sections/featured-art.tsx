@@ -52,7 +52,7 @@ export function FeaturedArt() {
                     'group pixel-box pixel-press flex h-full flex-col bg-card',
                   )}
                 >
-                  <div className="pixel-checker relative aspect-square w-full overflow-hidden border-b-4 border-border">
+                  <div className="art-ground relative aspect-square w-full overflow-hidden border-b-4 border-border">
                     <Image
                       src={thumbSrc(piece.slug)}
                       alt={piece.alt}

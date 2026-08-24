@@ -95,7 +95,7 @@ export default function JourneyPage() {
                   variant={flipped ? 'slide-right' : 'slide-left'}
                   className={cn(flipped && 'lg:order-2')}
                 >
-                  <div className="pixel-box-lg pixel-checker pixel-tilt relative aspect-[4/3] w-full overflow-hidden bg-card">
+                  <div className="pixel-box-lg art-ground pixel-tilt relative aspect-[4/3] w-full overflow-hidden bg-card">
                     <Image
                       src={chapter.art}
                       alt={chapter.artAlt}

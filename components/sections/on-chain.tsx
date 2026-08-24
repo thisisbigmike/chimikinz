@@ -18,7 +18,7 @@ export function OnChain() {
     <section className="border-b-4 border-border">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_1.05fr] lg:py-20">
         <ScrollReveal variant="slide-left">
-          <div className="pixel-box-lg pixel-checker pixel-tilt relative aspect-square bg-secondary overflow-hidden">
+          <div className="pixel-box-lg art-ground pixel-tilt relative aspect-square bg-secondary overflow-hidden">
             <Image
               src={brandArt.bull}
               alt="A Chimikinz oddling in an orange hoodie waving beside a large bull wearing a CHIMIKINS cap, clovers at its feet"

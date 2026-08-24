@@ -21,7 +21,7 @@ export function OddlingCard({
 
   return (
     <article className="group pixel-box pixel-press flex flex-col bg-card relative">
-      <div className="pixel-checker relative aspect-square overflow-hidden border-b-4 border-border">
+      <div className="art-ground relative aspect-square overflow-hidden border-b-4 border-border">
         <Image
           src={oddling.image}
           alt={`${oddling.name}, a Chimikinz oddling`}

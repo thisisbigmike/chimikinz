@@ -53,7 +53,7 @@ export function ChimiOfTheMoment({
           type="button"
           onClick={() => onOpen?.(piece)}
           aria-label={`Open ${piece.title}`}
-          className="pixel-checker group relative aspect-square w-full overflow-hidden border-b-4 border-border md:aspect-auto md:min-h-[420px] md:border-b-0 md:border-r-4"
+          className="art-ground group relative aspect-square w-full overflow-hidden border-b-4 border-border md:aspect-auto md:min-h-[420px] md:border-b-0 md:border-r-4"
         >
           <Image
             key={piece.slug}

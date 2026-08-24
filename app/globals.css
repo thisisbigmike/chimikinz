@@ -122,16 +122,20 @@
   --accent-foreground: var(--night);
 
   /**
-   * The mat artwork sits on, and the checker squares over it.
+   * The mat artwork sits on.
    *
    * These do NOT swap with the theme. Some of the brand art is line work
    * with its background knocked out — the logo group is 43% transparent,
    * the chimi mark and `oddling-3` are 72% — and that art is black ink
    * drawn for cream paper. On a dark ground it has nothing to read
    * against, so the paper stays paper in both modes.
+   *
+   * The value is sampled straight out of the source art: the group portrait's
+   * JPEG background is a flat #fdecc0, and the cut-out PNG still carries that
+   * exact RGB in its transparent pixels. Using it means the knocked-out art
+   * sits on the same paper it was drawn on, with no visible seam.
    */
-  --art-ground: #fff6e5;
-  --art-checker: #f0e2c8;
+  --art-ground: #fdecc0;
 
   --destructive: light-dark(#d1341c, #ff6b52);
   /* Its own value rather than the shared ink foreground: destructive is
@@ -250,31 +254,9 @@
     image-rendering: auto;
   }
 
-  /* Chunky 8px checker — reads as a pixel grid, not a gradient. */
-  .pixel-checker {
-    background-image:
-      linear-gradient(45deg, var(--art-checker) 25%, transparent 25%),
-      linear-gradient(-45deg, var(--art-checker) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, var(--art-checker) 75%),
-      linear-gradient(-45deg, transparent 75%, var(--art-checker) 75%),
-      linear-gradient(var(--art-ground), var(--art-ground));
-    background-size:
-      16px 16px,
-      16px 16px,
-      16px 16px,
-      16px 16px,
-      auto;
-    background-position:
-      0 0,
-      0 8px,
-      8px -8px,
-      -8px 0,
-      0 0;
-  }
-
-  /* The same paper, flat — for art wells that are not checkered. */
+  /* The paper every piece of artwork is mounted on. */
   .art-ground {
-    background-color: var(--art-ground);
+    background-image: linear-gradient(var(--art-ground), var(--art-ground));
   }
 
   /* The hint stays on the loops below: they animate continuously, so the

@@ -63,7 +63,7 @@ export default function VisionPage() {
             </div>
 
             <ScrollReveal variant="scale-up" delay={150}>
-              <div className="pixel-box-lg pixel-checker pixel-tilt relative aspect-square w-full overflow-hidden bg-card">
+              <div className="pixel-box-lg art-ground pixel-tilt relative aspect-square w-full overflow-hidden bg-card">
                 <Image
                   src={brandArt.group}
                   alt="The Chimikinz cast gathered together"

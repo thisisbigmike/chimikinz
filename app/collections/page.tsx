@@ -65,7 +65,7 @@ export default function CollectionsPage() {
                     onClick={() => open(collection)}
                     className="pixel-box pixel-press pixel-lift flex flex-1 flex-col bg-card text-left"
                   >
-                    <div className="pixel-checker relative aspect-[4/3] w-full overflow-hidden border-b-4 border-border">
+                    <div className="art-ground relative aspect-[4/3] w-full overflow-hidden border-b-4 border-border">
                       <Image
                         src={collection.cover}
                         alt={collection.name}
