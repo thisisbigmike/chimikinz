@@ -11,13 +11,13 @@ export function PixelMarquee({
   className,
 }: {
   items: readonly string[]
-  tone?: 'ink' | 'primary' | 'gold'
+  tone?: 'ink' | 'primary' | 'secondary'
   className?: string
 }) {
   const tones = {
     ink: 'bg-foreground text-background',
     primary: 'bg-primary text-primary-foreground',
-    gold: 'bg-secondary text-secondary-foreground',
+    secondary: 'bg-secondary text-secondary-foreground',
   } as const
 
   return (

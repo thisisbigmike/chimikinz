@@ -5,16 +5,21 @@ import { cn } from '@/lib/utils'
 
 type RevealVariant = 'fade-up' | 'fade-down' | 'slide-left' | 'slide-right' | 'scale-up' | 'pixel-pop'
 
+const variantStyles: Record<RevealVariant, string> = {
+  'fade-up': 'translate-y-8 opacity-0',
+  'fade-down': '-translate-y-8 opacity-0',
+  'slide-left': '-translate-x-12 opacity-0',
+  'slide-right': 'translate-x-12 opacity-0',
+  'scale-up': 'scale-90 opacity-0',
+  'pixel-pop': 'scale-75 opacity-0',
+}
+
 interface ScrollRevealProps {
   children: ReactNode
   variant?: RevealVariant
   delay?: number
   duration?: number
   className?: string
-  /** When true, staggers children automatically */
-  stagger?: boolean
-  /** Delay between each staggered child in ms */
-  staggerDelay?: number
   /** Threshold for Intersection Observer (0–1) */
   threshold?: number
   /** Only animate once */
@@ -27,13 +32,19 @@ export function ScrollReveal({
   delay = 0,
   duration = 500,
   className,
-  stagger = false,
-  staggerDelay = 100,
   threshold = 0.15,
   once = true,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
+  /**
+   * `will-change` is a promise to the browser that costs a compositor layer
+   * to keep. A single page mounts dozens of these wrappers, so holding the
+   * hint forever meant dozens of permanent layers and noticeably heavier
+   * scrolling. We hold it only until this element has finished revealing,
+   * then hand the layer back.
+   */
+  const [settled, setSettled] = useState(false)
 
   useEffect(() => {
     const el = ref.current
@@ -43,6 +54,7 @@ export function ScrollReveal({
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) {
       setIsVisible(true)
+      setSettled(true)
       return
     }
 
@@ -62,20 +74,18 @@ export function ScrollReveal({
     return () => observer.disconnect()
   }, [threshold, once])
 
-  const variantStyles: Record<RevealVariant, string> = {
-    'fade-up': 'translate-y-8 opacity-0',
-    'fade-down': '-translate-y-8 opacity-0',
-    'slide-left': '-translate-x-12 opacity-0',
-    'slide-right': 'translate-x-12 opacity-0',
-    'scale-up': 'scale-90 opacity-0',
-    'pixel-pop': 'scale-75 opacity-0',
-  }
+  useEffect(() => {
+    if (!isVisible || settled) return
+    const done = window.setTimeout(() => setSettled(true), delay + duration + 50)
+    return () => window.clearTimeout(done)
+  }, [isVisible, settled, delay, duration])
 
   return (
     <div
       ref={ref}
       className={cn(
-        'transition-[transform,opacity] ease-out will-change-[transform,opacity]',
+        'transition-[transform,opacity] ease-out',
+        !settled && 'will-change-[transform,opacity]',
         !isVisible && variantStyles[variant],
         isVisible && 'translate-x-0 translate-y-0 scale-100 opacity-100',
         className,
@@ -115,6 +125,8 @@ export function ScrollRevealGroup({
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
 
+  const [settled, setSettled] = useState(false)
+
   useEffect(() => {
     const el = ref.current
     if (!el) return
@@ -122,6 +134,7 @@ export function ScrollRevealGroup({
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) {
       setIsVisible(true)
+      setSettled(true)
       return
     }
 
@@ -139,17 +152,17 @@ export function ScrollRevealGroup({
     return () => observer.disconnect()
   }, [threshold])
 
-  const variantStyles: Record<RevealVariant, string> = {
-    'fade-up': 'translate-y-8 opacity-0',
-    'fade-down': '-translate-y-8 opacity-0',
-    'slide-left': '-translate-x-12 opacity-0',
-    'slide-right': 'translate-x-12 opacity-0',
-    'scale-up': 'scale-90 opacity-0',
-    'pixel-pop': 'scale-75 opacity-0',
-  }
-
   // Convert children to array for mapping
   const childArray = Array.isArray(children) ? children : [children]
+
+  // Same deal as ScrollReveal: hold the hint only until the last child in
+  // the stagger has finished, then release every layer at once.
+  useEffect(() => {
+    if (!isVisible || settled) return
+    const last = (childArray.length - 1) * staggerDelay + 500 + 50
+    const done = window.setTimeout(() => setSettled(true), last)
+    return () => window.clearTimeout(done)
+  }, [isVisible, settled, childArray.length, staggerDelay])
 
   return (
     <div ref={ref} className={className}>
@@ -157,7 +170,8 @@ export function ScrollRevealGroup({
         <div
           key={i}
           className={cn(
-            'transition-[transform,opacity] ease-out will-change-[transform,opacity]',
+            'transition-[transform,opacity] ease-out',
+            !settled && 'will-change-[transform,opacity]',
             !isVisible && variantStyles[variant],
             isVisible && 'translate-x-0 translate-y-0 scale-100 opacity-100',
             childClassName,

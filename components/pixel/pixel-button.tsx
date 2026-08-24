@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 const variants = {
   primary: 'bg-primary text-primary-foreground',
   accent: 'bg-accent text-accent-foreground',
-  gold: 'bg-secondary text-secondary-foreground',
+  secondary: 'bg-secondary text-secondary-foreground',
   bone: 'bg-card text-foreground',
   ink: 'bg-foreground text-background',
 } as const

@@ -91,7 +91,7 @@ export function SiteFooter() {
             <p className="text-xl text-cream/70">
               {site.supply.toLocaleString()} oddlings, minting on {site.chain}.
             </p>
-            <PixelLink href={site.links.discord} external variant="gold">
+            <PixelLink href={site.links.discord} external variant="secondary">
               Join Discord
             </PixelLink>
           </div>
@@ -106,7 +106,7 @@ export function SiteFooter() {
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="pixel-box-sm pixel-press bg-secondary text-secondary-foreground px-4 py-2 font-display text-xs uppercase flex items-center gap-2 hover:bg-secondary/90 transition-all self-start sm:self-auto"
+            className="pixel-box-sm pixel-press bg-secondary text-secondary-foreground px-4 py-2 font-display text-xs uppercase flex items-center gap-2 hover:bg-secondary/90 transition-colors self-start sm:self-auto"
           >
             <span>✋</span> Push Me To Top <span>👆</span>
           </button>

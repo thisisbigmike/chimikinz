@@ -289,7 +289,7 @@ export default function AdminPage() {
                   type="button"
                   onClick={() => setActiveTab(t.id as any)}
                   className={cn(
-                    'py-3 px-2 font-display text-[10px] sm:text-xs uppercase transition-all duration-200 text-center flex items-center justify-center gap-1.5 leading-tight',
+                    'py-3 px-2 font-display text-[10px] sm:text-xs uppercase transition-colors duration-200 text-center flex items-center justify-center gap-1.5 leading-tight',
                     activeTab === t.id
                       ? 'bg-foreground text-background shadow-sm'
                       : 'text-muted-foreground hover:text-foreground',

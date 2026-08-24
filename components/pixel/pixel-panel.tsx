@@ -13,7 +13,7 @@ export function PixelPanel({
   children,
 }: {
   title?: string
-  tone?: 'card' | 'bone' | 'ink' | 'primary' | 'accent' | 'gold'
+  tone?: 'card' | 'bone' | 'ink' | 'primary' | 'accent' | 'secondary'
   className?: string
   bodyClassName?: string
   children: React.ReactNode
@@ -24,7 +24,7 @@ export function PixelPanel({
     ink: 'bg-foreground text-background',
     primary: 'bg-primary text-primary-foreground',
     accent: 'bg-accent text-accent-foreground',
-    gold: 'bg-secondary text-secondary-foreground',
+    secondary: 'bg-secondary text-secondary-foreground',
   } as const
 
   return (

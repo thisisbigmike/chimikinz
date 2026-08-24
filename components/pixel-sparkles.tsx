@@ -36,6 +36,15 @@ export function PixelSparkles({
   const particlesRef = useRef<Particle[]>([])
   const animationRef = useRef<number>(0)
 
+  /**
+   * `colors` arrives as a fresh array literal on every render — from the
+   * callers and from this component's own default. Depending on it directly
+   * meant the effect below tore down and rebuilt the entire particle system
+   * each time the parent re-rendered. Joining collapses it to a value the
+   * dependency check can actually compare.
+   */
+  const palette = colors.join(',')
+
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -49,21 +58,36 @@ export function PixelSparkles({
 
     const resize = () => {
       const rect = canvas.parentElement?.getBoundingClientRect()
-      if (rect) {
+      if (rect && rect.width > 0 && rect.height > 0) {
         canvas.width = rect.width
         canvas.height = rect.height
       }
     }
 
+    /**
+     * A drag-resize fires continuously, and every `canvas.width` write
+     * reallocates the backing store and clears it. One per frame is plenty.
+     */
+    let resizeFrame = 0
+    const onResize = () => {
+      if (resizeFrame) return
+      resizeFrame = requestAnimationFrame(() => {
+        resizeFrame = 0
+        resize()
+      })
+    }
+
     resize()
-    window.addEventListener('resize', resize)
+    window.addEventListener('resize', onResize, { passive: true })
+
+    const swatches = palette.split(',')
 
     // Initialize particles
     particlesRef.current = Array.from({ length: count }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       size: Math.floor(Math.random() * 3 + 1) * 2, // 2, 4, or 6px — pixel-perfect
-      color: colors[Math.floor(Math.random() * colors.length)],
+      color: swatches[Math.floor(Math.random() * swatches.length)],
       vx: (Math.random() - 0.5) * 0.4 * speed,
       vy: (Math.random() - 0.5) * 0.3 * speed - 0.15 * speed, // drift upward
       opacity: Math.random() * 0.6 + 0.15,
@@ -75,7 +99,10 @@ export function PixelSparkles({
     let isVisible = true
 
     const animate = () => {
-      if (!isVisible) return
+      if (!isVisible) {
+        animationRef.current = 0
+        return
+      }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
@@ -111,9 +138,10 @@ export function PixelSparkles({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const wasVisible = isVisible
         isVisible = entry.isIntersecting
-        if (isVisible && !wasVisible) {
+        // Restart only if the loop has actually wound down, so a flicker
+        // across the threshold cannot leave two loops running.
+        if (isVisible && !animationRef.current) {
           animationRef.current = requestAnimationFrame(animate)
         }
       },
@@ -127,13 +155,15 @@ export function PixelSparkles({
     }
 
     return () => {
-      window.removeEventListener('resize', resize)
+      window.removeEventListener('resize', onResize)
       observer.disconnect()
+      if (resizeFrame) cancelAnimationFrame(resizeFrame)
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
+        animationRef.current = 0
       }
     }
-  }, [count, colors, speed])
+  }, [count, palette, speed])
 
   return (
     <canvas
