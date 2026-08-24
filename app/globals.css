@@ -147,7 +147,14 @@
 
   * {
     @apply border-border;
-    /* keep every corner square — the whole system is pixel-grid */
+  }
+
+  /* Square corners everywhere — the whole system is pixel-grid. The one
+     exception is `.soft-card`: the character card is drawn artwork rather
+     than UI, and the reference art has a rounded panel. `:where()` holds the
+     specificity at zero, so this still behaves like the plain `*` rule it
+     replaces — it just stops claiming the inside of that one card. */
+  *:where(:not(.soft-card, .soft-card *)) {
     border-radius: 0 !important;
   }
 

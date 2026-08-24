@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { PixelTag } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import type { Chimi } from '@/lib/chimis'
@@ -77,7 +78,18 @@ export function ChimiProfile({
               </div>
 
               <h2 className="font-display text-3xl uppercase sm:text-4xl">
-                {chimi.name}
+                <Link
+                  href={`/chimis/${chimi.slug}`}
+                  className="group inline-flex items-center gap-3 hover:text-primary"
+                >
+                  {chimi.name}
+                  <span
+                    aria-hidden="true"
+                    className="pixel-arrow font-display text-lg text-primary"
+                  >
+                    &rarr;
+                  </span>
+                </Link>
               </h2>
 
               <p className="text-pretty text-2xl leading-snug text-foreground">
@@ -114,6 +126,13 @@ export function ChimiProfile({
                 ))}
               </ul>
             </div>
+
+            <Link
+              href={`/chimis/${chimi.slug}`}
+              className="pixel-box pixel-press w-fit bg-primary px-6 py-3 font-display text-xs uppercase text-primary-foreground"
+            >
+              See {chimi.name}&apos;s card
+            </Link>
 
             {/* Companion */}
             <div className="pixel-box bg-card p-5">

@@ -26,7 +26,7 @@ export function MeetTheChimis() {
             <ScrollReveal key={chimi.slug} variant="scale-up" delay={i * 150}>
               <li className="h-full">
                 <Link
-                  href={`/chimis#${chimi.slug}`}
+                  href={`/chimis/${chimi.slug}`}
                   className="group pixel-box pixel-press flex h-full flex-col bg-card"
                 >
                   <div
@@ -56,7 +56,7 @@ export function MeetTheChimis() {
                       {chimi.personality}
                     </p>
                     <span className="mt-auto pt-2 font-display text-[9px] uppercase text-primary">
-                      Read {chimi.name}&apos;s story{' '}
+                      See {chimi.name}&apos;s card{' '}
                       <span className="pixel-arrow">&rarr;</span>
                     </span>
                   </div>

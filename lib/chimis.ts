@@ -11,6 +11,16 @@ export type Chimi = {
   story: string[]
   /** Something they'd actually say. */
   quote: string
+  /**
+   * The card's opening lines — about the *feeling*, not the individual.
+   * Rendered as separate lines, so keep each one short.
+   */
+  blurb: string[]
+  /** One sentence on why they are the way they are. */
+  lore: string
+  gender: 'Male' | 'Female'
+  /** The card's "How to find" value. */
+  howToFind: string
   companion: { name: string; body: string }
   traits: ChimiTrait[]
   /** Full-size artwork for the profile. */
@@ -43,6 +53,14 @@ export const chimis: Chimi[] = [
       'When a new Chimi wakes up somewhere they do not recognise, it is usually Clov who finds them first. He never explains the whole world at once. He just points at one interesting thing and lets them do the rest.',
     ],
     quote: 'Everything is somewhere. You just have to go and see.',
+    blurb: [
+      'Nothing in Clover Cove stays unfound for long.',
+      'Curious Chimis go looking before they are ready.',
+      'That is usually the point.',
+    ],
+    lore: 'He walks the same paths every week because a place you think you know is just a place you stopped looking at.',
+    gender: 'Male',
+    howToFind: 'One of the four',
     companion: {
       name: 'Pocket',
       body: 'A clover sprite the size of a thumbnail that rides in his hood and leans out at corners.',
@@ -70,6 +88,14 @@ export const chimis: Chimi[] = [
       'Chimis come to Moss when they have decided they are failing. He rarely gives advice. He mostly sits with them until they notice, on their own, how far they have already come.',
     ],
     quote: 'It is still growing. So are you.',
+    blurb: [
+      'Some things in Clover Cove take a whole season to arrive.',
+      'Patient Chimis do not hurry them.',
+      'They just keep showing up.',
+    ],
+    lore: 'He waters the same sprout every morning because he would rather be early for something slow than late for something fast.',
+    gender: 'Male',
+    howToFind: 'One of the four',
     companion: {
       name: 'Drift',
       body: 'A stone snail that has been crossing the same meadow for two years and is genuinely enjoying it.',
@@ -97,6 +123,14 @@ export const chimis: Chimi[] = [
       'Whim is the reason there are parts of Clover Cove that no map agrees on. She says a world you can finish mapping is a world you have stopped being surprised by, and she has no intention of letting that happen.',
     ],
     quote: "Or — and hear me out — we could do the other thing.",
+    blurb: [
+      'Not every corner of Clover Cove stays where you left it.',
+      'Wondering Chimis move things on purpose.',
+      'The map has given up.',
+    ],
+    lore: 'She rearranges the high street most weeks because a world you can finish mapping is a world you stopped being surprised by.',
+    gender: 'Female',
+    howToFind: 'One of the four',
     companion: {
       name: 'Blink',
       body: 'A firefly that only lights up when nobody is watching it directly.',
@@ -124,6 +158,14 @@ export const chimis: Chimi[] = [
       'His real talent is not speed. It is that he is impossible to be discouraged around. Chimis who set out with Zipp tend to get further than they meant to, and are never quite sure how.',
     ],
     quote: 'That was attempt four. Attempt five is going to be great.',
+    blurb: [
+      'Nobody in Clover Cove gets it right the first time.',
+      'Determined Chimis count the tries out loud.',
+      'Then they go again.',
+    ],
+    lore: 'He counts his attempts out loud because the number is not a score, it is proof he has not stopped.',
+    gender: 'Male',
+    howToFind: 'One of the four',
     companion: {
       name: 'Dash',
       body: 'A wind-up bird that runs out of spring at the worst moments and gets wound straight back up.',

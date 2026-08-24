@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { PixelLink } from '@/components/pixel/pixel-button'
@@ -43,13 +44,13 @@ export default function ChimisPage() {
               </p>
             </ScrollReveal>
 
-            {/* Quick jump — a small thing to notice on the way down */}
+            {/* Straight through to each Chimi's own card */}
             <ScrollReveal variant="fade-up" delay={300}>
               <ul className="flex flex-wrap items-center justify-center gap-3">
                 {mainChimis.map((chimi) => (
                   <li key={chimi.slug}>
-                    <a
-                      href={`#${chimi.slug}`}
+                    <Link
+                      href={`/chimis/${chimi.slug}`}
                       className="pixel-box-sm pixel-press inline-flex items-center gap-2 bg-card px-3 py-2 font-display text-[10px] uppercase"
                     >
                       <span
@@ -58,7 +59,7 @@ export default function ChimisPage() {
                         aria-hidden="true"
                       />
                       {chimi.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
