@@ -154,6 +154,13 @@
   --ring: light-dark(#141416, #fff6e5);
 
   --radius: 0px;
+
+  /* Where the afternoon begins — see the nightfall block below. Scroll
+     above this point is flat, full daylight; the whole ramp is fitted
+     into what is left. Measured to land on the lore section, which is
+     ~21% down the home page on a desktop viewport. This is the one
+     number to turn if the sun should set earlier or later. */
+  --nightfall-start: 20%;
 }
 
 :root[data-theme='light'] {
@@ -168,10 +175,16 @@
    NIGHTFALL — the page keeps the sun's hours
    ================================================================
 
-   The top of every page is midday. Scrolling is the afternoon: the
-   paper warms, goes gold, catches a sunset, and the last stretch is
-   night — which is where the footer already lived (`bg-night`), so
-   the page now arrives there instead of cutting to it.
+   The top of every page is midday, and it stays midday: nothing moves
+   until `--nightfall-start`, so the hero is always read in full
+   daylight. From there it is the afternoon — the paper warms, goes
+   gold, catches a sunset, and the last stretch is night, which is
+   where the footer already lived (`bg-night`), so the page now
+   arrives there instead of cutting to it.
+
+   The hold is `animation-range` rather than a flat run of leading
+   keyframes: it keeps the ramp below authored as a clean 0-100 and
+   leaves the start point a single number to turn.
 
    How it works. Nine of the semantic roles are registered with
    `@property` as `<color>`, which is the whole trick: an unregistered
@@ -376,6 +389,7 @@
     animation-timing-function: linear;
     animation-fill-mode: both;
     animation-timeline: scroll(root block);
+    animation-range: var(--nightfall-start) 100%;
 
     --background: var(--dusk-bg);
     --card: var(--dusk-card);
