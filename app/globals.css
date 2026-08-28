@@ -2,15 +2,23 @@
 @import 'shadcn/tailwind.css';
 
 /**
- * `dark:` utilities follow the OS unless the page pins a mode with
- * `data-theme` on <html>. Everything else themes itself through the
- * light-dark() tokens below, so this exists only so any `dark:` class
- * stays in step with an explicit toggle instead of ignoring it.
+ * `dark:` utilities. Everything else themes itself through the tokens
+ * below, so this exists only so any `dark:` class stays in step with
+ * the rest of the page instead of ignoring it.
+ *
+ * The OS arm is gated behind `@supports not` to match: where nightfall
+ * runs (see the block after the palette), the page's mode is a function
+ * of scroll position, not of the OS, so an OS-dark visitor reading the
+ * daylit top of the page must not get dark-mode utilities underneath
+ * it. Where nightfall does not run, the OS is once again in charge and
+ * the arm applies as before. An explicit `data-theme` pin wins in both.
  */
 @custom-variant dark {
-  @media (prefers-color-scheme: dark) {
-    &:where(:not([data-theme='light'] *)) {
-      @slot;
+  @supports not (animation-timeline: scroll()) {
+    @media (prefers-color-scheme: dark) {
+      &:where(:not([data-theme='light'] *)) {
+        @slot;
+      }
     }
   }
   &:where([data-theme='dark'] *) {
@@ -154,6 +162,235 @@
 
 :root[data-theme='dark'] {
   color-scheme: dark;
+}
+
+/* ================================================================
+   NIGHTFALL — the page keeps the sun's hours
+   ================================================================
+
+   The top of every page is midday. Scrolling is the afternoon: the
+   paper warms, goes gold, catches a sunset, and the last stretch is
+   night — which is where the footer already lived (`bg-night`), so
+   the page now arrives there instead of cutting to it.
+
+   How it works. Nine of the semantic roles are registered with
+   `@property` as `<color>`, which is the whole trick: an unregistered
+   custom property is just a string and jumps between keyframes, while
+   a registered one interpolates. They then ride `scroll(root block)`,
+   so "progress" is literally how far down the page you are. No JS, no
+   scroll listener, no hydration flash — the first paint is already
+   correct for wherever the browser restored the scroll position.
+
+   Two animations, not one, because they want opposite easing:
+
+     dusk-sky   the backgrounds, eased smoothly through sunset stops.
+                This is the gradient blend — it is doing the work of
+                making it read as a sun rather than a dimmer switch.
+
+     dusk-ink   the ink, linework and drop shadow, on `steps(1, end)`.
+                Deliberate. The sky has to cross mid-luminance to get
+                from cream to night, and interpolating text across
+                that same crossing puts grey-on-grey for a stretch of
+                scroll — unreadable, whichever end you favour. So the
+                ink holds full dark through the entire sunset and
+                flips in one frame at 93.5%, the steepest part of the
+                plunge, where both sides of the flip stay legible. In
+                a system already built on steps() it reads as the
+                lights coming on.
+
+   Linework and muted ink flip *bright* rather than straight to their
+   night values, then cool down over the last stretch. At the moment
+   of the flip the sky is still twilight-mid; going directly to the
+   dark-mode edge (#3a3a42) would erase every border on the page for
+   several percent of scroll, and the borders are the whole look.
+
+   What does not move: the eight brand colours (same paint in both
+   modes, by design) and `--art-ground` (see its note above — the
+   knocked-out art has to stay on the paper it was drawn for).
+
+   Which mode wins:
+     no data-theme      nightfall, as described
+     data-theme=light   pinned light, no scroll effect
+     data-theme=dark    pinned dark, no scroll effect
+
+   Browsers without scroll-driven animations skip the whole block and
+   get exactly the previous behaviour: light-dark() following the OS. */
+
+@property --dusk-bg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #fff6e5;
+}
+@property --dusk-card {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #fffcf4;
+}
+@property --dusk-muted {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f3e8d4;
+}
+@property --dusk-ink {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #141416;
+}
+@property --dusk-ink-muted {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #6b6459;
+}
+@property --dusk-line {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #141416;
+}
+@property --dusk-shade {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #141416;
+}
+@property --dusk-destructive {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #d1341c;
+}
+@property --dusk-destructive-fg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #fff6e5;
+}
+
+/* The sky. Held light for most of the scroll — the warm half of the
+   ramp is the part you actually read on — then a decisive plunge
+   between 88% and 95%, which is how a real sunset behaves and keeps
+   the low-contrast crossing down to a moment rather than a stretch. */
+@keyframes dusk-sky {
+  0% {
+    --dusk-bg: #fff6e5;
+    --dusk-card: #fffcf4;
+    --dusk-muted: #f3e8d4;
+  }
+  38% {
+    --dusk-bg: #fff1d8;
+    --dusk-card: #fff8ea;
+    --dusk-muted: #f5e4cb;
+  }
+  58% {
+    --dusk-bg: #ffe8c3;
+    --dusk-card: #fff2dc;
+    --dusk-muted: #f6dcb6;
+  }
+  72% {
+    --dusk-bg: #ffd5a6;
+    --dusk-card: #ffe4c4;
+    --dusk-muted: #f4c99b;
+  }
+  82% {
+    --dusk-bg: #fab48d;
+    --dusk-card: #fdc9ac;
+    --dusk-muted: #eaa886;
+  }
+  88% {
+    --dusk-bg: #e58a80;
+    --dusk-card: #efa39c;
+    --dusk-muted: #d47f78;
+  }
+  92% {
+    --dusk-bg: #9a5f86;
+    --dusk-card: #ab7396;
+    --dusk-muted: #8a567a;
+  }
+  95% {
+    --dusk-bg: #4a3760;
+    --dusk-card: #58436f;
+    --dusk-muted: #453357;
+  }
+  97.5% {
+    --dusk-bg: #23212e;
+    --dusk-card: #2e2b3b;
+    --dusk-muted: #38344a;
+  }
+  100% {
+    --dusk-bg: #141416;
+    --dusk-card: #1e1e22;
+    --dusk-muted: #2a2a30;
+  }
+}
+
+/* The ink. Every property is repeated at 100% on purpose: a property
+   missing from the last keyframe gets an implicit one built from the
+   element's underlying value, which would quietly drag the ink back
+   toward daylight over the final stretch. */
+@keyframes dusk-ink {
+  0% {
+    --dusk-ink: #141416;
+    --dusk-ink-muted: #6b6459;
+    --dusk-line: #141416;
+    --dusk-shade: #141416;
+    --dusk-destructive: #d1341c;
+    --dusk-destructive-fg: #fff6e5;
+    animation-timing-function: steps(1, end);
+  }
+  93.5% {
+    --dusk-ink: #fff6e5;
+    --dusk-ink-muted: #d8d0c2;
+    --dusk-line: #d6cab8;
+    --dusk-shade: #000000;
+    --dusk-destructive: #ff6b52;
+    --dusk-destructive-fg: #141416;
+  }
+  97.5% {
+    --dusk-ink: #fff6e5;
+    --dusk-ink-muted: #c3bbad;
+    --dusk-line: #8b8378;
+    --dusk-shade: #000000;
+    --dusk-destructive: #ff6b52;
+    --dusk-destructive-fg: #141416;
+  }
+  100% {
+    --dusk-ink: #fff6e5;
+    --dusk-ink-muted: #a9a296;
+    --dusk-line: #3a3a42;
+    --dusk-shade: #000000;
+    --dusk-destructive: #ff6b52;
+    --dusk-destructive-fg: #141416;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  :root:not([data-theme]) {
+    /* light-dark() is out of the picture here — every role it fed is
+       overridden below — but it still decides form controls, so pin it
+       to the mode the page opens in. The scrollbar is themed off the
+       tokens instead, so it falls with everything else. */
+    color-scheme: light;
+    scrollbar-color: var(--line) var(--background);
+
+    /* Longhands rather than the `animation` shorthand: the shorthand
+       resets animation-timeline to `auto`, and `duration: auto` is
+       what hands the animation the full scroll range. */
+    animation-name: dusk-sky, dusk-ink;
+    animation-duration: auto;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: scroll(root block);
+
+    --background: var(--dusk-bg);
+    --card: var(--dusk-card);
+    --muted: var(--dusk-muted);
+
+    --foreground: var(--dusk-ink);
+    --muted-foreground: var(--dusk-ink-muted);
+
+    --line: var(--dusk-line);
+    --shade: var(--dusk-shade);
+
+    --destructive: var(--dusk-destructive);
+    --destructive-foreground: var(--dusk-destructive-fg);
+    --ring: var(--dusk-ink);
+  }
 }
 
 @layer base {
