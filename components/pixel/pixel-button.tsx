@@ -8,6 +8,11 @@ const variants = {
   secondary: 'bg-secondary text-secondary-foreground',
   bone: 'bg-card text-foreground',
   ink: 'bg-foreground text-background',
+  /* Mode-independent, for the brand-painted panels. Those keep their own
+     colour in every mode, so a button on one cannot follow the page the
+     way `ink` does: at nightfall `ink` inverts to a cream fill and goes
+     mushy against Sunbeam. This stays the printed dark slab throughout. */
+  night: 'bg-night text-cream',
 } as const
 
 const sizes = {

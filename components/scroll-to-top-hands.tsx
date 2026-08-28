@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Sparkles, ArrowUp } from 'lucide-react'
-import { brandArt } from '@/lib/oddlings'
+import { brandArt } from '@/lib/collection'
 import { cn } from '@/lib/utils'
 
 /** Past this many pixels down the page, the button appears. */
@@ -84,7 +84,7 @@ export function ScrollToTopHands() {
 
   return (
     <>
-      {/* FLOATING BUTTON WITH ODDLING HANDS */}
+      {/* FLOATING BUTTON WITH CHIMI HANDS */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
         {/* Speech bubble on hover or climbing */}
         <div
@@ -95,20 +95,20 @@ export function ScrollToTopHands() {
               : 'opacity-0 scale-90 hover:opacity-100 hover:scale-100',
           )}
         >
-          {isClimbing ? '🖐️ Oddling Hands Climbing!' : 'Need a hand to top? 👆'}
+          {isClimbing ? '🖐️ Chimi Hands Climbing!' : 'Need a hand to top? 👆'}
         </div>
 
         <button
           type="button"
           onClick={scrollToTop}
-          aria-label="Scroll to top with oddling hands"
+          aria-label="Scroll to top with chimi hands"
           className={cn(
             'pixel-box pixel-press group relative flex items-center gap-2.5 bg-primary text-primary-foreground px-4 py-3 font-display text-xs uppercase transition-transform duration-200',
             isClimbing &&
               'bg-accent text-accent-foreground scale-105 pixel-burst',
           )}
         >
-          {/* Animated Oddling Avatar */}
+          {/* Animated Chimi Avatar */}
           <div className="art-ground relative size-7 shrink-0 overflow-hidden border-2 border-border">
             <Image
               src={brandArt.builder}
@@ -157,10 +157,10 @@ export function ScrollToTopHands() {
         </button>
       </div>
 
-      {/* FULL SCREEN ANIMATED ODDLING HANDS OVERLAY WHEN SCROLLING */}
+      {/* FULL SCREEN ANIMATED CHIMI HANDS OVERLAY WHEN SCROLLING */}
       {isClimbing && (
         <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-          {/* Left Oddling Hand — poses come from the .hand-climb-* keyframes */}
+          {/* Left Chimi Hand — poses come from the .hand-climb-* keyframes */}
           <div className="hand-climb-left absolute left-4 bottom-12 flex flex-col items-center gap-1">
             <div className="pixel-box bg-secondary text-foreground p-3 border-4 border-border shadow-lg flex items-center gap-2">
               <span className="text-3xl">✋</span>
@@ -171,7 +171,7 @@ export function ScrollToTopHands() {
             <div className="w-4 h-32 bg-primary border-x-4 border-border" />
           </div>
 
-          {/* Right Oddling Hand */}
+          {/* Right Chimi Hand */}
           <div className="hand-climb-right absolute right-4 bottom-12 flex flex-col items-center gap-1">
             <div className="pixel-box bg-accent text-accent-foreground p-3 border-4 border-border shadow-lg flex items-center gap-2">
               <span className="font-display text-xs uppercase bg-foreground text-background px-2 py-0.5">
@@ -196,7 +196,7 @@ export function ScrollToTopHands() {
             <div className="flex flex-col">
               <span className="font-display text-xs uppercase text-primary flex items-center gap-1">
                 <Sparkles className="size-3 text-secondary fill-current" />{' '}
-                Oddling Hands At Work!
+                Chimi Hands At Work!
               </span>
               <span className="font-display text-[10px] text-muted-foreground">
                 Scrolling back to top...

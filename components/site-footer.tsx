@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { brandArt } from '@/lib/oddlings'
+import { brandArt } from '@/lib/collection'
 import { site } from '@/lib/site'
 
 const columns = [
@@ -44,7 +44,7 @@ export function SiteFooter() {
                 alt=""
                 fill
                 sizes="112px"
-                className="oddling-bob object-contain"
+                className="chimi-bob object-contain"
               />
             </div>
           </div>
@@ -89,7 +89,7 @@ export function SiteFooter() {
               Catch the luck
             </h2>
             <p className="text-xl text-cream/70">
-              {site.supply.toLocaleString()} oddlings, minting on {site.chain}.
+              {site.supply.toLocaleString()} chimis, minting on {site.chain}.
             </p>
             <PixelLink href={site.links.discord} external variant="secondary">
               Join Discord

@@ -4,15 +4,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { oddlings } from '@/lib/oddlings'
+import { collection } from '@/lib/collection'
 import { site } from '@/lib/site'
 
-const byId = (id: number) => oddlings.find((o) => o.id === id)
+const byId = (id: number) => collection.find((c) => c.id === id)
 
 const tiles = [
   {
     title: 'The Nest',
-    copy: 'Browse every revealed oddling and filter by charm family.',
+    copy: 'Browse every revealed chimi and filter by charm family.',
     href: '/gallery',
     cta: 'Open the nest',
     image: byId(13)?.image ?? '',
@@ -21,7 +21,7 @@ const tiles = [
   },
   {
     title: 'The Story',
-    copy: 'Discover how the oddlings were born and what each charm brings.',
+    copy: 'Discover how the chimis were born and what each charm brings.',
     href: '/#story',
     cta: 'Read the lore',
     image: byId(11)?.image ?? '',
@@ -30,7 +30,7 @@ const tiles = [
   },
   {
     title: 'Mint',
-    copy: `${site.supply.toLocaleString()} oddlings, one charm each, live on ${site.chain}.`,
+    copy: `${site.supply.toLocaleString()} chimis, one charm each, live on ${site.chain}.`,
     href: site.links.mint,
     cta: 'Go to mint',
     image: byId(15)?.image ?? '',

@@ -18,7 +18,7 @@ export const collections: Collection[] = [
     slug: 'genesis',
     name: 'Chimikinz Genesis',
     blurb:
-      'The full cast. 4,444 oddlings drawn by hand, each one born with a single charm of its own.',
+      'The full cast. 4,444 chimis drawn by hand, each one born with a single charm of its own.',
     cover: '/chimikinz/chimikins-logo-group.png',
     supply: '4,444',
     status: 'Minting soon',
@@ -40,7 +40,7 @@ export const collections: Collection[] = [
     slug: 'clover-cove',
     name: 'Clover Cove',
     blurb:
-      'Scenes from the world the oddlings live in — the streets, the shops and the strange weather.',
+      'Scenes from the world the chimis live in — the streets, the shops and the strange weather.',
     cover: '/chimikinz/art/full/clover-cove-sign.webp',
     supply: 'TBA',
     status: 'In the sketchbook',

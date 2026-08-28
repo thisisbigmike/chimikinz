@@ -3,17 +3,17 @@
 import Image from 'next/image'
 import { PixelPanel, SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { brandArt } from '@/lib/oddlings'
+import { brandArt } from '@/lib/collection'
 import { site } from '@/lib/site'
 
 const beats = [
   {
     title: 'Drawn, not generated',
-    body: 'No trait machine spitting out combinations. Each oddling is inked by hand, which is why the odd ones look genuinely odd.',
+    body: 'No trait machine spitting out combinations. Each chimi is inked by hand, which is why the odd ones look genuinely odd.',
   },
   {
     title: 'One charm each',
-    body: 'A halo, a cracked skull, a burger for a hat. The charm is the character — it decides how the oddling behaves in the lore.',
+    body: 'A halo, a cracked skull, a burger for a hat. The charm is the character — it decides how the chimi behaves in the lore.',
   },
   {
     title: 'Luck is the point',
@@ -32,7 +32,7 @@ export function Story() {
           <ScrollReveal variant="fade-up">
             <SectionHeading
               eyebrow="The story"
-              title="Where the oddlings came from"
+              title="Where the chimis came from"
               body={`${site.name} started as a sketchbook habit — one strange little creature a night, each one luckier than the last.`}
             />
           </ScrollReveal>
@@ -59,7 +59,7 @@ export function Story() {
           <div className="pixel-box-lg art-ground pixel-tilt relative aspect-square bg-card lg:sticky lg:top-28 overflow-hidden">
             <Image
               src={brandArt.builder}
-              alt="A Chimikinz oddling lying on the floor at a laptop, a tiny winged charm resting on its head"
+              alt="A Chimikinz chimi lying on the floor at a laptop, a tiny winged charm resting on its head"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="pixel-float object-contain p-6"

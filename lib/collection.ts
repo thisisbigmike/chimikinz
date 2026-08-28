@@ -1,6 +1,6 @@
 export type Rarity = 'Common' | 'Uncommon' | 'Rare' | 'Legendary' | 'Mythic'
 
-export type Oddling = {
+export type CollectionChimi = {
   id: number
   name: string
   image: string
@@ -11,7 +11,7 @@ export type Oddling = {
   traits: { label: string; value: string }[]
 }
 
-export const oddlings: Oddling[] = [
+export const collection: CollectionChimi[] = [
   {
     id: 1,
     name: 'Kickback',
@@ -208,8 +208,8 @@ export const rarityStyle: Record<Rarity, string> = {
 }
 
 /** The four the landing page leads with. */
-export const featuredOddlings = oddlings.filter((o) =>
-  [15, 7, 12, 4].includes(o.id),
+export const featuredChimis = collection.filter((c) =>
+  [15, 7, 12, 4].includes(c.id),
 )
 
 export const brandArt = {

@@ -4,8 +4,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 
 type FavoritesContextType = {
   favorites: number[]
-  toggleFavorite: (oddlingId: number) => void
-  isFavorite: (oddlingId: number) => boolean
+  toggleFavorite: (chimiId: number) => void
+  isFavorite: (chimiId: number) => boolean
 }
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined)
@@ -22,15 +22,15 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  const toggleFavorite = (oddlingId: number) => {
-    const next = favorites.includes(oddlingId)
-      ? favorites.filter((id) => id !== oddlingId)
-      : [...favorites, oddlingId]
+  const toggleFavorite = (chimiId: number) => {
+    const next = favorites.includes(chimiId)
+      ? favorites.filter((id) => id !== chimiId)
+      : [...favorites, chimiId]
     setFavorites(next)
     localStorage.setItem('chimikinz_favorites', JSON.stringify(next))
   }
 
-  const isFavorite = (oddlingId: number) => favorites.includes(oddlingId)
+  const isFavorite = (chimiId: number) => favorites.includes(chimiId)
 
   return (
     <FavoritesContext.Provider value={{ favorites, toggleFavorite, isFavorite }}>

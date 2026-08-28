@@ -9,7 +9,7 @@ import {
   SectionHeading,
 } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { brandArt } from '@/lib/oddlings'
+import { brandArt } from '@/lib/collection'
 import { site } from '@/lib/site'
 import {
   goals,
@@ -70,7 +70,7 @@ export default function VisionPage() {
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   priority
-                  className="oddling-bob object-contain p-6"
+                  className="chimi-bob object-contain p-6"
                 />
               </div>
             </ScrollReveal>

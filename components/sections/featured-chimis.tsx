@@ -1,12 +1,12 @@
 'use client'
 
-import { OddlingCard } from '@/components/oddling-card'
+import { CollectionCard } from '@/components/collection-card'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { featuredOddlings } from '@/lib/oddlings'
+import { featuredChimis } from '@/lib/collection'
 
-export function FeaturedOddlings() {
+export function FeaturedChimis() {
   return (
     <section className="border-b-4 border-border bg-muted">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
@@ -14,7 +14,7 @@ export function FeaturedOddlings() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="Fresh out the sketchbook"
-              title="Meet a few oddlings"
+              title="A few from the collection"
               body="Twelve are out in the open. The rest stay hidden until mint."
             />
             <PixelLink href="/gallery" variant="ink">
@@ -24,10 +24,10 @@ export function FeaturedOddlings() {
         </ScrollReveal>
 
         <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredOddlings.map((oddling, index) => (
-            <ScrollReveal key={oddling.id} variant="scale-up" delay={index * 100}>
+          {featuredChimis.map((chimi, index) => (
+            <ScrollReveal key={chimi.id} variant="scale-up" delay={index * 100}>
               <li>
-                <OddlingCard oddling={oddling} priority={index < 2} />
+                <CollectionCard chimi={chimi} priority={index < 2} />
               </li>
             </ScrollReveal>
           ))}

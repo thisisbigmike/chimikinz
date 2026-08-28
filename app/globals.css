@@ -249,11 +249,6 @@
   inherits: true;
   initial-value: #141416;
 }
-@property --dusk-ink-muted {
-  syntax: '<color>';
-  inherits: true;
-  initial-value: #6b6459;
-}
 @property --dusk-line {
   syntax: '<color>';
   inherits: true;
@@ -306,24 +301,33 @@
     --dusk-muted: #eaa886;
   }
   88% {
-    --dusk-bg: #e58a80;
-    --dusk-card: #efa39c;
-    --dusk-muted: #d47f78;
+    --dusk-bg: #e88d80;
+    --dusk-card: #f2a89c;
+    --dusk-muted: #d78278;
   }
-  92% {
-    --dusk-bg: #9a5f86;
-    --dusk-card: #ab7396;
-    --dusk-muted: #8a567a;
+  /* The crossover. Ink flips on this exact keyframe, and the colour is
+     picked so the two sides of the flip are equally legible against it
+     — roughly 4:1 either way, which is the ceiling for any light-to-dark
+     crossfade. Everything either side of it recovers fast. */
+  90% {
+    --dusk-bg: #a2657f;
+    --dusk-card: #b2738d;
+    --dusk-muted: #92596f;
   }
-  95% {
-    --dusk-bg: #4a3760;
-    --dusk-card: #58436f;
-    --dusk-muted: #453357;
+  91.5% {
+    --dusk-bg: #47385f;
+    --dusk-card: #55446e;
+    --dusk-muted: #413353;
   }
-  97.5% {
-    --dusk-bg: #23212e;
-    --dusk-card: #2e2b3b;
-    --dusk-muted: #38344a;
+  94% {
+    --dusk-bg: #2a2740;
+    --dusk-card: #35314e;
+    --dusk-muted: #3a3550;
+  }
+  97% {
+    --dusk-bg: #1e1d28;
+    --dusk-card: #282634;
+    --dusk-muted: #302d3e;
   }
   100% {
     --dusk-bg: #141416;
@@ -339,24 +343,21 @@
 @keyframes dusk-ink {
   0% {
     --dusk-ink: #141416;
-    --dusk-ink-muted: #6b6459;
     --dusk-line: #141416;
     --dusk-shade: #141416;
     --dusk-destructive: #d1341c;
     --dusk-destructive-fg: #fff6e5;
     animation-timing-function: steps(1, end);
   }
-  93.5% {
+  90% {
     --dusk-ink: #fff6e5;
-    --dusk-ink-muted: #d8d0c2;
     --dusk-line: #d6cab8;
     --dusk-shade: #000000;
     --dusk-destructive: #ff6b52;
     --dusk-destructive-fg: #141416;
   }
-  97.5% {
+  95% {
     --dusk-ink: #fff6e5;
-    --dusk-ink-muted: #c3bbad;
     --dusk-line: #8b8378;
     --dusk-shade: #000000;
     --dusk-destructive: #ff6b52;
@@ -364,7 +365,6 @@
   }
   100% {
     --dusk-ink: #fff6e5;
-    --dusk-ink-muted: #a9a296;
     --dusk-line: #3a3a42;
     --dusk-shade: #000000;
     --dusk-destructive: #ff6b52;
@@ -396,7 +396,12 @@
     --muted: var(--dusk-muted);
 
     --foreground: var(--dusk-ink);
-    --muted-foreground: var(--dusk-ink-muted);
+    /* Derived, not animated. Held as its own colour it kept the daylight
+       grey while the sky went to sunset underneath it, which bottomed out
+       near 1:1. Mixed from the pair it sits between, it is dark on the
+       bright half of the ramp and light on the dark half automatically,
+       and it flips at the same instant the ink does. */
+    --muted-foreground: color-mix(in oklab, var(--foreground) 70%, var(--background));
 
     --line: var(--dusk-line);
     --shade: var(--dusk-shade);
@@ -518,7 +523,7 @@
     animation: marquee 34s linear infinite;
   }
 
-  .oddling-bob {
+  .chimi-bob {
     will-change: transform;
     transform: translateZ(0);
     animation: bob 3s steps(6) infinite alternate;
@@ -528,7 +533,7 @@
      NEW ANIMATION UTILITIES
      ================================================================ */
 
-  /* Wiggle on hover — oddling images jiggle when card is hovered */
+  /* Wiggle on hover — chimi images jiggle when card is hovered */
   .pixel-wiggle {
     transition: transform 200ms steps(3);
   }
@@ -601,7 +606,7 @@
   .motion-card:hover .pixel-float,
   .motion-card:hover .pixel-float-slow,
   .motion-card:hover .pixel-sway,
-  .motion-card:hover .oddling-bob {
+  .motion-card:hover .chimi-bob {
     animation-play-state: paused;
   }
 
@@ -705,7 +710,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .marquee-track,
-    .oddling-bob,
+    .chimi-bob,
     .pixel-float,
     .pixel-float-delayed,
     .pixel-float-slow,

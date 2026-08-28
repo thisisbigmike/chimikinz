@@ -4,12 +4,12 @@ import Image from 'next/image'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { brandArt } from '@/lib/oddlings'
+import { brandArt } from '@/lib/collection'
 import { site } from '@/lib/site'
 
 const points = [
   'Minted on Ethereum mainnet',
-  'Holders vote on which oddlings get animated first',
+  'Holders vote on which chimis get animated first',
   'Charm ledger tracks every trait on-chain',
 ]
 
@@ -21,10 +21,10 @@ export function OnChain() {
           <div className="pixel-box-lg art-ground pixel-tilt relative aspect-square bg-secondary overflow-hidden">
             <Image
               src={brandArt.bull}
-              alt="A Chimikinz oddling in an orange hoodie waving beside a large bull wearing a CHIMIKINS cap, clovers at its feet"
+              alt="A Chimikinz chimi in an orange hoodie waving beside a large bull wearing a CHIMIKINS cap, clovers at its feet"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="oddling-bob object-contain p-6"
+              className="chimi-bob object-contain p-6"
             />
           </div>
         </ScrollReveal>
@@ -33,7 +33,7 @@ export function OnChain() {
           <ScrollReveal variant="slide-right">
             <SectionHeading
               eyebrow={`Home on ${site.chain}`}
-              title="The oddlings picked a bull to ride"
+              title="The chimis picked a bull to ride"
               body="Ethereum is fast, secure and full of people who appreciate true hand-drawn web3 art. It felt like the right home."
             />
           </ScrollReveal>

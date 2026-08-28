@@ -1,17 +1,17 @@
 # 🧪 Chimikinz
 
-> **Hand-drawn oddlings. Every one carries a charm.**
+> **Hand-drawn chimis. Every one carries a charm.**
 
-Chimikinz is a collection of 4,444 hand-drawn, unique oddlings built on **Ethereum**. No trait machines, no generic generators — every single creature is inked by hand and carries its own distinct charm.
+Chimikinz is a collection of 4,444 hand-drawn, unique chimis built on **Ethereum**. No trait machines, no generic generators — every single creature is inked by hand and carries its own distinct charm.
 
 ---
 
 ## ✨ Features & Lore
 
-- 🎨 **100% Hand-Drawn**: Each oddling was sketched, inked, and named by hand by founder Metakiddo.
-- 🔮 **One Charm Each**: Whether it's a halo, a cracked skull, or a burger hat, each charm shapes the oddling's behavior and place in the lore.
+- 🎨 **100% Hand-Drawn**: Each chimi was sketched, inked, and named by hand by founder Metakiddo.
+- 🔮 **One Charm Each**: Whether it's a halo, a cracked skull, or a burger hat, each charm shapes the chimi's behavior and place in the lore.
 - ⚡ **Built on Ethereum**: Native NFT collection built on the Ethereum blockchain.
-- 📜 **Quests & Oddling Terminal**: Interactive quest system rewarding early oddling holders.
+- 📜 **Quests & Chimi Terminal**: Interactive quest system rewarding early chimi holders.
 - 🍀 **Pure Luck**: A small pile of good luck you can carry in your web3 wallet.
 
 ---
@@ -19,7 +19,7 @@ Chimikinz is a collection of 4,444 hand-drawn, unique oddlings built on **Ethere
 ## 🚀 Project Roadmap
 
 - **Phase 01: The Scribble** *(Completed)*  
-  Every oddling drawn by hand — 4,444 charms sketched, inked, and named.
+  Every chimi drawn by hand — 4,444 charms sketched, inked, and named.
 - **Phase 02: Polish the Charm** *(Active)*  
   Lore finalized, traits balanced, terminal built, and Quests live.
 - **Phase 03: Share the Luck** *(Upcoming)*  

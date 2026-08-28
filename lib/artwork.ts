@@ -330,7 +330,7 @@ export const artGroups: { id: ArtGroup; label: string; blurb: string }[] = [
   {
     id: 'characters',
     label: 'Characters',
-    blurb: 'One-off oddlings, drawn one at a time and dressed for the occasion.',
+    blurb: 'One-off chimis, drawn one at a time and dressed for the occasion.',
   },
   {
     id: 'scenes',

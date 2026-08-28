@@ -59,7 +59,7 @@ export const motionPieces: MotionPiece[] = [
 
 export const motionClass: Record<MotionPiece['motion'], string> = {
   float: 'pixel-float',
-  bob: 'oddling-bob',
+  bob: 'chimi-bob',
   sway: 'pixel-sway',
   wiggle: 'pixel-float-slow',
 }

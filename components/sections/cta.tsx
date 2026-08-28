@@ -21,21 +21,21 @@ export function Cta() {
           <div className="flex items-end justify-center gap-2">
             <Image
               src="/chimikinz/oddling-11.png"
-              alt="A Chimikinz oddling waving"
+              alt="A Chimikinz chimi waving"
               width={96}
               height={96}
               className="pixelated pixel-float w-16 md:w-24"
             />
             <Image
               src="/chimikinz/oddling-6.png"
-              alt="A Chimikinz oddling with a halo"
+              alt="A Chimikinz chimi with a halo"
               width={120}
               height={120}
               className="pixelated pixel-float-delayed w-20 md:w-32"
             />
             <Image
               src="/chimikinz/oddling-13.png"
-              alt="A grinning Chimikinz oddling"
+              alt="A grinning Chimikinz chimi"
               width={96}
               height={96}
               className="pixelated pixel-float-slow w-16 md:w-24"
@@ -51,15 +51,15 @@ export function Cta() {
 
         <ScrollReveal variant="fade-up" delay={200}>
           <p className="max-w-xl text-pretty text-xl leading-relaxed md:text-2xl">
-            {site.supply.toLocaleString()} oddlings, one weird little family. Claim your luck, then
+            {site.supply.toLocaleString()} chimis, one weird little family. Claim your luck, then
             come be strange with us.
           </p>
         </ScrollReveal>
 
         <ScrollReveal variant="fade-up" delay={300}>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <PixelLink href={site.links.mint} external variant="ink" size="lg" className="pixel-pulse">
-              Mint an oddling
+            <PixelLink href={site.links.mint} external variant="night" size="lg" className="pixel-pulse">
+              Mint a chimi
             </PixelLink>
             <PixelLink href={site.links.discord} external variant="bone" size="lg">
               Join the Discord

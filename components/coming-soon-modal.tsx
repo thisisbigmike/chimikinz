@@ -76,12 +76,12 @@ export function ComingSoonModal({
 
         <p className="text-pretty text-2xl leading-snug text-muted-foreground">
           <span className="text-foreground">{title}</span> is not on OpenSea
-          yet. The oddlings are still getting their charms in order — we are
+          yet. The chimis are still getting their charms in order — we are
           almost there.
         </p>
 
         <p className="font-display text-[10px] uppercase text-muted-foreground">
-          Launch: {site.launch}
+          Launching {site.launch}
         </p>
 
         <div className="flex flex-col gap-3 sm:flex-row">

@@ -46,7 +46,7 @@ export default function CollectionsPage() {
                   Mint is not live yet
                 </p>
                 <p className="text-xl">
-                  Trading opens on OpenSea at launch — {site.launch}.
+                  Trading opens on OpenSea — launching {site.launch}.
                 </p>
               </div>
             </ScrollReveal>

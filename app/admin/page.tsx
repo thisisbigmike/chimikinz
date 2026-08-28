@@ -273,7 +273,7 @@ export default function AdminPage() {
                 <span className="font-display text-2xl text-foreground">
                   {site.supply.toLocaleString()}
                 </span>
-                <span className="text-xs text-muted-foreground">Oddlings Collection Size</span>
+                <span className="text-xs text-muted-foreground">Chimis Collection Size</span>
               </div>
             </div>
 

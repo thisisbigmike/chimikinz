@@ -11,7 +11,7 @@ export function CloverCoveBanner() {
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
         <ScrollReveal variant="pixel-pop">
           <PixelTag className="bg-accent text-accent-foreground">
-            Launches {site.launch}
+            Launching {site.launch}
           </PixelTag>
         </ScrollReveal>
 
