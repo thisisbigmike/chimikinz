@@ -6,8 +6,13 @@ const variants = {
   primary: 'bg-primary text-primary-foreground',
   accent: 'bg-accent text-accent-foreground',
   secondary: 'bg-secondary text-secondary-foreground',
+  /* The light slab. Fill and type both ride the theme, so it is a cream
+     button with ink type by day and inverts to a dark one with cream type
+     at nightfall — the 4px line and the offset shadow are what make it read
+     as a button either way, not the fill. This replaced an `ink` variant
+     that was `bg-foreground`: a black slab dropped on the light half of
+     the page, which is the look it was meant to avoid. */
   bone: 'bg-card text-foreground',
-  ink: 'bg-foreground text-background',
   /* Mode-independent, for the brand-painted panels. Those keep their own
      colour in every mode, so a button on one cannot follow the page the
      way `ink` does: at nightfall `ink` inverts to a cream fill and goes

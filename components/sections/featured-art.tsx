@@ -35,7 +35,7 @@ export function FeaturedArt() {
               title="A few worth stopping on"
               body="Everything is drawn by hand, one at a time. These are some of the ones we keep coming back to."
             />
-            <PixelLink href="/gallery" variant="ink">
+            <PixelLink href="/gallery" variant="bone">
               Open the gallery
             </PixelLink>
           </div>

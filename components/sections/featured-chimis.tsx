@@ -17,7 +17,7 @@ export function FeaturedChimis() {
               title="A few from the collection"
               body="Twelve are out in the open. The rest stay hidden until mint."
             />
-            <PixelLink href="/gallery" variant="ink">
+            <PixelLink href="/gallery" variant="bone">
               View all
             </PixelLink>
           </div>

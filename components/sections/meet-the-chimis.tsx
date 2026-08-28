@@ -68,7 +68,7 @@ export function MeetTheChimis() {
 
         <ScrollReveal variant="fade-up" delay={300}>
           <div className="mt-10">
-            <PixelLink href="/chimis" variant="ink" size="lg">
+            <PixelLink href="/chimis" variant="bone" size="lg">
               Meet them properly
             </PixelLink>
           </div>
