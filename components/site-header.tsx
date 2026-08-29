@@ -129,13 +129,21 @@ export function SiteHeader() {
       />
 
       {/* Anchored to the header's bottom edge rather than the viewport, so the
-          height needs no magic number: 100% here is the header's own height. */}
+          height needs no magic number: 100% here is the header's own height.
+          The wrapper exists to clip the closed drawer, which otherwise parks a
+          panel-width past the right edge and widens the page. Clipping it here
+          rather than on <html> matters — an overflow on the root makes it the
+          sticky header's containing scrollport and the header stops sticking. */}
+      <div
+        className="pointer-events-none absolute right-0 top-full z-40 h-[calc(100dvh_-_100%)] w-screen overflow-x-clip lg:hidden"
+        aria-hidden={!open}
+      >
       <nav
         id="mobile-nav"
         aria-label="Mobile"
         inert={!open}
         className={cn(
-          'pixel-drawer absolute right-0 top-full z-40 flex h-[calc(100dvh_-_100%)] w-[min(18rem,80vw)] flex-col overflow-y-auto border-l-4 border-border bg-card lg:hidden',
+          'pixel-drawer pointer-events-auto absolute right-0 top-0 flex h-full w-[min(18rem,80vw)] flex-col overflow-y-auto border-l-4 border-border bg-card',
           open ? 'translate-x-0' : 'translate-x-full',
         )}
       >
@@ -167,6 +175,7 @@ export function SiteHeader() {
           </li>
         </ul>
       </nav>
+      </div>
     </header>
   )
 }
