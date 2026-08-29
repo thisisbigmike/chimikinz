@@ -17,7 +17,7 @@ const variants = {
      the opposite of the ink, so it is a dark button on the daylit green and
      a light one once that green falls to night. A fixed slab cannot do this:
      it would sink into the panel at one end of the ramp or the other. */
-  invert: 'bg-foreground text-foreground-inverse',
+  invert: 'pixel-invert',
 } as const
 
 const sizes = {

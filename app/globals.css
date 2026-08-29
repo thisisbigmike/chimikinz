@@ -505,6 +505,22 @@
 }
 
 @layer utilities {
+  /**
+   * The inverted slab: filled with the ink, printed in its opposite.
+   *
+   * Both halves in one rule on purpose. Split across two utilities the pair
+   * can half-apply — anything holding a stylesheet older than the newer text
+   * utility still matches `bg-foreground`, paints the fill, and lets `color`
+   * inherit, which puts cream type on a cream fill and empties the button.
+   * Declared together they land together or not at all, and the failure mode
+   * if this rule is missing is an unfilled box with inherited type, which is
+   * still readable.
+   */
+  .pixel-invert {
+    background-color: var(--foreground);
+    color: var(--foreground-inverse);
+  }
+
   /* Hard offset block shadow — the signature of the whole system. */
   .pixel-box {
     border: 4px solid var(--line);

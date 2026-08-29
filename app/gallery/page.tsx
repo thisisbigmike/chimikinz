@@ -129,7 +129,7 @@ export default function GalleryPage() {
                 className={cn(
                   'pixel-box-sm pixel-press px-3 py-2 font-display text-[10px] uppercase',
                   filter === 'all'
-                    ? 'bg-foreground text-foreground-inverse'
+                    ? 'pixel-invert'
                     : 'bg-card hover:bg-secondary',
                 )}
               >
@@ -147,7 +147,7 @@ export default function GalleryPage() {
                   className={cn(
                     'pixel-box-sm pixel-press px-3 py-2 font-display text-[10px] uppercase',
                     filter === category.id
-                      ? 'bg-foreground text-foreground-inverse'
+                      ? 'pixel-invert'
                       : 'bg-card hover:bg-secondary',
                   )}
                 >

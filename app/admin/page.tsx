@@ -291,7 +291,7 @@ export default function AdminPage() {
                   className={cn(
                     'py-3 px-2 font-display text-[10px] sm:text-xs uppercase transition-colors duration-200 text-center flex items-center justify-center gap-1.5 leading-tight',
                     activeTab === t.id
-                      ? 'bg-foreground text-foreground-inverse shadow-sm'
+                      ? 'pixel-invert shadow-sm'
                       : 'text-muted-foreground hover:text-foreground',
                   )}
                 >
@@ -381,7 +381,7 @@ export default function AdminPage() {
                     <div className="overflow-x-auto border-3 border-border">
                       <table className="w-full text-left font-display text-xs border-collapse">
                         <thead>
-                          <tr className="bg-foreground text-foreground-inverse">
+                          <tr className="pixel-invert">
                             <th className="p-3 uppercase">Wallet Address</th>
                             <th className="p-3 uppercase">Tier</th>
                             <th className="p-3 uppercase text-center">Max Mints</th>
@@ -437,7 +437,7 @@ export default function AdminPage() {
                 <div className="overflow-x-auto border-3 border-border">
                   <table className="w-full text-left font-display text-xs border-collapse">
                     <thead>
-                      <tr className="bg-foreground text-foreground-inverse">
+                      <tr className="pixel-invert">
                         <th className="p-3 uppercase">User Address</th>
                         <th className="p-3 uppercase">Role</th>
                         <th className="p-3 uppercase text-right">Joined</th>

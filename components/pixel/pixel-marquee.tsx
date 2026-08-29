@@ -15,7 +15,7 @@ export function PixelMarquee({
   className?: string
 }) {
   const tones = {
-    ink: 'bg-foreground text-foreground-inverse',
+    ink: 'pixel-invert',
     primary: 'bg-primary text-primary-foreground',
     secondary: 'bg-secondary text-secondary-foreground',
   } as const

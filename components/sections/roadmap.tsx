@@ -15,7 +15,7 @@ export function Roadmap() {
   return (
     <section
       id="roadmap"
-      className="scroll-mt-24 border-b-4 border-border bg-foreground text-foreground-inverse"
+      className="scroll-mt-24 border-b-4 border-border pixel-invert"
     >
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">

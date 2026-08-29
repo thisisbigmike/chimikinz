@@ -21,7 +21,7 @@ export function PixelPanel({
   const tones = {
     card: 'bg-card text-card-foreground',
     bone: 'bg-background text-foreground',
-    ink: 'bg-foreground text-foreground-inverse',
+    ink: 'pixel-invert',
     primary: 'bg-primary text-primary-foreground',
     accent: 'bg-accent text-accent-foreground',
     secondary: 'bg-secondary text-secondary-foreground',
@@ -30,13 +30,13 @@ export function PixelPanel({
   return (
     <div className={cn('pixel-box', tones[tone], className)}>
       {title ? (
-        <div className="flex items-center gap-2 border-b-4 border-border bg-foreground px-4 py-2">
+        <div className="pixel-invert flex items-center gap-2 border-b-4 border-border px-4 py-2">
           <span className="flex gap-1" aria-hidden="true">
             <span className="size-2 bg-primary" />
             <span className="size-2 bg-secondary" />
             <span className="size-2 bg-accent" />
           </span>
-          <h3 className="font-display text-[10px] uppercase tracking-tight text-foreground-inverse">
+          <h3 className="font-display text-[10px] uppercase tracking-tight">
             {title}
           </h3>
         </div>
