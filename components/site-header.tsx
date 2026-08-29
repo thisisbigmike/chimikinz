@@ -135,7 +135,7 @@ export function SiteHeader() {
           rather than on <html> matters — an overflow on the root makes it the
           sticky header's containing scrollport and the header stops sticking. */}
       <div
-        className="pointer-events-none absolute right-0 top-full z-40 h-[calc(100dvh_-_100%)] w-screen overflow-x-clip lg:hidden"
+        className="pointer-events-none fixed inset-y-0 right-0 z-50 w-screen overflow-x-clip lg:hidden"
         aria-hidden={!open}
       >
       <nav
@@ -143,10 +143,27 @@ export function SiteHeader() {
         aria-label="Mobile"
         inert={!open}
         className={cn(
-          'pixel-drawer pointer-events-auto absolute right-0 top-0 flex h-full w-[min(18rem,80vw)] flex-col overflow-y-auto border-l-4 border-border bg-card',
+          'pixel-drawer pointer-events-auto absolute inset-y-0 right-0 flex w-[min(18rem,80vw)] flex-col overflow-y-auto border-l-4 border-border bg-card',
           open ? 'translate-x-0' : 'translate-x-full',
         )}
       >
+        {/* The drawer covers the bar, so the toggle underneath is no longer
+            reachable. This sits in the same corner with the same padding and
+            box, so closing happens where the reader last tapped. */}
+        <div className="flex shrink-0 items-center justify-end border-b-4 border-border p-3">
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="pixel-box-sm grid size-10 place-items-center bg-card"
+          >
+            <span className="sr-only">Close menu</span>
+            <span className="relative block size-5" aria-hidden="true">
+              <span className="absolute left-0 top-1/2 h-1 w-5 -translate-y-1/2 rotate-45 bg-foreground" />
+              <span className="absolute left-0 top-1/2 h-1 w-5 -translate-y-1/2 -rotate-45 bg-foreground" />
+            </span>
+          </button>
+        </div>
+
         <ul className="flex flex-col">
           {site.nav.map((item) => (
             <li key={item.href} className="border-b-4 border-border">
