@@ -58,7 +58,7 @@ export function Cta() {
 
         <ScrollReveal variant="fade-up" delay={300}>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <PixelLink href={site.links.mint} external variant="invert" size="lg" className="pixel-pulse">
+            <PixelLink href={site.links.mint} external variant="slab" size="lg" className="pixel-pulse">
               Mint a chimi
             </PixelLink>
             <PixelLink href={site.links.discord} external variant="bone" size="lg">

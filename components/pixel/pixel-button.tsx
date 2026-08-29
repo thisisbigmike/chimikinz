@@ -13,11 +13,11 @@ const variants = {
      that was `bg-foreground`: a black slab dropped on the light half of
      the page, which is the look it was meant to avoid. */
   bone: 'bg-card text-foreground',
-  /* For a surface that inverts with the page — the `--panel` band. Always
-     the opposite of the ink, so it is a dark button on the daylit green and
-     a light one once that green falls to night. A fixed slab cannot do this:
-     it would sink into the panel at one end of the ramp or the other. */
-  invert: 'pixel-invert',
+  /* The CTA button on the `--panel` band. Fixed cream-on-ink rather than
+     something that inverts with the page: the panel it sits on is dark for
+     the whole stretch of scroll where it is actually on screen, and a fixed
+     pair can never collide with its own fill. See `.pixel-slab`. */
+  slab: 'pixel-slab',
 } as const
 
 const sizes = {

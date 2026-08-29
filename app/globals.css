@@ -516,6 +516,22 @@
    * if this rule is missing is an unfilled box with inherited type, which is
    * still readable.
    */
+  /**
+   * The CTA slab. Deliberately the dumbest rule in the file.
+   *
+   * Fill and type are both fixed brand paint declared in one place, with
+   * literal fallbacks, so nothing about this button depends on the theme
+   * tokens, the scroll animation, `@property` support, or which version of
+   * the stylesheet happens to be cached. Earlier passes tied its type to an
+   * animated token; when any link in that chain failed to resolve, `color`
+   * fell back to inheriting the section's cream and the button rendered as
+   * an empty cream box. Nothing here can resolve to the fill.
+   */
+  .pixel-slab {
+    background-color: var(--cream, #fff6e5);
+    color: var(--night, #141416);
+  }
+
   .pixel-invert {
     background-color: var(--foreground);
     color: var(--foreground-inverse);
