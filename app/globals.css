@@ -43,6 +43,7 @@
   --color-ember: var(--ember);
   --color-night: var(--night);
 
+  --color-panel: var(--panel);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -128,6 +129,12 @@
   --secondary-foreground: var(--night);
   --accent: var(--ember);
   --accent-foreground: var(--night);
+
+  /* The feature panel — the CTA band and the scroll-to-top control.
+     Clover by day, a deep green-black once night lands. Unlike the eight
+     brand colours this one is a role, not fixed paint, because it has to
+     fall with the page instead of staying a bright slab above a dark one. */
+  --panel: light-dark(#7ec88b, #1b2620);
 
   /**
    * The mat artwork sits on.
@@ -234,6 +241,11 @@
   inherits: true;
   initial-value: #fff6e5;
 }
+@property --dusk-panel {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #7ec88b;
+}
 @property --dusk-card {
   syntax: '<color>';
   inherits: true;
@@ -276,31 +288,37 @@
    the low-contrast crossing down to a moment rather than a stretch. */
 @keyframes dusk-sky {
   0% {
+    --dusk-panel: #7ec88b;
     --dusk-bg: #fff6e5;
     --dusk-card: #fffcf4;
     --dusk-muted: #f3e8d4;
   }
   38% {
+    --dusk-panel: #86cb89;
     --dusk-bg: #fff1d8;
     --dusk-card: #fff8ea;
     --dusk-muted: #f5e4cb;
   }
   58% {
+    --dusk-panel: #93cd83;
     --dusk-bg: #ffe8c3;
     --dusk-card: #fff2dc;
     --dusk-muted: #f6dcb6;
   }
   72% {
+    --dusk-panel: #9dc477;
     --dusk-bg: #ffd5a6;
     --dusk-card: #ffe4c4;
     --dusk-muted: #f4c99b;
   }
   82% {
+    --dusk-panel: #9bae67;
     --dusk-bg: #fab48d;
     --dusk-card: #fdc9ac;
     --dusk-muted: #eaa886;
   }
   88% {
+    --dusk-panel: #8b8f5f;
     --dusk-bg: #e88d80;
     --dusk-card: #f2a89c;
     --dusk-muted: #d78278;
@@ -310,26 +328,31 @@
      — roughly 4:1 either way, which is the ceiling for any light-to-dark
      crossfade. Everything either side of it recovers fast. */
   90% {
+    --dusk-panel: #767a5e;
     --dusk-bg: #a2657f;
     --dusk-card: #b2738d;
     --dusk-muted: #92596f;
   }
   91.5% {
+    --dusk-panel: #33423a;
     --dusk-bg: #47385f;
     --dusk-card: #55446e;
     --dusk-muted: #413353;
   }
   94% {
+    --dusk-panel: #263229;
     --dusk-bg: #2a2740;
     --dusk-card: #35314e;
     --dusk-muted: #3a3550;
   }
   97% {
+    --dusk-panel: #1c2620;
     --dusk-bg: #1e1d28;
     --dusk-card: #282634;
     --dusk-muted: #302d3e;
   }
   100% {
+    --dusk-panel: #16201b;
     --dusk-bg: #141416;
     --dusk-card: #1e1e22;
     --dusk-muted: #2a2a30;
@@ -391,6 +414,7 @@
     animation-timeline: scroll(root block);
     animation-range: var(--nightfall-start) 100%;
 
+    --panel: var(--dusk-panel);
     --background: var(--dusk-bg);
     --card: var(--dusk-card);
     --muted: var(--dusk-muted);

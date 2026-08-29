@@ -13,11 +13,11 @@ const variants = {
      that was `bg-foreground`: a black slab dropped on the light half of
      the page, which is the look it was meant to avoid. */
   bone: 'bg-card text-foreground',
-  /* Mode-independent, for the brand-painted panels. Those keep their own
-     colour in every mode, so a button on one cannot follow the page the
-     way `ink` does: at nightfall `ink` inverts to a cream fill and goes
-     mushy against Sunbeam. This stays the printed dark slab throughout. */
-  night: 'bg-night text-cream',
+  /* For a surface that inverts with the page — the `--panel` band. Always
+     the opposite of the ink, so it is a dark button on the daylit green and
+     a light one once that green falls to night. A fixed slab cannot do this:
+     it would sink into the panel at one end of the ramp or the other. */
+  invert: 'bg-foreground text-background',
 } as const
 
 const sizes = {

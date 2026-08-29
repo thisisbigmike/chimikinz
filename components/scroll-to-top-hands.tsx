@@ -103,7 +103,7 @@ export function ScrollToTopHands() {
           onClick={scrollToTop}
           aria-label="Scroll to top with chimi hands"
           className={cn(
-            'pixel-box pixel-press group relative flex items-center gap-2.5 bg-primary text-primary-foreground px-4 py-3 font-display text-xs uppercase transition-transform duration-200',
+            'pixel-box pixel-press group relative flex items-center gap-2.5 bg-panel text-foreground px-4 py-3 font-display text-xs uppercase transition-transform duration-200',
             isClimbing &&
               'bg-accent text-accent-foreground scale-105 pixel-burst',
           )}

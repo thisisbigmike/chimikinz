@@ -9,7 +9,7 @@ import { site } from '@/lib/site'
 
 export function Cta() {
   return (
-    <section className="relative border-t-4 border-border bg-primary text-primary-foreground overflow-hidden">
+    <section className="relative border-t-4 border-border bg-panel text-foreground overflow-hidden">
       <PixelSparkles
         count={30}
         colors={['#ff8a4c', '#7ec88b', '#fff6e5', '#141416']}
@@ -58,7 +58,7 @@ export function Cta() {
 
         <ScrollReveal variant="fade-up" delay={300}>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <PixelLink href={site.links.mint} external variant="night" size="lg" className="pixel-pulse">
+            <PixelLink href={site.links.mint} external variant="invert" size="lg" className="pixel-pulse">
               Mint a chimi
             </PixelLink>
             <PixelLink href={site.links.discord} external variant="bone" size="lg">
