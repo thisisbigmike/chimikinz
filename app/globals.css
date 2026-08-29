@@ -727,6 +727,15 @@
     animation: pixelBurst 600ms steps(6) forwards;
   }
 
+  /* The mobile drawer. Comes in from the right edge and leaves the same way,
+     on steps() like every other motion here. It moves on a transform and stays
+     mounted rather than being conditionally rendered: an element that unmounts
+     on close has nothing left to animate, so the exit would just pop. */
+  .pixel-drawer {
+    transition: transform 240ms steps(5);
+    will-change: transform;
+  }
+
   /* Slide-down for mobile menu */
   .pixel-slide-down {
     animation: slideDown 200ms steps(4) forwards;
@@ -806,6 +815,9 @@
     .pixel-lift:hover,
     .pixel-zoom:hover {
       transform: none;
+    }
+    .pixel-drawer {
+      transition: none;
     }
     .pixel-glow:hover::after {
       animation: none;
