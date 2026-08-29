@@ -456,6 +456,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
   * {
@@ -732,8 +733,11 @@
      mounted rather than being conditionally rendered: an element that unmounts
      on close has nothing left to animate, so the exit would just pop. */
   .pixel-drawer {
-    transition: transform 240ms steps(5);
-    will-change: transform;
+    /* `translate`, not `transform`: Tailwind v4's translate utilities compile
+       to the standalone `translate` property, so a transform transition here
+       animates nothing and the drawer snaps instead of sliding. */
+    transition: translate 240ms steps(5);
+    will-change: translate;
   }
 
   /* Slide-down for mobile menu */
