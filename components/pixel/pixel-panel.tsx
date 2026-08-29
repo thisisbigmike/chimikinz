@@ -21,7 +21,7 @@ export function PixelPanel({
   const tones = {
     card: 'bg-card text-card-foreground',
     bone: 'bg-background text-foreground',
-    ink: 'bg-foreground text-background',
+    ink: 'bg-foreground text-foreground-inverse',
     primary: 'bg-primary text-primary-foreground',
     accent: 'bg-accent text-accent-foreground',
     secondary: 'bg-secondary text-secondary-foreground',
@@ -36,7 +36,7 @@ export function PixelPanel({
             <span className="size-2 bg-secondary" />
             <span className="size-2 bg-accent" />
           </span>
-          <h3 className="font-display text-[10px] uppercase tracking-tight text-background">
+          <h3 className="font-display text-[10px] uppercase tracking-tight text-foreground-inverse">
             {title}
           </h3>
         </div>

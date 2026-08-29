@@ -164,7 +164,7 @@ export function ScrollToTopHands() {
           <div className="hand-climb-left absolute left-4 bottom-12 flex flex-col items-center gap-1">
             <div className="pixel-box bg-secondary text-foreground p-3 border-4 border-border shadow-lg flex items-center gap-2">
               <span className="text-3xl">✋</span>
-              <span className="font-display text-xs uppercase bg-foreground text-background px-2 py-0.5">
+              <span className="font-display text-xs uppercase bg-foreground text-foreground-inverse px-2 py-0.5">
                 PUSH UP!
               </span>
             </div>
@@ -174,7 +174,7 @@ export function ScrollToTopHands() {
           {/* Right Chimi Hand */}
           <div className="hand-climb-right absolute right-4 bottom-12 flex flex-col items-center gap-1">
             <div className="pixel-box bg-accent text-accent-foreground p-3 border-4 border-border shadow-lg flex items-center gap-2">
-              <span className="font-display text-xs uppercase bg-foreground text-background px-2 py-0.5">
+              <span className="font-display text-xs uppercase bg-foreground text-foreground-inverse px-2 py-0.5">
                 PULL TOP!
               </span>
               <span className="text-3xl">🤚</span>

@@ -15,14 +15,14 @@ export function Roadmap() {
   return (
     <section
       id="roadmap"
-      className="scroll-mt-24 border-b-4 border-border bg-foreground text-background"
+      className="scroll-mt-24 border-b-4 border-border bg-foreground text-foreground-inverse"
     >
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <SectionHeading
             eyebrow="Roadmap"
             title="Four phases, no filler"
-            className="[&_p]:text-background/70"
+            className="[&_p]:text-foreground-inverse/70"
           />
         </ScrollReveal>
 
@@ -46,7 +46,7 @@ export function Roadmap() {
                     </PixelTag>
                   </div>
                   <h3 className="font-display text-sm uppercase">{item.title}</h3>
-                  <p className="text-pretty text-xl leading-snug text-background/70">
+                  <p className="text-pretty text-xl leading-snug text-foreground-inverse/70">
                     {item.body}
                   </p>
                 </li>

@@ -46,6 +46,7 @@
   --color-panel: var(--panel);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-foreground-inverse: var(--foreground-inverse);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--card);
@@ -110,6 +111,12 @@
   /* Ink */
   --foreground: light-dark(#141416, #fff6e5);
   --card-foreground: var(--foreground);
+  /* The ink's opposite, for UI that fills with the ink and prints on it.
+     It has to live on the ink's own track: `--background` looks like the
+     right colour but rides the smooth sky ramp, so pairing the two put
+     cream type on a cream fill for the couple of percent of scroll between
+     the ink's step and the sky catching up. */
+  --foreground-inverse: light-dark(#fff6e5, #141416);
   --muted-foreground: light-dark(#6b6459, #a9a296);
 
   /* Linework and the hard offset shadow. Ink-on-cream in light. In dark
@@ -261,6 +268,11 @@
   inherits: true;
   initial-value: #141416;
 }
+@property --dusk-ink-inverse {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #fff6e5;
+}
 @property --dusk-line {
   syntax: '<color>';
   inherits: true;
@@ -365,6 +377,7 @@
    toward daylight over the final stretch. */
 @keyframes dusk-ink {
   0% {
+    --dusk-ink-inverse: #fff6e5;
     --dusk-ink: #141416;
     --dusk-line: #141416;
     --dusk-shade: #141416;
@@ -373,6 +386,7 @@
     animation-timing-function: steps(1, end);
   }
   90% {
+    --dusk-ink-inverse: #141416;
     --dusk-ink: #fff6e5;
     --dusk-line: #d6cab8;
     --dusk-shade: #000000;
@@ -380,6 +394,7 @@
     --dusk-destructive-fg: #141416;
   }
   95% {
+    --dusk-ink-inverse: #141416;
     --dusk-ink: #fff6e5;
     --dusk-line: #8b8378;
     --dusk-shade: #000000;
@@ -387,6 +402,7 @@
     --dusk-destructive-fg: #141416;
   }
   100% {
+    --dusk-ink-inverse: #141416;
     --dusk-ink: #fff6e5;
     --dusk-line: #3a3a42;
     --dusk-shade: #000000;
@@ -420,6 +436,7 @@
     --muted: var(--dusk-muted);
 
     --foreground: var(--dusk-ink);
+    --foreground-inverse: var(--dusk-ink-inverse);
     /* Derived, not animated. Held as its own colour it kept the daylight
        grey while the sky went to sunset underneath it, which bottomed out
        near 1:1. Mixed from the pair it sits between, it is dark on the
