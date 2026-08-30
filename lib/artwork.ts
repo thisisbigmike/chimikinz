@@ -29,8 +29,12 @@ export const thumbSrc = (slug: string) => `/chimikinz/art/thumb/${slug}.webp`
 /** Lightbox image — larger, only fetched when a piece is opened. */
 export const fullSrc = (slug: string) => `/chimikinz/art/full/${slug}.webp`
 
-/** The logo mark, used as the gallery's header art. */
-export const chimiMark = fullSrc('chimi-head')
+/**
+ * The logo mark — the same trimmed, transparent head the site header wears.
+ * The gallery art file it came from carries a lot of empty canvas, which
+ * only reads as centred inside a panel; unframed it needs the tight crop.
+ */
+export const chimiMark = '/chimikinz/chimi-mark.png'
 
 export const artwork: Artwork[] = [
   // ── The four ──────────────────────────────────────────────────────────

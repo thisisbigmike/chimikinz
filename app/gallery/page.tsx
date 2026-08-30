@@ -99,14 +99,15 @@ export default function GalleryPage() {
             </ScrollReveal>
 
             <ScrollReveal variant="scale-up" delay={150}>
-              <div className="pixel-box-lg art-ground relative size-32 shrink-0 bg-card sm:size-40">
+              {/* No panel behind the mark — it floats on the page itself. */}
+              <div className="relative size-32 shrink-0 sm:size-40">
                 <Image
                   src={chimiMark}
                   alt=""
                   fill
                   sizes="160px"
                   priority
-                  className="art-smooth pixel-float object-contain p-3"
+                  className="art-smooth pixel-float object-contain"
                 />
               </div>
             </ScrollReveal>
