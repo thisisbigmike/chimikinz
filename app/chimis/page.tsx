@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { ChimiProfile } from '@/components/chimi-profile'
+import { ChimiRail } from '@/components/chimi-rail'
 import { mainChimis, rareChimis } from '@/lib/chimis'
 import { site } from '@/lib/site'
 
@@ -43,39 +42,34 @@ export default function ChimisPage() {
                 when you get something wrong.
               </p>
             </ScrollReveal>
-
-            {/* Straight through to each Chimi's own card */}
-            <ScrollReveal variant="fade-up" delay={300}>
-              <ul className="flex flex-wrap items-center justify-center gap-3">
-                {mainChimis.map((chimi) => (
-                  <li key={chimi.slug}>
-                    <Link
-                      href={`/chimis/${chimi.slug}`}
-                      className="pixel-box-sm pixel-press inline-flex items-center gap-2 bg-card px-3 py-2 font-display text-[10px] uppercase"
-                    >
-                      <span
-                        className="size-3 shrink-0 border-2 border-border"
-                        style={{ backgroundColor: chimi.accent }}
-                        aria-hidden="true"
-                      />
-                      {chimi.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </ScrollReveal>
           </div>
         </section>
 
-        {/* The four */}
-        {mainChimis.map((chimi, i) => (
-          <ChimiProfile key={chimi.slug} chimi={chimi} flipped={i % 2 === 1} />
-        ))}
+        {/* The four, as a rail of faces. Everything there is to say about
+            any of them is on their own card, so this is just the way in. */}
+        <section className="border-b-4 border-border">
+          <div className="mx-auto max-w-7xl px-4 pt-14 sm:px-6 lg:pt-20">
+            <ScrollReveal variant="fade-up">
+              <SectionHeading
+                align="center"
+                eyebrow="Swipe through"
+                title="Pick a face"
+                body="The rail drifts along on its own until you take hold of it. Any Chimi you tap opens their card."
+                className="mx-auto"
+              />
+            </ScrollReveal>
+          </div>
+          <ChimiRail
+            chimis={mainChimis}
+            label="The four founding Chimis"
+            className="pb-8 lg:pb-12"
+          />
+        </section>
 
         {/* Rare personalities — renders only once one exists */}
         {rareChimis.length > 0 ? (
-          <section className="border-b-4 border-border bg-muted">
-            <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
+          <section className="border-b-4 border-border">
+            <div className="mx-auto max-w-7xl px-4 pt-14 sm:px-6 lg:pt-20">
               <ScrollReveal variant="fade-up">
                 <SectionHeading
                   align="center"
@@ -86,13 +80,11 @@ export default function ChimisPage() {
                 />
               </ScrollReveal>
             </div>
-            {rareChimis.map((chimi, i) => (
-              <ChimiProfile
-                key={chimi.slug}
-                chimi={chimi}
-                flipped={i % 2 === 1}
-              />
-            ))}
+            <ChimiRail
+              chimis={rareChimis}
+              label="The rare Chimis"
+              className="pb-8 lg:pb-12"
+            />
           </section>
         ) : (
           <section className="border-b-4 border-border bg-muted">
