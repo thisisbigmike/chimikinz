@@ -49,11 +49,15 @@ export const metadata: Metadata = {
     description: 'Hand-drawn chimis, each carrying a charm of its own.',
     creator: '@chimikinzzz',
   },
+  /**
+   * All cut from the same transparent Chimi head as the header mark, so one
+   * set covers both schemes — the old light/dark pair were byte-identical
+   * files anyway, and the .svg was a PNG in an <svg> wrapper.
+   */
   icons: {
     icon: [
-      { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
-      { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-32x32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/icon-192x192.png', type: 'image/png', sizes: '192x192' },
     ],
     apple: '/apple-icon.png',
   },

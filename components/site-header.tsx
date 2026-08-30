@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -48,12 +49,18 @@ export function SiteHeader() {
           href="/"
           className="group flex items-center gap-3 font-display text-sm uppercase tracking-tight sm:text-base"
         >
-          <span
-            className="grid size-9 shrink-0 place-items-center border-4 border-border bg-primary text-primary-foreground transition-transform duration-200 group-hover:scale-110"
+          {/* The mark is the Chimi head itself — no plate behind it, so it
+              sits on whichever background the theme is wearing. Decorative:
+              the wordmark beside it already names the site. */}
+          <Image
+            src="/chimikinz/chimi-mark.png"
+            alt=""
+            width={40}
+            height={40}
+            priority
             aria-hidden="true"
-          >
-            <span className="font-display text-xs">C</span>
-          </span>
+            className="art-smooth size-10 shrink-0 transition-transform duration-200 group-hover:scale-110"
+          />
           {site.name}
         </Link>
 
