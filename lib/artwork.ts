@@ -323,6 +323,62 @@ export const artwork: Artwork[] = [
     category: 'scenes',
     alt: 'Two Chimis talking in tall grass at sunset',
   },
+  {
+    slug: 'pencil-stairs',
+    title: 'Pencil Stairs',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A Chimi riding a giant pencil, drawing the staircase it is already climbing',
+  },
+  {
+    slug: 'your-days',
+    title: 'Your Days',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A huge calendar grid titled Your Days, half of it grown over with grass and a tree, Chimis digging and planting the squares',
+  },
+  {
+    slug: 'your-way',
+    title: 'Your Way',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'Three Chimis hauling a road sign reading Your Way upright out of a mound of dirt',
+  },
+  {
+    slug: 'the-cursor',
+    title: 'The Cursor',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A Chimi lying flat beneath a giant pixel mouse cursor',
+  },
+  {
+    slug: 'problem-wall',
+    title: 'Problem Wall',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'Chimis with a ladder and spray cans painting the word PROBLEM across a brick wall built like a rising graph',
+  },
+  {
+    slug: 'piano-keys',
+    title: 'Piano Keys',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A Chimi in headphones sitting between the keys of a giant piano with an open book',
+  },
+  {
+    slug: 'toast-bed',
+    title: 'Toast Bed',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A Chimi asleep tucked into a slice of bread like a bed',
+  },
+  {
+    slug: 'movie-night',
+    title: 'Movie Night',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A Chimi slumped at a desk in a dark room while a Chimi made of fire glows beside it',
+  },
 ]
 
 export const artGroups: { id: ArtGroup; label: string; blurb: string }[] = [

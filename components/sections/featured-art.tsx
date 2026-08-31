@@ -10,14 +10,14 @@ import { cn } from '@/lib/utils'
 
 /** A hand-picked handful — the pieces worth leading with. */
 const featuredSlugs = [
-  'the-crossing',
-  'wrapped-crown',
-  'first-sea',
-  'tiger-suit',
-  'night-hill',
-  'blue-braid',
-  'four-windows',
-  'bone-mask',
+  'pencil-stairs',
+  'your-days',
+  'your-way',
+  'the-cursor',
+  'problem-wall',
+  'piano-keys',
+  'toast-bed',
+  'movie-night',
 ]
 
 const featured = featuredSlugs
