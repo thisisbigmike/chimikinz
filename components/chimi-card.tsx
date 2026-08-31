@@ -100,7 +100,10 @@ export function ChimiCard({ chimi }: { chimi: Chimi }) {
 
           {/* Artwork */}
           <div>
-            <div className="relative aspect-square w-full">
+            {/* Framed like a picture on the wash. The art files carry their
+                own coloured ground and are square, so the frame sits flush
+                to the edge of the drawing with nothing to letterbox. */}
+            <div className="relative aspect-square w-full overflow-hidden rounded-2xl border-4 border-border">
               <Image
                 src={chimi.art}
                 alt={`${chimi.name}, the Chimi of ${chimi.emotion.toLowerCase()}`}
@@ -111,9 +114,11 @@ export function ChimiCard({ chimi }: { chimi: Chimi }) {
               />
             </div>
 
-            {/* The ground they stand on */}
+            {/* The ground the frame stands on. It used to tuck under the
+                artwork; against a border it has to clear it, or it reads as
+                a smudge across the bottom edge. */}
             <div
-              className="mx-auto -mt-2 mb-6 h-2.5 w-1/2 bg-night/15"
+              className="mx-auto mb-6 mt-2 h-2.5 w-1/2 bg-night/15"
               style={{ borderRadius: '50%' }}
               aria-hidden="true"
             />
