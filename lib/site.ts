@@ -87,17 +87,25 @@ export const roadmap = [
   },
 ] as const
 
+/**
+ * The card art is square with a transparent ground, so it drops straight
+ * into the team card's `aspect-square` frame and picks up the paper behind
+ * it. The old .jpeg headshots are kept commented below — same crop, same
+ * character, just flat photos of the art rather than the art itself.
+ */
 export const team = [
   {
     name: 'Metakiddo',
     role: 'Founder / Art & Lore',
-    image: '/chimikinz/metakiddo.jpeg',
+    // image: '/chimikinz/metakiddo.jpeg',
+    image: '/chimikinz/oddling-7.png',
     body: 'Draws every chimi and writes the charm behind it.',
   },
   {
     name: 'CHIMIJEE',
     role: 'Vibes & Events',
-    image: '/chimikinz/chimijee.jpeg',
+    // image: '/chimikinz/chimijee.jpeg',
+    image: '/chimikinz/oddling-4.png',
     body: 'Runs the community, events and the noise.',
   },
 ] as const
