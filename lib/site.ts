@@ -32,6 +32,18 @@ export const site = {
  */
 export const launched: boolean = false
 
+/**
+ * The launch switch for the Workshop page.
+ *
+ * While this is `false` the whole page renders as a blurred preview behind a
+ * "Coming soon" plate — the sections are all built and sit underneath it.
+ * Flip it to `true` and the same page comes through sharp and interactive.
+ *
+ * Typed as `boolean` for the same reason as `launched` above: a literal
+ * `false` would make TypeScript treat the open branch as dead code.
+ */
+export const workshopOpen: boolean = false
+
 export const stats = [
   { value: '4,444', label: 'Chimis' },
   { value: '100%', label: 'Hand-drawn' },
