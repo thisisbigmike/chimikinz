@@ -379,6 +379,48 @@ export const artwork: Artwork[] = [
     category: 'scenes',
     alt: 'A Chimi slumped at a desk in a dark room while a Chimi made of fire glows beside it',
   },
+  {
+    slug: 'cap-and-books',
+    title: 'Cap And Books',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A graduation cap resting on a stack of grass-grown books, with a Chimi abseiling down the tassel',
+  },
+  {
+    slug: 'in-one-ear',
+    title: 'In One Ear',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A Chimi standing inside a giant ear, shouting a heart through a megaphone',
+  },
+  {
+    slug: 'table-for-one',
+    title: 'Table For One',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A Chimi sitting alone at a small cafe table set out on the keys of a giant keyboard',
+  },
+  {
+    slug: 'out-of-the-screen',
+    title: 'Out Of The Screen',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'One Chimi hauling another up out of a phone screen on a rope',
+  },
+  {
+    slug: 'the-flip',
+    title: 'The Flip',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A fried egg standing on two legs with a frying pan, having just flipped a Chimi into the air',
+  },
+  {
+    slug: 'the-long-shadow',
+    title: 'The Long Shadow',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A small Chimi on open ground casting the long shadow of someone much taller',
+  },
 ]
 
 export const artGroups: { id: ArtGroup; label: string; blurb: string }[] = [
