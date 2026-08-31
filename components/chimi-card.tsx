@@ -102,8 +102,13 @@ export function ChimiCard({ chimi }: { chimi: Chimi }) {
           <div>
             {/* Framed like a picture on the wash. The art files carry their
                 own coloured ground and are square, so the frame sits flush
-                to the edge of the drawing with nothing to letterbox. */}
-            <div className="relative aspect-square w-full overflow-hidden rounded-2xl border-4 border-border">
+                to the edge of the drawing with nothing to letterbox.
+
+                The radius is spelled out rather than `rounded-2xl`: the
+                theme zeroes every `--radius-*` token to hold the pixel grid
+                square, so the scale utilities all compile to 0. The card
+                itself takes the same way out at 28px. */}
+            <div className="relative aspect-square w-full overflow-hidden rounded-[18px] border-4 border-border">
               <Image
                 src={chimi.art}
                 alt={`${chimi.name}, the Chimi of ${chimi.emotion.toLowerCase()}`}
