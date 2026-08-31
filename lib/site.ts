@@ -15,6 +15,7 @@ export const site = {
     { label: 'Home', href: '/' },
     { label: 'Chimis', href: '/chimis' },
     { label: 'Gallery', href: '/gallery' },
+    { label: 'Workshop', href: '/workshop' },
     { label: 'Journey', href: '/journey' },
   ],
 } as const

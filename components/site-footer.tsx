@@ -13,6 +13,7 @@ const columns = [
     links: [
       { label: 'The Chimis', href: '/chimis' },
       { label: 'Gallery', href: '/gallery' },
+      { label: 'The Workshop', href: '/workshop' },
       { label: 'The Journey', href: '/journey' },
       // Kept off the main nav until the OpenSea drop is live.
       { label: 'Collections', href: '/collections' },
