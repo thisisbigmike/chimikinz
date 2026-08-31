@@ -176,7 +176,7 @@ export default function WorkshopPage() {
           <div
             aria-hidden="true"
             inert
-            className="pointer-events-none select-none blur-[6px] sm:blur-[8px]"
+            className="pointer-events-none select-none blur-[12px] sm:blur-[16px]"
           >
             {content}
           </div>
