@@ -29,47 +29,6 @@ function Clover({ className }: { className?: string }) {
   )
 }
 
-/**
- * The empty thought bubble from the reference. Drawn in two passes: the
- * first lays down outlined circles, the second fills over the seams where
- * they overlap, so the cluster reads as one cloud instead of a pile.
- */
-function ThoughtBubble({ className }: { className?: string }) {
-  const puffs = [
-    { cx: 62, cy: 36, r: 25 },
-    { cx: 92, cy: 43, r: 17 },
-    { cx: 35, cy: 47, r: 16 },
-    { cx: 66, cy: 15, r: 14 },
-    { cx: 100, cy: 24, r: 10 },
-  ]
-  const trail = [
-    { cx: 24, cy: 70, r: 7 },
-    { cx: 13, cy: 82, r: 4.5 },
-  ]
-
-  return (
-    <svg
-      viewBox="0 0 120 92"
-      aria-hidden="true"
-      className={className}
-      fill="var(--cream)"
-      stroke="var(--night)"
-      strokeWidth="2.5"
-    >
-      <g>
-        {[...puffs, ...trail].map((p) => (
-          <circle key={`${p.cx}-${p.cy}`} {...p} />
-        ))}
-      </g>
-      <g stroke="none">
-        {puffs.map((p) => (
-          <circle key={`fill-${p.cx}-${p.cy}`} {...p} r={p.r - 1.3} />
-        ))}
-      </g>
-    </svg>
-  )
-}
-
 /** One labelled block in the cream strip along the bottom. */
 function Field({
   label,
@@ -140,9 +99,7 @@ export function ChimiCard({ chimi }: { chimi: Chimi }) {
           </div>
 
           {/* Artwork */}
-          <div className="relative">
-            <ThoughtBubble className="absolute right-0 top-0 z-10 w-24 sm:w-32 lg:-top-4 lg:w-40" />
-
+          <div>
             <div className="relative aspect-square w-full">
               <Image
                 src={chimi.art}
