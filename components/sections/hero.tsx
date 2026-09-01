@@ -5,80 +5,97 @@ import { PixelLink } from '@/components/pixel/pixel-button'
 import { PixelTag } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { PixelSparkles } from '@/components/pixel-sparkles'
-import { brandArt } from '@/lib/collection'
+import { fullSrc } from '@/lib/artwork'
 import { site, stats } from '@/lib/site'
 
 export function Hero() {
   return (
-    <section className="border-b-4 border-border">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:py-20">
-        <div className="flex flex-col items-start gap-6">
-          <ScrollReveal variant="pixel-pop" delay={0}>
-            <div className="flex flex-wrap items-center gap-2">
-              <PixelTag className="bg-accent text-accent-foreground">
-                {site.supply.toLocaleString()} lucky chimis
-              </PixelTag>
-            </div>
-          </ScrollReveal>
+    /**
+     * The hero is the one section that does not keep the sun's hours.
+     *
+     * It is painted with the flat cream the scene behind it was drawn
+     * on — `--art-ground` pinned to the file's own `#feeebc`, sampled from
+     * its corners — so the artwork has no edge to give it away. That paper
+     * does not swap with the theme, so the ink on top must not either:
+     * `text-night` and the two linework variables are pinned here, or a
+     * reader on `data-theme=dark` gets cream type on cream paper. Nightfall
+     * never reaches this far up the page anyway (it starts at 53%).
+     */
+    <section className="art-ground relative isolate overflow-hidden border-b-4 border-border text-night [--art-ground:#feeebc] [--line:var(--night)] [--shade:var(--night)]">
+      <PixelSparkles count={16} speed={0.6} />
 
-          {/* The signature element: the wordmark itself. */}
-          <ScrollReveal variant="fade-up" delay={100}>
-            <h1 className="font-display text-4xl uppercase leading-[1.1] sm:text-5xl lg:text-6xl">
-              <span className="pixel-text-shadow-primary text-foreground">
-                Chimikinz
-              </span>
-            </h1>
-          </ScrollReveal>
-
-          <ScrollReveal variant="fade-up" delay={200}>
-            <p className="max-w-xl text-pretty text-2xl leading-snug text-muted-foreground">
-              Every chimi is drawn by hand and born with one charm of its own —
-              a horn, a halo, a hood, a habit. Collect one and the luck is yours
-              to keep.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal variant="fade-up" delay={300}>
-            <div className="flex flex-wrap items-center gap-4">
-              <PixelLink href={site.links.mint} external size="lg">
-                Mint on {site.chain}
-              </PixelLink>
-              <PixelLink href="/gallery" variant="secondary" size="lg">
-                Explore Nest
-              </PixelLink>
-            </div>
-          </ScrollReveal>
-
-          <dl className="mt-2 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
-            {stats.map((stat, i) => (
-              <ScrollReveal key={stat.label} variant="pixel-pop" delay={400 + i * 100}>
-                <div className="pixel-box-sm bg-card px-3 py-3 text-center">
-                  <dt className="sr-only">{stat.label}</dt>
-                  <dd className="font-display text-base uppercase">
-                    {stat.value}
-                  </dd>
-                  <dd className="mt-1 text-lg uppercase text-muted-foreground">
-                    {stat.label}
-                  </dd>
-                </div>
-              </ScrollReveal>
-            ))}
-          </dl>
+      {/**
+       * The four of them, behind the copy rather than under it.
+       *
+       * Behind the copy, so the section keeps its own height — the scene
+       * fits the hero instead of the hero growing to fit the scene. 70rem
+       * is a cap, not a width: bleeding it edge to edge would blow the four
+       * of them up to fill the screen, so past the cap the flat cream takes
+       * over and `hero-art-fade` dissolves the two side edges. 52% centres
+       * the crop on the stretch they occupy rather than the empty sky above
+       * or the rail below.
+       *
+       * `hero-art-veil` is what lets type sit on top of it.
+       */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="hero-art-fade absolute inset-y-0 left-1/2 w-[min(100%,70rem)] -translate-x-1/2">
+          <Image
+            src={fullSrc('on-the-rail')}
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 1120px) 70rem, 100vw"
+            className="art-smooth object-cover object-[center_52%]"
+          />
         </div>
+        <div className="hero-art-veil absolute inset-0" />
+      </div>
 
-        <ScrollReveal variant="scale-up" delay={150}>
-          <div className="pixel-box-lg art-ground pixel-tilt relative aspect-square w-full bg-card overflow-hidden">
-            <PixelSparkles count={16} speed={0.6} />
-            <Image
-              src={brandArt.group}
-              alt="The Chimikins logo above the full cast of chimis gathered together for a group portrait"
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              priority
-              className="chimi-bob relative z-10 object-contain p-6"
-            />
+      <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
+        <ScrollReveal variant="pixel-pop" delay={0}>
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <PixelTag className="bg-accent text-accent-foreground">
+              {site.supply.toLocaleString()} lucky chimis
+            </PixelTag>
           </div>
         </ScrollReveal>
+
+        {/* The signature element: the wordmark itself. */}
+        <ScrollReveal variant="fade-up" delay={100}>
+          <h1 className="font-display text-4xl uppercase leading-[1.1] sm:text-5xl lg:text-6xl">
+            <span className="pixel-text-shadow-primary">{site.name}</span>
+          </h1>
+        </ScrollReveal>
+
+        <ScrollReveal variant="fade-up" delay={200}>
+          <p className="max-w-xl text-pretty text-2xl leading-snug text-night/75">
+            Every chimi is drawn by hand and born with one charm of its own —
+            a horn, a halo, a hood, a habit. Collect one and the luck is yours
+            to keep.
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal variant="fade-up" delay={300}>
+          <PixelLink href={site.links.mint} external size="lg">
+            Mint on {site.chain}
+          </PixelLink>
+        </ScrollReveal>
+
+        <dl className="mt-2 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
+          {stats.map((stat, i) => (
+            <ScrollReveal key={stat.label} variant="pixel-pop" delay={400 + i * 100}>
+              <div className="pixel-box-sm bg-cream px-3 py-3 text-center">
+                <dt className="sr-only">{stat.label}</dt>
+                <dd className="font-display text-base uppercase">
+                  {stat.value}
+                </dd>
+                <dd className="mt-1 text-lg uppercase text-night/60">
+                  {stat.label}
+                </dd>
+              </div>
+            </ScrollReveal>
+          ))}
+        </dl>
       </div>
     </section>
   )

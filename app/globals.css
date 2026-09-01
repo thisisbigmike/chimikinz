@@ -590,6 +590,59 @@
     background-image: linear-gradient(var(--art-ground), var(--art-ground));
   }
 
+  /**
+   * The veil that lets the hero scene sit *behind* the copy.
+   *
+   * The artwork fills the hero, so the headline and buttons are printed on
+   * top of four faces and a rail. The section is compact — the copy runs
+   * nearly its whole height — so the veil never fully clears: cream at 64%
+   * behind the headline, easing to 40% at the bottom edge, where the stat
+   * cards bring their own fill and nothing is printed straight onto the
+   * art. 64/58 is as far down as this can go and still hold the copy: the
+   * worst case is body text over the black hoodie or the linework, which
+   * measures about 6:1 against the ink — clear of the 4.5:1 floor, with
+   * the scene as present as it can be underneath.
+   *
+   * `color-mix` rather than a hard rgba so the veil stays tied to whatever
+   * `--art-ground` the section pins itself to.
+   */
+  .hero-art-veil {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--art-ground) 64%, transparent) 0%,
+      color-mix(in srgb, var(--art-ground) 58%, transparent) 62%,
+      color-mix(in srgb, var(--art-ground) 40%, transparent) 100%
+    );
+  }
+
+  /**
+   * The hero scene, dissolved into the paper it sits on.
+   *
+   * The art is capped narrower than the section so the scene reads at a
+   * sensible scale instead of four faces filling the screen; past the cap
+   * the flat cream takes over. The hero pins `--art-ground` to the file's
+   * own cream so the two match exactly, and this is the belt to that pair
+   * of braces: masking the side edges to nothing means the join is never a
+   * line to spot, whatever the file.
+   */
+  .hero-art-fade {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 14%,
+      #000 86%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 14%,
+      #000 86%,
+      transparent
+    );
+  }
+
+
   /* The hint stays on the loops below: they animate continuously, so the
      layer they pin is a layer they are actually using. */
   .marquee-track {
