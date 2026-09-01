@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { ScrollReveal } from '@/components/scroll-reveal'
+import { fullSrc } from '@/lib/artwork'
 import { brandArt } from '@/lib/collection'
 import { site } from '@/lib/site'
 
@@ -31,7 +32,62 @@ const columns = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t-4 border-border bg-night text-cream">
+    <footer className="relative isolate overflow-hidden border-t-4 border-border bg-night text-cream">
+      {/**
+       * The footer's sky — Night Hill, the scene the page has been walking
+       * toward. The nightfall ramp lands the whole site on `--night` by the
+       * time you reach the bottom (see globals.css), and this art is painted
+       * in the same cool blue-purple those last keyframes cross through, so
+       * it reads as where the sunset ended rather than a picture dropped
+       * into a slab.
+       *
+       * The layers sit on `-z-10` inside the footer's own stacking context:
+       * `bg-night` paints first, these tint it, and the content above is
+       * untouched — no `z-10` needed on every column.
+       */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        {/* The sky, full bleed. Cropped high onto the drifting cloud layer so
+            it is atmosphere rather than subject — this is what the corners of
+            the footer are wearing. Desktop only: once the columns stack, the
+            scene below already fills the width, and a second copy of the same
+            art underneath it would just double-expose the clouds and wash out
+            the type. */}
+        <Image
+          src={fullSrc('night-hill')}
+          alt=""
+          fill
+          sizes="100vw"
+          className="art-smooth hidden object-cover object-[center_26%] opacity-[0.3] lg:block"
+        />
+
+        {/* The scene itself, held to a centred box narrower than the footer.
+            Scaling it down is the only way the chimi and the hill it stands
+            on both fit a band this wide and this short: at full bleed the
+            figure alone is taller than the footer's content, so its legs run
+            off the bottom edge with no ground under them. At this size the
+            crop lands sky above the head and hill below the feet. */}
+        <div className="absolute inset-y-0 left-1/2 w-full max-w-[64rem] -translate-x-1/2">
+          <Image
+            src={fullSrc('night-hill')}
+            alt=""
+            fill
+            sizes="100vw"
+            className="art-smooth object-cover object-[center_60%] opacity-[0.55]"
+          />
+          {/* Melts into the full-bleed sky either side, so the box has no
+              edges of its own. */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--night)_0%,transparent_22%,transparent_78%,var(--night)_100%)] opacity-70" />
+        </div>
+
+        {/* Evens out the sky, which is the lightest part of the art and sits
+            directly behind the link columns. */}
+        <div className="absolute inset-0 bg-night/25" />
+        {/* Both edges dissolve into `--night`: the top so the seam with the
+            page above disappears, the bottom so the copyright bar keeps the
+            near-black it was already printed on. */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--night)_0%,transparent_34%,transparent_58%,var(--night)_100%)]" />
+      </div>
+
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <ScrollReveal variant="fade-up" delay={0}>
           <div className="flex flex-col gap-4">
