@@ -68,7 +68,12 @@ export function Hero() {
         </ScrollReveal>
 
         <ScrollReveal variant="fade-up" delay={200}>
-          <p className="max-w-xl text-pretty text-2xl leading-snug text-night/75">
+          {/* 85, not the 75 the muted copy uses elsewhere: this paragraph is
+              printed straight onto the artwork, and the extra ten points are
+              what take the worst case — 24px text over the black hoodie —
+              from 3.9:1 to 4.6:1, clear of the 4.5 floor rather than only
+              the 3.0 one large text is allowed. */}
+          <p className="max-w-xl text-pretty text-2xl leading-snug text-night/85">
             Every chimi is drawn by hand and born with one charm of its own —
             a horn, a halo, a hood, a habit. Collect one and the luck is yours
             to keep.
