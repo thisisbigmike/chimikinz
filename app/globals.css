@@ -171,10 +171,12 @@
 
   /* Where the afternoon begins — see the nightfall block below. Scroll
      above this point is flat, full daylight; the whole ramp is fitted
-     into what is left. Measured to land on the lore section, which is
-     ~21% down the home page on a desktop viewport. This is the one
-     number to turn if the sun should set earlier or later. */
-  --nightfall-start: 20%;
+     into what is left. Measured to land on `Four feelings, four friends`
+     — the section sits 34.5% down the home page's scroll at a 900px
+     viewport and 35.7% at 1080px, so the sun holds until you have the
+     four of them on screen and starts dropping from there. This is the
+     one number to turn if the sun should set earlier or later. */
+  --nightfall-start: 35%;
 }
 
 :root[data-theme='light'] {
