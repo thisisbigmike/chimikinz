@@ -58,15 +58,19 @@ export function Hero() {
         <ScrollReveal variant="pixel-pop" delay={0}>
           <div className="flex flex-wrap items-center justify-center gap-2">
             <PixelTag className="bg-accent text-accent-foreground">
-              {site.supply.toLocaleString()} lucky chimis
+              Launching {site.launch}
             </PixelTag>
           </div>
         </ScrollReveal>
 
-        {/* The signature element: the wordmark itself. */}
+        {/* The signature element. `text-balance` because this line is a
+            sentence rather than the one-word wordmark it replaced, and at
+            the display sizes below it wraps on every viewport under lg. */}
         <ScrollReveal variant="fade-up" delay={100}>
-          <h1 className="font-display text-4xl uppercase leading-[1.1] sm:text-5xl lg:text-6xl">
-            <span className="pixel-text-shadow-primary">{site.name}</span>
+          <h1 className="text-balance font-display text-4xl uppercase leading-[1.1] sm:text-5xl lg:text-6xl">
+            <span className="pixel-text-shadow-primary">
+              Welcome to {site.world}
+            </span>
           </h1>
         </ScrollReveal>
 
@@ -80,9 +84,9 @@ export function Hero() {
               on top of margin; it stays because the art is the thing likely
               to be swapped, not the type. */}
           <p className="max-w-xl text-pretty text-2xl leading-snug text-night/85">
-            Every chimi is drawn by hand and born with one charm of its own —
-            a horn, a halo, a hood, a habit. Collect one and the luck is yours
-            to keep.
+            Tiny beings born from emotions. A world where every Chimi begins
+            as a feeling, growing into a unique companion with a story of
+            its own.
           </p>
         </ScrollReveal>
 
