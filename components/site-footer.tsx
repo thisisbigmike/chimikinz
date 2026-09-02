@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { fullSrc } from '@/lib/artwork'
-import { brandArt } from '@/lib/collection'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
@@ -112,15 +111,6 @@ export function SiteFooter({ backdrop = true }: { backdrop?: boolean }) {
             <p className="max-w-xs text-pretty text-xl text-cream/70">
               {site.tagline}
             </p>
-            <div className="art-ground pixel-box-sm relative size-28 p-1">
-              <Image
-                src={brandArt.builder}
-                alt=""
-                fill
-                sizes="112px"
-                className="chimi-bob object-contain"
-              />
-            </div>
           </div>
         </ScrollReveal>
 
@@ -175,7 +165,7 @@ export function SiteFooter({ backdrop = true }: { backdrop?: boolean }) {
       <div className="border-t-4 border-cream/20">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-lg text-cream/60 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p>
-            &copy; {new Date().getFullYear()} {site.name}. All charms reserved.
+            &copy; {new Date().getFullYear()} {site.name}. All beliefs secured.
           </p>
           <button
             type="button"
