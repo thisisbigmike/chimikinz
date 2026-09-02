@@ -53,7 +53,7 @@ export const chapters: Chapter[] = [
     title: 'The Chimis',
     lead: 'Clov, Moss, Whim and Zipp turned up, and the world got a cast.',
     body: [
-      'Four feelings arrived first: curiosity, patience, wonder and determination. Between them they set the tone of the Cove — how fast it moves, how much it forgives, how much it wanders off.',
+      'Four feelings arrived first: hope, patience, wonder and chaos. Between them they set the tone of the Cove — how fast it moves, how much it forgives, how much it wanders off.',
       'They stopped being drawings at the point they started disagreeing with each other. Everything since has been written with the four of them in mind.',
     ],
     status: 'past',

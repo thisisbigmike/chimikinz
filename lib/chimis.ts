@@ -44,7 +44,7 @@ export const chimis: Chimi[] = [
   {
     slug: 'clov',
     name: 'Clov',
-    emotion: 'Curiosity',
+    emotion: 'Hope',
     personality:
       'Always first through the gap in the hedge, and always fine about what he finds on the other side.',
     story: [
@@ -55,7 +55,7 @@ export const chimis: Chimi[] = [
     quote: 'Everything is somewhere. You just have to go and see.',
     blurb: [
       'Nothing in Clover Cove stays unfound for long.',
-      'Curious Chimis go looking before they are ready.',
+      'Hopeful Chimis go looking before they are ready.',
       'That is usually the point.',
     ],
     lore: 'He walks the same paths every week because a place you think you know is just a place you stopped looking at.',
@@ -149,7 +149,7 @@ export const chimis: Chimi[] = [
   {
     slug: 'zipp',
     name: 'Zipp',
-    emotion: 'Determination',
+    emotion: 'Chaos',
     personality:
       'Has never once finished something on the first try, and has never once stopped at the first try.',
     story: [
@@ -160,7 +160,7 @@ export const chimis: Chimi[] = [
     quote: 'That was attempt four. Attempt five is going to be great.',
     blurb: [
       'Nobody in Clover Cove gets it right the first time.',
-      'Determined Chimis count the tries out loud.',
+      'Chaotic Chimis count the tries out loud.',
       'Then they go again.',
     ],
     lore: 'He counts his attempts out loud because the number is not a score, it is proof he has not stopped.',
