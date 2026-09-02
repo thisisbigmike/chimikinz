@@ -92,7 +92,7 @@ export function Hero() {
           </PixelLink>
         </ScrollReveal>
 
-        <dl className="mt-2 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
+        <dl className="mt-2 grid w-full grid-cols-2 gap-3 sm:grid-cols-3">
           {stats.map((stat, i) => (
             <ScrollReveal key={stat.label} variant="pixel-pop" delay={400 + i * 100}>
               <div className="pixel-box-sm bg-cream px-3 py-3 text-center">

@@ -8,12 +8,16 @@ import { MeetTheChimis } from '@/components/sections/meet-the-chimis'
 import { MotionShowcase } from '@/components/sections/motion-showcase'
 import { FeaturedArt } from '@/components/sections/featured-art'
 import { SocialLinks } from '@/components/sections/social-links'
+import { NightOutro } from '@/components/night-outro'
 import { marqueeItems } from '@/lib/site'
 
 /**
  * The way in to Clover Cove. Reads as a place rather than a pitch:
  * arrive → what this is → the world → who lives there → what it looks
  * like moving → the art → where to find us.
+ *
+ * The last of those and the footer are wrapped together: past `FeaturedArt`
+ * the sun is down, and `NightOutro` paints the one sky they share.
  */
 export default function Home() {
   return (
@@ -27,9 +31,12 @@ export default function Home() {
         <MeetTheChimis />
         <MotionShowcase />
         <FeaturedArt />
-        <SocialLinks />
       </main>
-      <SiteFooter />
+
+      <NightOutro>
+        <SocialLinks />
+        <SiteFooter backdrop={false} />
+      </NightOutro>
     </div>
   )
 }

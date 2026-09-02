@@ -25,17 +25,17 @@ const channels = [
 
 export function SocialLinks() {
   return (
-    <section className="relative overflow-hidden border-b-4 border-border bg-muted">
+    <section className="relative overflow-hidden">
       <PixelSparkles count={18} speed={0.5} />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <div className="flex flex-col items-center gap-4 text-center">
-            <PixelTag className="bg-card">Come in</PixelTag>
+            <PixelTag className="bg-card text-cream">Come in</PixelTag>
             <h2 className="text-balance font-display text-2xl uppercase sm:text-3xl">
               Clover Cove is better with people in it
             </h2>
-            <p className="max-w-xl text-pretty text-2xl leading-snug text-muted-foreground">
+            <p className="max-w-xl text-pretty text-2xl leading-snug text-cream/70">
               No pressure, no alpha calls. Just a small place on the internet
               with a lot of drawings in it.
             </p>
@@ -69,7 +69,7 @@ export function SocialLinks() {
                       {channel.label}{' '}
                       <span className="pixel-arrow text-primary">&rarr;</span>
                     </h3>
-                    <p className="text-pretty text-xl leading-snug text-muted-foreground">
+                    <p className="text-pretty text-xl leading-snug text-cream/70">
                       {channel.body}
                     </p>
                   </div>

@@ -48,7 +48,6 @@ export const stats = [
   { value: '4,444', label: 'Chimis' },
   { value: '100%', label: 'Hand-drawn' },
   { value: 'ETH', label: 'Chain' },
-  { value: 'SOON', label: 'Mint' },
 ] as const
 
 export const marqueeItems = [
