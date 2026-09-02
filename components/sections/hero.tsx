@@ -35,7 +35,10 @@ export function Hero() {
        * the crop on the stretch they occupy rather than the empty sky above
        * or the rail below.
        *
-       * `hero-art-veil` is what lets type sit on top of it.
+       * The scene itself carries `opacity-60`, so it reads as a print on the
+       * cream rather than a photo behind the type; `hero-art-veil` is the
+       * second half of that, and the two together are what let the copy sit
+       * on top of it.
        */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div className="hero-art-fade absolute inset-y-0 left-1/2 w-[min(100%,70rem)] -translate-x-1/2">
@@ -45,7 +48,7 @@ export function Hero() {
             fill
             priority
             sizes="(min-width: 1120px) 70rem, 100vw"
-            className="art-smooth object-cover object-[center_52%]"
+            className="art-smooth object-cover object-[center_52%] opacity-60"
           />
         </div>
         <div className="hero-art-veil absolute inset-0" />
@@ -70,9 +73,12 @@ export function Hero() {
         <ScrollReveal variant="fade-up" delay={200}>
           {/* 85, not the 75 the muted copy uses elsewhere: this paragraph is
               printed straight onto the artwork, and the extra ten points are
-              what take the worst case — 24px text over the black hoodie —
-              from 3.9:1 to 4.6:1, clear of the 4.5 floor rather than only
-              the 3.0 one large text is allowed. */}
+              what took the worst case — 24px text over the black hoodie —
+              clear of the 4.5:1 floor rather than only the 3.0 one large
+              text is allowed. The scene's own 60% opacity has since lifted
+              that hoodie most of the way to the cream, so this is now margin
+              on top of margin; it stays because the art is the thing likely
+              to be swapped, not the type. */}
           <p className="max-w-xl text-pretty text-2xl leading-snug text-night/85">
             Every chimi is drawn by hand and born with one charm of its own —
             a horn, a halo, a hood, a habit. Collect one and the luck is yours

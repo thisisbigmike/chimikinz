@@ -64,7 +64,6 @@ export const metadata: Metadata = {
 }
 
 import { FavoritesProvider } from '@/lib/context/favorites-context'
-import { ScrollToTopHands } from '@/components/scroll-to-top-hands'
 
 export const viewport: Viewport = {
   // The tokens in globals.css theme themselves with light-dark(), so the
@@ -89,7 +88,6 @@ export default function RootLayout({
       <body className="antialiased">
         <FavoritesProvider>
           {children}
-          <ScrollToTopHands />
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </FavoritesProvider>
       </body>

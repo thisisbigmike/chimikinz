@@ -847,17 +847,6 @@
     animation: unlockGlow 1.5s ease-in-out infinite;
   }
 
-  /* The scroll-to-top hands. These used to be three React states flipped by
-     a 150ms setInterval, which re-rendered a full-screen overlay ~7x a
-     second during a smooth scroll — exactly when the main thread is busiest.
-     Same three poses, same 450ms cycle, now on the compositor. */
-  .hand-climb-left {
-    animation: handClimbLeft 450ms steps(1, end) infinite;
-  }
-  .hand-climb-right {
-    animation: handClimbRight 450ms steps(1, end) infinite;
-  }
-
   /* Arrow slide for CTAs */
   .pixel-arrow {
     display: inline-block;
@@ -882,8 +871,6 @@
     .pixel-slide-up,
     .pixel-unlock-glow,
     .pixel-count-up,
-    .hand-climb-left,
-    .hand-climb-right,
     .rail-nudge {
       animation: none;
     }
@@ -998,18 +985,4 @@
 @keyframes unlockGlow {
   0%, 100% { box-shadow: 6px 6px 0 0 var(--shade), 0 0 0 0 rgba(255, 219, 107, 0.3); }
   50%      { box-shadow: 6px 6px 0 0 var(--shade), 0 0 0 8px rgba(255, 219, 107, 0.1); }
-}
-
-@keyframes handClimbLeft {
-  0%   { transform: translateY(0) rotate(-5deg); }
-  33%  { transform: translateY(-2rem) rotate(-15deg) scale(1.1); }
-  66%  { transform: translateY(-4rem) rotate(-10deg) scale(1.05); }
-  100% { transform: translateY(0) rotate(-5deg); }
-}
-
-@keyframes handClimbRight {
-  0%   { transform: translateY(-2rem) rotate(15deg) scale(1.1); }
-  33%  { transform: translateY(-4rem) rotate(10deg) scale(1.05); }
-  66%  { transform: translateY(0) rotate(5deg); }
-  100% { transform: translateY(-2rem) rotate(15deg) scale(1.1); }
 }
