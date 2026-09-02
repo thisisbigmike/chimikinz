@@ -54,7 +54,7 @@ export function Hero() {
         <div className="hero-art-veil absolute inset-0" />
       </div>
 
-      <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
+      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
         <ScrollReveal variant="pixel-pop" delay={0}>
           <div className="flex flex-wrap items-center justify-center gap-2">
             <PixelTag className="bg-accent text-accent-foreground">
@@ -63,14 +63,22 @@ export function Hero() {
           </div>
         </ScrollReveal>
 
-        {/* The signature element. `text-balance` because this line is a
-            sentence rather than the one-word wordmark it replaced, and at
-            the display sizes below it wraps on every viewport under lg. */}
+        {/* The signature element, and the one heading on the site whose
+            size is arithmetic rather than taste.
+
+            Press Start 2P is monospaced at 1em of advance per character, so
+            this line is a fixed 22 chars × 0.98em ≈ 21.6em wide whatever the
+            font-size — it does not reflow, it only fits or it does not. At
+            lg that is 776px against the 848px this column now has, which is
+            why the column above is `max-w-4xl` and not the `max-w-3xl` the
+            one-word wordmark used to need. Going up one step to text-5xl
+            costs 970px and breaks the line; so does keeping text-4xl in the
+            narrower column. `text-balance` is for the small viewports below
+            sm, where 21.6em cannot fit at any readable size and two even
+            lines beat a widow. */}
         <ScrollReveal variant="fade-up" delay={100}>
-          <h1 className="text-balance font-display text-4xl uppercase leading-[1.1] sm:text-5xl lg:text-6xl">
-            <span className="pixel-text-shadow-primary">
-              Welcome to {site.world}
-            </span>
+          <h1 className="text-balance font-display text-2xl uppercase leading-[1.1] sm:text-3xl lg:text-4xl">
+            <span className="pixel-text-shadow-primary">Welcome to {site.world}</span>
           </h1>
         </ScrollReveal>
 
@@ -96,9 +104,31 @@ export function Hero() {
           </PixelLink>
         </ScrollReveal>
 
-        <dl className="mt-2 grid w-full grid-cols-2 gap-3 sm:grid-cols-3">
+        <dl className="mt-2 grid w-full max-w-3xl grid-cols-2 gap-3 sm:grid-cols-3">
           {stats.map((stat, i) => (
-            <ScrollReveal key={stat.label} variant="pixel-pop" delay={400 + i * 100}>
+            <ScrollReveal
+              key={stat.label}
+              variant="pixel-pop"
+              delay={400 + i * 100}
+              /**
+               * An odd number of stats leaves the last one stranded alone on
+               * the bottom row of the two-column layout, hard against the
+               * left edge. That one spans both columns instead and then
+               * takes a single column's width back — half the row less half
+               * the 0.75rem gap — so it lands centred at exactly the width
+               * of the cards above it rather than shrink-to-fit.
+               *
+               * Above sm the grid is three columns, three stats fill it
+               * evenly, and the whole thing reverts: `w-auto` alone would
+               * leave `justify-self-center` sizing the card to its text, so
+               * the stretch has to be handed back explicitly.
+               */
+              className={
+                stats.length % 2 === 1 && i === stats.length - 1
+                  ? 'col-span-2 w-[calc(50%-0.375rem)] justify-self-center sm:col-span-1 sm:w-auto sm:justify-self-stretch'
+                  : undefined
+              }
+            >
               <div className="pixel-box-sm bg-cream px-3 py-3 text-center">
                 <dt className="sr-only">{stat.label}</dt>
                 <dd className="font-display text-base uppercase">
