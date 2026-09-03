@@ -32,43 +32,26 @@ export function NightOutro({ children }: { children: React.ReactNode }) {
             that the heading below is already on night. */}
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0,var(--night)_7rem,var(--night)_100%)]" />
 
-        {/* The sky, full bleed over the whole block. Cropped high onto the
-            drifting cloud layer so it is atmosphere rather than subject —
-            this is what the corners are wearing. It runs at every width now:
-            the block is tall enough that the scene below no longer fills it
-            on a phone, so there is no second copy to double-expose. */}
+        {/* The sky, full bleed over the whole block, and now the only Night
+            Hill layer here. Cropped high onto the drifting cloud layer so it
+            is atmosphere rather than subject — this is what the corners are
+            wearing. The centred band that used to sit on top of it, scaled
+            down onto the chimi and the hill, is gone: one continuous wash
+            behind the whole outro reads better than a subject parked in the
+            middle of it. */}
         <Image
           src={fullSrc('night-hill')}
           alt=""
           fill
           sizes="100vw"
-          className="art-smooth object-cover object-[center_26%] opacity-[0.3]"
+          className="art-smooth night-art-fade object-cover object-[center_26%] opacity-[0.3]"
         />
 
-        {/* The scene itself, held to a centred box and anchored to the
-            bottom. Both, for the same reason: at full bleed across a block
-            this tall the chimi alone stands taller than the footer's
-            content, so the figure has to be scaled down to land sky above
-            its head and hill below its feet — and the hill belongs on the
-            horizon, not floating in the middle of the sky. */}
-        <div className="absolute inset-x-0 bottom-0 mx-auto h-[clamp(22rem,55vh,34rem)] w-full max-w-[64rem]">
-          <Image
-            src={fullSrc('night-hill')}
-            alt=""
-            fill
-            sizes="100vw"
-            className="art-smooth object-cover object-[center_60%] opacity-[0.55]"
-          />
-          {/* Melts into the full-bleed sky either side, so the box has no
-              edges of its own. */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--night)_0%,transparent_22%,transparent_78%,var(--night)_100%)] opacity-70" />
-          {/* And into it above, so the band has no top edge either. */}
-          <div className="absolute inset-x-0 top-0 h-32 bg-[linear-gradient(to_bottom,var(--night),transparent)]" />
-        </div>
-
         {/* Evens out the sky, which is the lightest part of the art and sits
-            directly behind the copy. */}
-        <div className="absolute inset-0 bg-night/25" />
+            directly behind the copy. Held off the top 6rem so it does not
+            re-darken the stretch the mask has already cleared — that band
+            is the sunset's, and nothing else should be printed on it. */}
+        <div className="absolute inset-x-0 bottom-0 top-24 bg-night/25" />
         {/* The bottom dissolves into `--night` so the copyright bar keeps the
             near-black it was already printed on. */}
         <div className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(to_bottom,transparent,var(--night))]" />

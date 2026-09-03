@@ -642,6 +642,41 @@
     );
   }
 
+  /**
+   * The outro scene, eased in rather than switched on.
+   *
+   * `NightOutro` opens transparent so the nightfall ramp above it shows
+   * through and dissolves into `--night` over the first 7rem. Night Hill
+   * used to print across that whole dissolve at a flat 30%, which put a
+   * washed brown band over the one stretch of the page that is supposed to
+   * be changing colour — the art announced itself on the section's top
+   * edge instead of arriving out of the dark.
+   *
+   * So the mask holds the art off until the ground beneath it has finished
+   * turning: nothing for the first 6rem, full strength by 18rem. The two
+   * ramps overlap deliberately — the art is already fading up while the
+   * last of the sunset is fading out, which is what makes it read as one
+   * move rather than two.
+   *
+   * A length, not a percentage, for the same reason the ground gradient
+   * uses one: this block's height depends on how the footer columns wrap,
+   * and the dissolve has to stay the same at every breakpoint.
+   */
+  .night-art-fade {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 6rem,
+      #000 18rem
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 6rem,
+      #000 18rem
+    );
+  }
+
 
   /* The hint stays on the loops below: they animate continuously, so the
      layer they pin is a layer they are actually using. */

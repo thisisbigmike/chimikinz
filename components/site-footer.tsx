@@ -36,13 +36,19 @@ const columns = [
  * this one together — so there the footer is a transparent block sitting on
  * a scene it does not own. Everywhere else it is still the only thing at
  * the bottom of the page, and paints its own.
+ *
+ * The top border goes with it, for the same reason. Where the footer opens
+ * on its own it needs that edge against the light section above; under
+ * `NightOutro` there is no edge to draw — the same night runs straight
+ * through from `Come in`, and a rule across it only marks a seam that is
+ * not there.
  */
 export function SiteFooter({ backdrop = true }: { backdrop?: boolean }) {
   return (
     <footer
       className={cn(
-        'relative overflow-hidden border-t-4 border-border text-cream',
-        backdrop && 'isolate bg-night',
+        'relative overflow-hidden text-cream',
+        backdrop && 'isolate border-t-4 border-border bg-night',
       )}
     >
       {backdrop && (
