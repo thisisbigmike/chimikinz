@@ -35,10 +35,6 @@ export function SocialLinks() {
             <h2 className="text-balance font-display text-2xl uppercase sm:text-3xl">
               Clover Cove is better with people in it
             </h2>
-            <p className="max-w-xl text-pretty text-2xl leading-snug text-cream/70">
-              No pressure, no alpha calls. Just a small place on the internet
-              with a lot of drawings in it.
-            </p>
           </div>
         </ScrollReveal>
 
