@@ -13,21 +13,21 @@ const SWIPE_THRESHOLD = 40
  * The Chimis as a carousel: one of them front and centre, the rest waiting
  * either side of it.
  *
- * This replaced a drifting marquee. The marquee showed four Chimis equally
- * and asked you to pick; this shows one and asks you to look at it, which is
- * the right shape for a cast of characters — they have faces, and faces want
- * a stage rather than a queue.
+ * The deck has no arrow buttons. The cards either side are the control — they
+ * are big, they are obviously the next thing along, and a button floated over
+ * the middle card only ever covered the face it was meant to be showing off.
+ * So a card off to the side is a button that brings itself to the middle, and
+ * the card in the middle is a link to that Chimi. One rule, and where you
+ * click is what you get.
  *
  * Geometry lives in two custom properties rather than in the transforms:
  * `--card-w` is the focused card's width and `--step` is how far one position
  * sits from the next. Every card is placed at a whole number of steps from
- * the middle, so widening the deck at a breakpoint is one value to change and
- * the arrows, which sit at a fraction of a step, follow it on their own.
+ * the middle, so widening the deck at a breakpoint is one value to change.
  *
- * Every card stays in the DOM, in order, and stays a real link — none of it
- * is `aria-hidden`. A card off to the side is dimmed and untouchable by
- * pointer, but tabbing to it still works and brings it to the middle, so the
- * keyboard path and the visible state never disagree.
+ * Every card stays in the DOM, in order, and none of it is `aria-hidden`.
+ * Tabbing to a card off to the side brings it to the middle, so the keyboard
+ * path and the visible state never disagree.
  */
 export function ChimiRail({
   chimis,
@@ -42,6 +42,11 @@ export function ChimiRail({
   const [index, setIndex] = useState(0)
   /** Where a finger went down, so pointer-up can tell a swipe from a tap. */
   const swipeStartRef = useRef<number | null>(null)
+  /**
+   * A swipe ends over a card, and that card is a link or a button — without
+   * this the gesture would fire whatever it happened to finish on top of.
+   */
+  const swipedRef = useRef(false)
   const count = chimis.length
 
   const go = useCallback(
@@ -83,20 +88,29 @@ export function ChimiRail({
         }}
         onPointerDown={(event) => {
           swipeStartRef.current = event.clientX
+          swipedRef.current = false
         }}
         onPointerUp={(event) => {
           const start = swipeStartRef.current
           swipeStartRef.current = null
           if (start === null) return
           const travelled = event.clientX - start
+          if (Math.abs(travelled) < SWIPE_THRESHOLD) return
           // Dragging right pulls the previous card in, the way a finger on a
-          // physical deck would. Anything shorter than the threshold is a
-          // tap, and belongs to the link underneath.
-          if (travelled <= -SWIPE_THRESHOLD) go(1)
-          else if (travelled >= SWIPE_THRESHOLD) go(-1)
+          // physical deck would.
+          swipedRef.current = true
+          go(travelled < 0 ? 1 : -1)
         }}
         onPointerCancel={() => {
           swipeStartRef.current = null
+        }}
+        onClickCapture={(event) => {
+          // Swallow the click a finished swipe leaves behind, before it
+          // reaches the card underneath.
+          if (!swipedRef.current) return
+          event.preventDefault()
+          event.stopPropagation()
+          swipedRef.current = false
         }}
         className={cn(
           'relative touch-pan-y overflow-hidden py-8 outline-none focus-visible:ring-4 focus-visible:ring-primary',
@@ -114,7 +128,7 @@ export function ChimiRail({
             nothing. Measuring a real tile rather than guessing at a height
             keeps it right if the nameplate's type ever changes. */}
         <div aria-hidden="true" className="invisible mx-auto w-[var(--card-w)]">
-          <ChimiTile chimi={chimis[0]} />
+          <ChimiTile chimi={chimis[0]} focused />
         </div>
 
         {chimis.map((chimi, i) => {
@@ -126,80 +140,53 @@ export function ChimiRail({
               key={chimi.slug}
               className={cn(
                 'absolute left-1/2 top-8 w-[var(--card-w)] transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none',
-                !focused && 'pointer-events-none',
+                // Only the three on show can be clicked. The rest are stacked
+                // behind them at nothing, waiting their turn.
+                !near && 'pointer-events-none',
               )}
               style={{
                 transform: `translateX(-50%) translateX(calc(var(--step) * ${d})) scale(${
                   focused ? 1 : 0.74
                 })`,
-                // Anything past the immediate neighbours is stacked behind
-                // them waiting its turn, not on show.
                 opacity: focused ? 1 : near ? 0.72 : 0,
                 zIndex: 20 - Math.abs(d),
               }}
             >
               <ChimiTile
                 chimi={chimi}
-                dimmed={!focused}
-                onFocus={() => setIndex(i)}
+                focused={focused}
+                onSelect={() => setIndex(i)}
               />
             </div>
           )
         })}
       </div>
-
-      {/* The arrows sit in the gaps either side of the focused card and point
-          inwards, at it — each says "bring this neighbour to the middle"
-          rather than naming a direction of travel. 0.56 of a step lands in
-          the middle of that gap at every breakpoint. */}
-      {count > 1 ? (
-        <div className="pointer-events-none absolute inset-0 z-30">
-          {([-1, 1] as const).map((direction) => (
-            <button
-              key={direction}
-              type="button"
-              onClick={() => go(direction)}
-              aria-label={
-                direction === -1
-                  ? 'Show the previous Chimi'
-                  : 'Show the next Chimi'
-              }
-              style={{
-                transform: `translate(-50%,-50%) translateX(calc(var(--step) * ${
-                  direction * 0.56
-                }))`,
-              }}
-              className="pixel-box-sm pixel-press pointer-events-auto absolute left-1/2 top-1/2 flex size-10 items-center justify-center bg-card font-display text-sm text-foreground"
-            >
-              <span aria-hidden="true">{direction === -1 ? '→' : '←'}</span>
-            </button>
-          ))}
-        </div>
-      ) : null}
     </div>
   )
 }
 
-/** One portrait. The whole tile is the link — tap anywhere, get the card. */
+/**
+ * One portrait, and one of two things depending on where it is sitting.
+ *
+ * In the middle it is a link to the Chimi's page — a real anchor, so it opens
+ * in a new tab on a middle click and offers the usual menu on a right click.
+ * Off to the side it is a button that brings itself to the middle: it does
+ * not navigate, so it must not be an anchor, and a screen reader is told
+ * which of the two it has landed on rather than having to guess.
+ */
 function ChimiTile({
   chimi,
-  dimmed = false,
-  onFocus,
+  focused,
+  onSelect,
 }: {
   chimi: Chimi
-  /** Off to the side: kept legible, but clearly not the one on show. */
-  dimmed?: boolean
-  onFocus?: () => void
+  focused: boolean
+  onSelect?: () => void
 }) {
-  return (
-    <Link
-      href={`/chimis/${chimi.slug}`}
-      onFocus={onFocus}
-      className={cn(
-        'group pixel-box pixel-press block w-full bg-card',
-        dimmed && 'saturate-75',
-      )}
-    >
+  const shell = 'group pixel-box pixel-press block w-full bg-card'
+
+  const face = (
+    <>
       <div
         className="relative aspect-square w-full overflow-hidden border-b-4 border-border"
         style={{ backgroundColor: `${chimi.accent}22` }}
@@ -218,16 +205,39 @@ function ChimiTile({
         />
       </div>
 
-      {/* The nameplate. Everything else about them lives on their card. */}
+      {/* The nameplate. The arrow means "this opens their card", so it belongs
+          to the middle one only — the others go no further than the middle. */}
       <div className="flex items-center justify-between gap-3 p-3">
         <span className="font-display text-sm uppercase">{chimi.name}</span>
-        <span
-          aria-hidden="true"
-          className="pixel-arrow font-display text-sm text-primary"
-        >
-          &rarr;
-        </span>
+        {focused ? (
+          <span
+            aria-hidden="true"
+            className="pixel-arrow font-display text-sm text-primary"
+          >
+            &rarr;
+          </span>
+        ) : null}
       </div>
-    </Link>
+    </>
+  )
+
+  if (focused) {
+    return (
+      <Link href={`/chimis/${chimi.slug}`} className={shell}>
+        {face}
+      </Link>
+    )
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      onFocus={onSelect}
+      aria-label={`Bring ${chimi.name} to the front`}
+      className={cn(shell, 'text-left saturate-75')}
+    >
+      {face}
+    </button>
   )
 }
