@@ -2,29 +2,32 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import type { Chimi } from '@/lib/chimis'
 import { cn } from '@/lib/utils'
 
-/** Pixels per second the rail drifts on its own. Slow enough to read. */
-const DRIFT_SPEED = 26
-/** How long the rail holds still after a finger, wheel, or arrow nudge. */
-const RESUME_DELAY = 1600
-/** Gap between tiles, in px — matches the `gap-4` on the track. */
-const TILE_GAP = 16
+/** How far a finger has to travel across the deck to count as a swipe, in px. */
+const SWIPE_THRESHOLD = 40
 
 /**
- * The Chimis as a rail of portraits: a marquee you can actually use.
+ * The Chimis as a carousel: one of them front and centre, the rest waiting
+ * either side of it.
  *
- * It is a real scroll container rather than a CSS transform loop, so a
- * finger, a trackpad, and the arrow keys all drive it directly. On top of
- * that it drifts a few px a frame when nobody is touching it, and stops the
- * instant someone is — a moving thing you can still hit.
+ * This replaced a drifting marquee. The marquee showed four Chimis equally
+ * and asked you to pick; this shows one and asks you to look at it, which is
+ * the right shape for a cast of characters — they have faces, and faces want
+ * a stage rather than a queue.
  *
- * The track is repeated `copies` times and the scroll position is wrapped
- * back by one copy's width whenever it crosses one, which is what makes the
- * loop seamless in both directions. Repeats are `aria-hidden` and untabbable,
- * so a screen reader and the tab key still see each Chimi exactly once.
+ * Geometry lives in two custom properties rather than in the transforms:
+ * `--card-w` is the focused card's width and `--step` is how far one position
+ * sits from the next. Every card is placed at a whole number of steps from
+ * the middle, so widening the deck at a breakpoint is one value to change and
+ * the arrows, which sit at a fraction of a step, follow it on their own.
+ *
+ * Every card stays in the DOM, in order, and stays a real link — none of it
+ * is `aria-hidden`. A card off to the side is dimmed and untouchable by
+ * pointer, but tabbing to it still works and brings it to the middle, so the
+ * keyboard path and the visible state never disagree.
  */
 export function ChimiRail({
   chimis,
@@ -33,238 +36,146 @@ export function ChimiRail({
 }: {
   chimis: Chimi[]
   className?: string
-  /** Names the rail for screen readers. */
+  /** Names the carousel for screen readers. */
   label?: string
 }) {
-  const railRef = useRef<HTMLDivElement>(null)
-  /** Hover / focus / finger-down: drift off while true. */
-  const pausedRef = useRef(false)
-  /** Timestamp to stay still until, after a deliberate nudge. */
-  const holdUntilRef = useRef(0)
-  /** Width of one copy of the track, and whether looping fits. */
-  const loopRef = useRef({ copyWidth: 0, canLoop: false })
-  /** Scroll events before this are the rail parking itself, not a person. */
-  const ignoreScrollUntilRef = useRef(0)
-  const reducedRef = useRef(false)
-  const [hintDone, setHintDone] = useState(false)
+  const [index, setIndex] = useState(0)
+  /** Where a finger went down, so pointer-up can tell a swipe from a tap. */
+  const swipeStartRef = useRef<number | null>(null)
+  const count = chimis.length
 
-  // Enough repeats that a single copy is always wider than the viewport —
-  // otherwise there is nothing to wrap through and the loop cannot close.
-  const copies = Math.max(4, Math.ceil(16 / Math.max(chimis.length, 1)))
-
-  const hold = useCallback(() => {
-    holdUntilRef.current = performance.now() + RESUME_DELAY
-  }, [])
-
-  /** Is the rail moving under its own steam right now? */
-  const drifting = useCallback(
-    (now: number) =>
-      !reducedRef.current &&
-      !document.hidden &&
-      !pausedRef.current &&
-      now >= holdUntilRef.current &&
-      loopRef.current.canLoop,
-    [],
-  )
-
-  /** Re-measure the track and park the rail inside the wrappable band. */
-  const measure = useCallback(() => {
-    const rail = railRef.current
-    if (!rail) return
-    const copyWidth = rail.scrollWidth / copies
-    const max = rail.scrollWidth - rail.clientWidth
-    // The band is [copyWidth, 2 × copyWidth). Looping needs room for both of
-    // its edges; with too few tiles for the screen it stays a plain rail.
-    const canLoop = copyWidth > 0 && max > copyWidth * 2 + 4
-    loopRef.current = { copyWidth, canLoop }
-    if (canLoop && rail.scrollLeft < copyWidth) {
-      ignoreScrollUntilRef.current = performance.now() + 100
-      rail.scrollLeft = copyWidth
-    }
-  }, [copies])
-
-  /** Keep the scroll position inside the band, wrapping by whole copies. */
-  const wrap = useCallback(() => {
-    const rail = railRef.current
-    const { copyWidth, canLoop } = loopRef.current
-    if (!rail || !canLoop) return
-    if (rail.scrollLeft >= copyWidth * 2) rail.scrollLeft -= copyWidth
-    else if (rail.scrollLeft < copyWidth) rail.scrollLeft += copyWidth
-  }, [])
-
-  const handleScroll = useCallback(() => {
-    wrap()
-    const now = performance.now()
-    if (now < ignoreScrollUntilRef.current) return
-    // Anything that moves the rail while the drift is suspended is a person,
-    // which is the only reliable signal that the hint has been taken. Watching
-    // for a pointer instead would fire on a page scroll that merely passes
-    // over the rail, and the hint would vanish before it was ever read.
-    if (!drifting(now)) setHintDone(true)
-  }, [drifting, wrap])
-
-  // Track the motion preference where the scroll handler can see it too.
-  useEffect(() => {
-    const query = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const sync = () => {
-      reducedRef.current = query.matches
-    }
-    sync()
-    query.addEventListener('change', sync)
-    return () => query.removeEventListener('change', sync)
-  }, [])
-
-  // Measure once the tiles have laid out, and again whenever they resize.
-  useEffect(() => {
-    const rail = railRef.current
-    if (!rail) return
-    measure()
-    const observer = new ResizeObserver(measure)
-    observer.observe(rail)
-    return () => observer.disconnect()
-  }, [measure])
-
-  // The drift itself.
-  useEffect(() => {
-    const rail = railRef.current
-    if (!rail) return
-    let frame = 0
-    let previous = 0
-
-    const step = (now: number) => {
-      frame = requestAnimationFrame(step)
-      const elapsed = previous ? Math.min(now - previous, 64) : 0
-      previous = now
-      if (!drifting(now)) return
-      rail.scrollLeft += (DRIFT_SPEED * elapsed) / 1000
-      wrap()
-    }
-
-    frame = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(frame)
-  }, [drifting, wrap])
-
-  /** One tile forward or back, for the pointer arrows and the arrow keys. */
-  const nudge = useCallback(
+  const go = useCallback(
     (direction: 1 | -1) => {
-      const rail = railRef.current
-      if (!rail) return
-      const tile = rail.querySelector<HTMLElement>('[data-tile]')
-      const distance = tile
-        ? tile.offsetWidth + TILE_GAP
-        : rail.clientWidth * 0.8
-      hold()
-      rail.scrollBy({ left: direction * distance, behavior: 'smooth' })
+      setIndex((current) => (current + direction + count) % count)
     },
-    [hold],
+    [count],
   )
+
+  /**
+   * Signed distance from the focused card, taking the short way round: with
+   * four Chimis the one three to the right is really one to the left, and
+   * placing it there is what stops the deck lurching when the index wraps.
+   */
+  const half = Math.floor(count / 2)
+  const offsetOf = (i: number) => {
+    let d = i - index
+    if (d > half) d -= count
+    if (d < -half) d += count
+    return d
+  }
+
+  if (count === 0) return null
 
   return (
     <div className={cn('relative', className)}>
-      {/* Edge fades: the rail runs off both sides of the page on purpose. */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-linear-to-r from-background to-transparent sm:w-12"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-linear-to-l from-background to-transparent sm:w-16"
-        aria-hidden="true"
-      />
-
-      {/* Swipe hint — points the way out of the right edge, and gets out of
-          the way for good once anyone has taken the hint. Touch only: on
-          pointer screens the right-hand arrow below does the same job, and
-          the two would sit on top of each other. */}
-      <div
-        className={cn(
-          'pointer-events-none absolute inset-y-0 right-0 z-20 flex items-center pr-2 transition-opacity duration-300 sm:hidden',
-          hintDone && 'opacity-0',
-        )}
-        aria-hidden="true"
-      >
-        <span className="rail-nudge pixel-box-sm flex items-center gap-2 bg-accent px-3 py-2 font-display text-[9px] uppercase text-accent-foreground">
-          Swipe
-          <span className="text-sm leading-none">&rarr;</span>
-        </span>
-      </div>
-
-      <div
-        ref={railRef}
         role="region"
         aria-label={label}
         tabIndex={0}
-        className="rail-scroll flex overflow-x-auto py-8 outline-none focus-visible:ring-4 focus-visible:ring-primary"
-        onScroll={handleScroll}
-        onWheel={(event) => {
-          // Sideways intent only — a page scroll passing over the rail
-          // should leave it drifting.
-          if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) hold()
-        }}
-        onPointerEnter={(event) => {
-          if (event.pointerType === 'mouse') pausedRef.current = true
-        }}
-        onPointerLeave={() => {
-          pausedRef.current = false
-        }}
-        onPointerDown={() => {
-          pausedRef.current = true
-          hold()
-        }}
-        onPointerUp={() => {
-          pausedRef.current = false
-        }}
-        onPointerCancel={() => {
-          pausedRef.current = false
-        }}
-        onFocus={() => {
-          pausedRef.current = true
-        }}
-        onBlur={() => {
-          pausedRef.current = false
-        }}
         onKeyDown={(event) => {
           if (event.key === 'ArrowRight') {
             event.preventDefault()
-            nudge(1)
+            go(1)
           } else if (event.key === 'ArrowLeft') {
             event.preventDefault()
-            nudge(-1)
+            go(-1)
           }
         }}
+        onPointerDown={(event) => {
+          swipeStartRef.current = event.clientX
+        }}
+        onPointerUp={(event) => {
+          const start = swipeStartRef.current
+          swipeStartRef.current = null
+          if (start === null) return
+          const travelled = event.clientX - start
+          // Dragging right pulls the previous card in, the way a finger on a
+          // physical deck would. Anything shorter than the threshold is a
+          // tap, and belongs to the link underneath.
+          if (travelled <= -SWIPE_THRESHOLD) go(1)
+          else if (travelled >= SWIPE_THRESHOLD) go(-1)
+        }}
+        onPointerCancel={() => {
+          swipeStartRef.current = null
+        }}
+        className={cn(
+          'relative touch-pan-y overflow-hidden py-8 outline-none focus-visible:ring-4 focus-visible:ring-primary',
+          // The deck's two measurements. `--step` is a touch under a full
+          // card width on a phone, so the neighbours still show a usable
+          // sliver instead of sitting off the edge of the screen.
+          '[--card-w:min(64vw,300px)] [--step:calc(var(--card-w)*0.92)]',
+          'sm:[--card-w:272px] sm:[--step:var(--card-w)]',
+          'lg:[--card-w:320px]',
+        )}
       >
-        <div className="flex shrink-0 items-stretch gap-4 px-4 sm:px-6">
-          {Array.from({ length: copies }, (_, copy) =>
-            chimis.map((chimi) => (
-              <ChimiTile
-                key={`${copy}-${chimi.slug}`}
-                chimi={chimi}
-                duplicate={copy > 0}
-              />
-            )),
-          )}
+        {/* Sets the deck's height. The cards themselves are all absolutely
+            positioned — they have to be, to sit on top of each other — so
+            without one left in the flow the container would collapse to
+            nothing. Measuring a real tile rather than guessing at a height
+            keeps it right if the nameplate's type ever changes. */}
+        <div aria-hidden="true" className="invisible mx-auto w-[var(--card-w)]">
+          <ChimiTile chimi={chimis[0]} />
         </div>
+
+        {chimis.map((chimi, i) => {
+          const d = offsetOf(i)
+          const focused = d === 0
+          const near = Math.abs(d) <= 1
+          return (
+            <div
+              key={chimi.slug}
+              className={cn(
+                'absolute left-1/2 top-8 w-[var(--card-w)] transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none',
+                !focused && 'pointer-events-none',
+              )}
+              style={{
+                transform: `translateX(-50%) translateX(calc(var(--step) * ${d})) scale(${
+                  focused ? 1 : 0.74
+                })`,
+                // Anything past the immediate neighbours is stacked behind
+                // them waiting its turn, not on show.
+                opacity: focused ? 1 : near ? 0.72 : 0,
+                zIndex: 20 - Math.abs(d),
+              }}
+            >
+              <ChimiTile
+                chimi={chimi}
+                dimmed={!focused}
+                onFocus={() => setIndex(i)}
+              />
+            </div>
+          )
+        })}
       </div>
 
-      {/* Pointer users get arrows too — a rail you can only swipe is a rail
-          half the visitors never move. */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 right-0 z-20 hidden items-center justify-between px-2 sm:flex">
-        {([-1, 1] as const).map((direction) => (
-          <button
-            key={direction}
-            type="button"
-            onClick={() => nudge(direction)}
-            aria-label={direction === 1 ? 'Next Chimis' : 'Previous Chimis'}
-            className={cn(
-              'pixel-box-sm pixel-press pointer-events-auto flex size-10 items-center justify-center bg-card font-display text-sm text-foreground',
-              // Until someone moves the rail, the forward arrow nudges to
-              // say which way it goes.
-              direction === 1 && !hintDone && 'rail-nudge',
-            )}
-          >
-            <span aria-hidden="true">{direction === 1 ? '→' : '←'}</span>
-          </button>
-        ))}
-      </div>
+      {/* The arrows sit in the gaps either side of the focused card and point
+          inwards, at it — each says "bring this neighbour to the middle"
+          rather than naming a direction of travel. 0.56 of a step lands in
+          the middle of that gap at every breakpoint. */}
+      {count > 1 ? (
+        <div className="pointer-events-none absolute inset-0 z-30">
+          {([-1, 1] as const).map((direction) => (
+            <button
+              key={direction}
+              type="button"
+              onClick={() => go(direction)}
+              aria-label={
+                direction === -1
+                  ? 'Show the previous Chimi'
+                  : 'Show the next Chimi'
+              }
+              style={{
+                transform: `translate(-50%,-50%) translateX(calc(var(--step) * ${
+                  direction * 0.56
+                }))`,
+              }}
+              className="pixel-box-sm pixel-press pointer-events-auto absolute left-1/2 top-1/2 flex size-10 items-center justify-center bg-card font-display text-sm text-foreground"
+            >
+              <span aria-hidden="true">{direction === -1 ? '→' : '←'}</span>
+            </button>
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -272,18 +183,22 @@ export function ChimiRail({
 /** One portrait. The whole tile is the link — tap anywhere, get the card. */
 function ChimiTile({
   chimi,
-  duplicate,
+  dimmed = false,
+  onFocus,
 }: {
   chimi: Chimi
-  duplicate: boolean
+  /** Off to the side: kept legible, but clearly not the one on show. */
+  dimmed?: boolean
+  onFocus?: () => void
 }) {
   return (
     <Link
-      data-tile
       href={`/chimis/${chimi.slug}`}
-      aria-hidden={duplicate || undefined}
-      tabIndex={duplicate ? -1 : undefined}
-      className="group pixel-box pixel-press block w-[68vw] max-w-[320px] shrink-0 bg-card sm:w-[272px] lg:w-[320px]"
+      onFocus={onFocus}
+      className={cn(
+        'group pixel-box pixel-press block w-full bg-card',
+        dimmed && 'saturate-75',
+      )}
     >
       <div
         className="relative aspect-square w-full overflow-hidden border-b-4 border-border"
@@ -296,13 +211,9 @@ function ChimiTile({
         />
         <Image
           src={chimi.art}
-          alt={
-            duplicate
-              ? ''
-              : `${chimi.name}, the Chimi of ${chimi.emotion.toLowerCase()}`
-          }
+          alt={`${chimi.name}, the Chimi of ${chimi.emotion.toLowerCase()}`}
           fill
-          sizes="(min-width: 1024px) 320px, (min-width: 640px) 272px, 68vw"
+          sizes="(min-width: 1024px) 320px, (min-width: 640px) 272px, 64vw"
           className="art-smooth pixel-wiggle object-contain p-4"
         />
       </div>

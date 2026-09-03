@@ -54,7 +54,7 @@ export default function ChimisPage() {
                 align="center"
                 eyebrow="Swipe through"
                 title="Pick a face"
-                body="The rail drifts along on its own until you take hold of it. Any Chimi you tap opens their card."
+                body="One Chimi at a time, front and centre. Step through them with the arrows, and tap any of them to open their card."
                 className="mx-auto"
               />
             </ScrollReveal>
