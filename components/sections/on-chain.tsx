@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { PixelLink } from '@/components/pixel/pixel-button'
+import { PixelButton } from '@/components/pixel/pixel-button'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { brandArt } from '@/lib/collection'
@@ -64,9 +64,10 @@ export function OnChain() {
           </ScrollReveal>
 
           <ScrollReveal variant="fade-up" delay={500}>
-            <PixelLink href={site.links.mint} external size="lg">
-              Open the mint page
-            </PixelLink>
+            {/* No link on it while the mint is shut — see the hero's. */}
+            <PixelButton size="lg" aria-disabled="true">
+              Mint on {site.chain}
+            </PixelButton>
           </ScrollReveal>
         </div>
       </div>
