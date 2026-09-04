@@ -23,7 +23,7 @@ export function MotionShowcase() {
   const sectionRef = useRef<HTMLElement>(null)
 
   /**
-   * Fourteen H.264 decoders is not something to leave running down the page.
+   * Twenty-two H.264 decoders is not something to leave running down the page.
    *
    * The clips only play while the strip is near the viewport, and never at
    * all for a reader who has asked for less motion — which is why none of
@@ -86,11 +86,13 @@ export function MotionShowcase() {
       </div>
 
       <div className="marquee-container mt-10 flex overflow-hidden pb-14 lg:pb-20">
-        {/* 68s, not the rail's 34s: these are cards, and a card has to be on
-            screen long enough to actually watch its loop come round. */}
+        {/* Not the rail's 34s: these are cards, and a card has to be on screen
+            long enough to actually watch its loop come round. The duration
+            tracks the number of clips — roughly 8.5s of travel each — so
+            adding one lengthens the strip instead of speeding it up. */}
         <div
           className="marquee-track flex shrink-0 items-stretch"
-          style={{ animationDuration: '68s' }}
+          style={{ animationDuration: `${motionLoops.length * 8.5}s` }}
         >
           {[0, 1].map((copy) => (
             <ul key={copy} className="flex shrink-0 items-stretch">

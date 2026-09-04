@@ -2,7 +2,7 @@
  * The animated strip on the home page.
  *
  * These are H.264 MP4s rather than GIFs, which is the whole reason the strip
- * can afford to be this long: the seven of them together are about 2.5MB,
+ * can afford to be this long: the eleven of them together are about 3.7MB,
  * where the same seconds as GIFs would have run to tens of megabytes. The
  * trade is that they are `<video>` elements, not images, so the component
  * has to start and stop them itself — see `MotionShowcase`.
@@ -37,4 +37,7 @@ export const motionLoops: MotionLoop[] = [
   { src: '/chimikinz/motion/loop-6.mp4', alt: 'An animated scene from Clover Cove' },
   { src: '/chimikinz/motion/loop-7.mp4', alt: 'An animated scene from Clover Cove' },
   { src: '/chimikinz/motion/loop-8.mp4', alt: 'An animated scene from Clover Cove' },
+  { src: '/chimikinz/motion/loop-9.mp4', alt: 'An animated scene from Clover Cove' },
+  { src: '/chimikinz/motion/loop-10.mp4', alt: 'An animated scene from Clover Cove' },
+  { src: '/chimikinz/motion/loop-11.mp4', alt: 'An animated scene from Clover Cove' },
 ]

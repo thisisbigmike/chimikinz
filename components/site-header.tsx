@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { PixelLink } from '@/components/pixel/pixel-button'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
@@ -81,15 +80,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <PixelLink
-            href={site.links.mint}
-            external
-            size="sm"
-            className="hidden sm:inline-flex"
-          >
-            Mint
-          </PixelLink>
-
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -187,16 +177,6 @@ export function SiteHeader() {
               </Link>
             </li>
           ))}
-          <li className="p-4">
-            <PixelLink
-              href={site.links.mint}
-              external
-              size="md"
-              className="w-full"
-            >
-              Mint on {site.chain}
-            </PixelLink>
-          </li>
         </ul>
       </nav>
       </div>

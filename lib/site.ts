@@ -8,7 +8,7 @@ export const site = {
   links: {
     x: 'https://x.com/chimikinzzz',
     xFollowIntent: 'https://x.com/intent/follow?screen_name=chimikinzzz',
-    discord: 'https://discord.gg/xTZ2zPwnX7',
+    discord: 'https://discord.gg/pTaBsxrXE',
     mint: 'https://chimikinz.nfts2.me',
   },
   nav: [

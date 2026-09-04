@@ -31,14 +31,15 @@
   --font-mono: var(--font-body), 'Courier New', monospace;
   --font-display: var(--font-display), 'Courier New', monospace;
 
-  /* The eight brand colours, reachable directly when a piece of UI wants a
-     named Clover Cove colour rather than a semantic role — `bg-blossom`,
+  /* The brand colours, reachable directly when a piece of UI wants a named
+     Clover Cove colour rather than a semantic role — `bg-blossom`,
      `text-dream`, `border-sky`. Badges are the main customer. */
   --color-clover: var(--clover);
   --color-cream: var(--cream);
   --color-sky: var(--sky);
   --color-blossom: var(--blossom);
   --color-sunbeam: var(--sunbeam);
+  --color-sprout: var(--sprout);
   --color-dream: var(--dream);
   --color-ember: var(--ember);
   --color-night: var(--night);
@@ -98,7 +99,8 @@
   --cream: #fff6e5; /* warmth, comfort, positivity */
   --sky: #8ecdf5; /* calm, imagination, freedom */
   --blossom: #ffc5d6; /* love, kindness, softness */
-  --sunbeam: #ffdb6b; /* joy, energy, light */
+  --sunbeam: #ffdb6b; /* joy, energy, light — art and sparkles only, see below */
+  --sprout: #8fe36b; /* the lead green: new growth, go */
   --dream: #b6a5f7; /* dreams, mystery, creativity */
   --ember: #ff8a4c; /* the warm pop */
   --night: #141416; /* depth, balance, focus */
@@ -126,11 +128,19 @@
   --shade: light-dark(#141416, #000000);
   --border: var(--line);
 
-  /* Roles, per the brand board's button hierarchy: Sunbeam leads, Clover
+  /* Roles, per the brand board's button hierarchy: Sprout leads, Clover
      supports, Ember is the pop. Every brand colour is a pastel, so ink is
      the only text that sits on one — which is true in both modes, and why
-     these foregrounds do not swap. */
-  --primary: var(--sunbeam);
+     these foregrounds do not swap.
+
+     Sprout, not Sunbeam: the lead role is green now, and it is a second
+     green rather than Clover itself because primary and secondary sit
+     beside each other in places where the pair carries meaning — `now` vs
+     `ahead` on the journey timeline, the two marker dots on a panel head,
+     a favourited card vs a hovered one. Pointing both at Clover would have
+     flattened those into one colour. Sprout is the brighter, limier of the
+     two, so it still leads. */
+  --primary: var(--sprout);
   --primary-foreground: var(--night);
   --secondary: var(--clover);
   --secondary-foreground: var(--night);

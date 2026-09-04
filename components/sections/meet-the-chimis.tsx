@@ -55,7 +55,7 @@ export function MeetTheChimis() {
                     <p className="text-pretty text-xl leading-snug text-muted-foreground">
                       {chimi.personality}
                     </p>
-                    <span className="mt-auto pt-2 font-display text-[9px] uppercase text-primary">
+                    <span className="mt-auto pt-2 font-display text-[9px] uppercase text-foreground transition-colors duration-200 group-hover:text-primary group-focus-visible:text-primary">
                       See {chimi.name}&apos;s card{' '}
                       <span className="pixel-arrow">&rarr;</span>
                     </span>
