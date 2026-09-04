@@ -187,6 +187,26 @@
      sun starts dropping as you leave them for the motion section. This
      is the one number to turn if the sun should set earlier or later. */
   --nightfall-start: 53%;
+
+  /* The floating header's own height.
+   *
+   * The bar paints no background of its own — what shows around the pill is
+   * whatever section is under it, which is the only version of this that
+   * stays right at every hour and on every page. A section that wants its
+   * paper to run up behind the bar therefore pulls itself up by exactly
+   * this much and pushes its content back down by the same, so only the
+   * background moves. The hero is the one that does it.
+   *
+   * It sums the bar: the top gap (`pt-3`, `sm:pt-4`), the 4px ink frame top
+   * and bottom, the inner `py-3`, and the 40px mark that sets the content
+   * height. Turn it if any of those change. */
+  --header-h: 84px;
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --header-h: 88px;
+  }
 }
 
 :root[data-theme='light'] {

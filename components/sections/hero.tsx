@@ -20,8 +20,14 @@ export function Hero() {
      * `text-night` and the two linework variables are pinned here, or a
      * reader on `data-theme=dark` gets cream type on cream paper. Nightfall
      * never reaches this far up the page anyway (it starts at 53%).
+     *
+     * That same paper runs up behind the header, which paints no background
+     * of its own: the section is pulled up by the bar's height and its
+     * content pushed back down by the same, so nothing moves except the
+     * cream, which now meets the top of the page instead of stopping under
+     * a strip of a different colour. See `--header-h`.
      */
-    <section className="art-ground relative isolate overflow-hidden border-b-4 border-border text-night [--art-ground:#feeebc] [--line:var(--night)] [--shade:var(--night)]">
+    <section className="art-ground relative isolate mt-[calc(var(--header-h)*-1)] overflow-hidden border-b-4 border-border pt-[var(--header-h)] text-night [--art-ground:#feeebc] [--line:var(--night)] [--shade:var(--night)]">
       <PixelSparkles count={16} speed={0.6} />
 
       {/**
