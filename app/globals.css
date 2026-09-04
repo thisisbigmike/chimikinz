@@ -563,6 +563,68 @@
     box-shadow: 4px 4px 0 0 var(--shade);
   }
 
+  /* The floating header bar.
+   *
+   * A stadium built out of square steps rather than a border-radius. From a
+   * distance it reads as a pill; up close every edge still lands on the
+   * pixel grid, so it belongs to the same system as the 4px boxes instead of
+   * importing a smooth curve nothing else on the page has. It also means the
+   * `border-radius: 0 !important` rule in the base layer stays untouched —
+   * this needs no `.soft-card`-style exception, because it never asks for a
+   * radius in the first place.
+   *
+   * Two elements, not one: `clip-path` cuts the border off along with
+   * everything else, so the outer copy is the ink and the inner copy is the
+   * fill, held 4px inside it by the parent's padding. That 4px is the border
+   * the class cannot draw.
+   *
+   * Worth knowing before moving it: `clip-path` clips descendants too. It
+   * belongs on the bar and not on <header>, whose other children are the
+   * fixed-position drawer and its overlay — those would be sliced to the
+   * bar's silhouette and vanish.
+   */
+  .pixel-pill {
+    --pixel-pill-step: 6px;
+    --pixel-pill-2: calc(var(--pixel-pill-step) * 2);
+    --pixel-pill-3: calc(var(--pixel-pill-step) * 3);
+    clip-path: polygon(
+      /* top edge, between the two upper staircases */
+      var(--pixel-pill-3) 0,
+      calc(100% - var(--pixel-pill-3)) 0,
+      /* top-right, stepping down to the right edge */
+      calc(100% - var(--pixel-pill-3)) var(--pixel-pill-step),
+      calc(100% - var(--pixel-pill-2)) var(--pixel-pill-step),
+      calc(100% - var(--pixel-pill-2)) var(--pixel-pill-2),
+      calc(100% - var(--pixel-pill-step)) var(--pixel-pill-2),
+      calc(100% - var(--pixel-pill-step)) var(--pixel-pill-3),
+      100% var(--pixel-pill-3),
+      /* bottom-right */
+      100% calc(100% - var(--pixel-pill-3)),
+      calc(100% - var(--pixel-pill-step)) calc(100% - var(--pixel-pill-3)),
+      calc(100% - var(--pixel-pill-step)) calc(100% - var(--pixel-pill-2)),
+      calc(100% - var(--pixel-pill-2)) calc(100% - var(--pixel-pill-2)),
+      calc(100% - var(--pixel-pill-2)) calc(100% - var(--pixel-pill-step)),
+      calc(100% - var(--pixel-pill-3)) calc(100% - var(--pixel-pill-step)),
+      calc(100% - var(--pixel-pill-3)) 100%,
+      /* bottom edge */
+      var(--pixel-pill-3) 100%,
+      /* bottom-left, stepping up to the left edge */
+      var(--pixel-pill-3) calc(100% - var(--pixel-pill-step)),
+      var(--pixel-pill-2) calc(100% - var(--pixel-pill-step)),
+      var(--pixel-pill-2) calc(100% - var(--pixel-pill-2)),
+      var(--pixel-pill-step) calc(100% - var(--pixel-pill-2)),
+      var(--pixel-pill-step) calc(100% - var(--pixel-pill-3)),
+      0 calc(100% - var(--pixel-pill-3)),
+      /* top-left */
+      0 var(--pixel-pill-3),
+      var(--pixel-pill-step) var(--pixel-pill-3),
+      var(--pixel-pill-step) var(--pixel-pill-2),
+      var(--pixel-pill-2) var(--pixel-pill-2),
+      var(--pixel-pill-2) var(--pixel-pill-step),
+      var(--pixel-pill-3) var(--pixel-pill-step)
+    );
+  }
+
   /* Press-down interaction: the box travels into its own shadow. */
   /* No `will-change` here on purpose: .pixel-press sits on nearly every
      button and card, and a permanent hint would pin a compositor layer for

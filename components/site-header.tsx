@@ -42,75 +42,81 @@ export function SiteHeader() {
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
-    <header className="sticky top-0 z-50 border-b-4 border-border bg-background">
-      <div className="relative z-50 mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link
-          href="/"
-          className="group flex items-center gap-3 font-display text-sm uppercase tracking-tight sm:text-base"
-        >
-          {/* The mark is the Chimi head itself — no plate behind it, so it
-              sits on whichever background the theme is wearing. Decorative:
-              the wordmark beside it already names the site. */}
-          <Image
-            src="/chimikinz/chimi-mark.png"
-            alt=""
-            width={40}
-            height={40}
-            priority
-            aria-hidden="true"
-            className="art-smooth size-10 shrink-0 transition-transform duration-200 group-hover:scale-110"
-          />
-          {site.name}
-        </Link>
-
-        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
-          {site.nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={isActive(item.href) ? 'page' : undefined}
-              className={cn(
-                'pixel-glow border-4 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-tight transition-colors hover:border-border hover:bg-secondary',
-                isActive(item.href) && 'border-border bg-secondary',
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            className="pixel-box-sm grid size-10 place-items-center bg-card lg:hidden"
+    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4">
+      {/* The bar floats now: no full-width fill and no bottom rule, so the
+          page runs under it and shows in the gap on every side. The ink that
+          used to be a `border-4` is this outer copy of the shape — see
+          `.pixel-pill`, which cannot draw a border of its own. */}
+      <div className="pixel-pill relative z-50 mx-auto max-w-7xl bg-border p-1">
+        <div className="flex items-center justify-between gap-4 bg-background px-4 py-3 pixel-pill sm:px-6">
+          <Link
+            href="/"
+            className="group flex items-center gap-3 font-display text-sm uppercase tracking-tight sm:text-base"
           >
-            <span className="sr-only">
-              {open ? 'Close menu' : 'Open menu'}
-            </span>
-            <span className="flex flex-col gap-1" aria-hidden="true">
-              <span
+            {/* The mark is the Chimi head itself — no plate behind it, so it
+                sits on whichever background the theme is wearing. Decorative:
+                the wordmark beside it already names the site. */}
+            <Image
+              src="/chimikinz/chimi-mark.png"
+              alt=""
+              width={40}
+              height={40}
+              priority
+              aria-hidden="true"
+              className="art-smooth size-10 shrink-0 transition-transform duration-200 group-hover:scale-110"
+            />
+            {site.name}
+          </Link>
+
+          <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
+            {site.nav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
                 className={cn(
-                  'h-1 w-5 bg-foreground transition-transform duration-200',
-                  open && 'translate-y-2 rotate-45',
+                  'pixel-glow border-4 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-tight transition-colors hover:border-border hover:bg-secondary',
+                  isActive(item.href) && 'border-border bg-secondary',
                 )}
-              />
-              <span
-                className={cn(
-                  'h-1 w-5 bg-foreground transition-opacity duration-200',
-                  open && 'opacity-0',
-                )}
-              />
-              <span
-                className={cn(
-                  'h-1 w-5 bg-foreground transition-transform duration-200',
-                  open && '-translate-y-2 -rotate-45',
-                )}
-              />
-            </span>
-          </button>
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              className="pixel-box-sm grid size-10 place-items-center bg-card lg:hidden"
+            >
+              <span className="sr-only">
+                {open ? 'Close menu' : 'Open menu'}
+              </span>
+              <span className="flex flex-col gap-1" aria-hidden="true">
+                <span
+                  className={cn(
+                    'h-1 w-5 bg-foreground transition-transform duration-200',
+                    open && 'translate-y-2 rotate-45',
+                  )}
+                />
+                <span
+                  className={cn(
+                    'h-1 w-5 bg-foreground transition-opacity duration-200',
+                    open && 'opacity-0',
+                  )}
+                />
+                <span
+                  className={cn(
+                    'h-1 w-5 bg-foreground transition-transform duration-200',
+                    open && '-translate-y-2 -rotate-45',
+                  )}
+                />
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 
