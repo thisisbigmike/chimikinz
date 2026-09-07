@@ -172,14 +172,6 @@ export default function JourneyPage() {
                 <PixelLink href="/gallery" size="lg">
                   See the gallery
                 </PixelLink>
-                <PixelLink
-                  href={site.links.discord}
-                  external
-                  variant="bone"
-                  size="lg"
-                >
-                  Join the Discord
-                </PixelLink>
               </div>
             </ScrollReveal>
           </div>
