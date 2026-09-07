@@ -224,7 +224,12 @@ export default function GalleryPage() {
             className="pixel-box-lg pixel-slide-up relative flex w-full max-w-3xl flex-col bg-card"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="art-ground relative aspect-square w-full border-b-4 border-border sm:aspect-[4/3]">
+            <div
+              className={cn(
+                'art-ground relative w-full border-b-4 border-border',
+                open.wide ? 'aspect-[3/1]' : 'aspect-square',
+              )}
+            >
               <Image
                 src={fullSrc(open.slug)}
                 alt={open.alt}

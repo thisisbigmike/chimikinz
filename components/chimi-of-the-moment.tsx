@@ -53,7 +53,7 @@ export function ChimiOfTheMoment({
           type="button"
           onClick={() => onOpen?.(piece)}
           aria-label={`Open ${piece.title}`}
-          className="art-ground group relative aspect-square w-full overflow-hidden border-b-4 border-border md:aspect-auto md:min-h-[420px] md:border-b-0 md:border-r-4"
+          className="art-ground group relative aspect-square w-full overflow-hidden border-b-4 border-border md:border-b-0 md:border-r-4"
         >
           <Image
             key={piece.slug}
@@ -62,7 +62,7 @@ export function ChimiOfTheMoment({
             fill
             sizes="(min-width: 768px) 55vw, 100vw"
             priority
-            className={`art-smooth object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03] ${
+            className={`art-smooth object-cover transition-transform duration-300 group-hover:scale-[1.03] ${
               rolling ? 'pixel-burst' : ''
             }`}
           />

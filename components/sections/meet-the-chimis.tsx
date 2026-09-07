@@ -38,7 +38,7 @@ export function MeetTheChimis() {
                       alt={chimi.name}
                       fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                      className="art-smooth pixel-zoom object-contain p-3"
+                      className="art-smooth pixel-zoom object-cover"
                     />
                     <PixelTag
                       className="absolute left-0 top-0 border-l-0 border-t-0 text-night"
