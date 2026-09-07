@@ -70,8 +70,9 @@ export const chapters: Chapter[] = [
       'The gallery is the honest record of this part — everything drawn so far, in the order it happened. It is the fastest-moving part of the project and the best place to watch it grow.',
     ],
     status: 'now',
-    art: '/chimikinz/art/full/the-whole-cast.webp',
-    artAlt: 'A wide group portrait of the entire Chimikinz cast',
+    art: '/chimikinz/art/full/pug-rider.webp',
+    artAlt:
+      'A green-eyed Chimi in a blue coat and striped scarf with a pug sitting on its head',
   },
   {
     slug: 'what-comes-next',

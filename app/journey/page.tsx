@@ -95,14 +95,14 @@ export default function JourneyPage() {
                   variant={flipped ? 'slide-right' : 'slide-left'}
                   className={cn(flipped && 'lg:order-2')}
                 >
-                  <div className="pixel-box-lg art-ground pixel-tilt relative aspect-[4/3] w-full overflow-hidden bg-card">
+                  <div className="pixel-box-lg art-ground pixel-tilt relative aspect-square w-full overflow-hidden bg-card">
                     <Image
                       src={chapter.art}
                       alt={chapter.artAlt}
                       fill
                       sizes="(min-width: 1024px) 50vw, 100vw"
                       priority={i === 0}
-                      className="art-smooth object-contain p-4"
+                      className="art-smooth object-cover"
                     />
                   </div>
                 </ScrollReveal>
