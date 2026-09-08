@@ -27,8 +27,14 @@ export default function ChimisPage() {
          * of growing to fit the art. `--art-ground` does not swap with the
          * theme (it is the paper this ink was drawn for), so the ink on top
          * is pinned too — without that, a reader on dark gets cream type on
-         * cream paper. */}
-        <section className="art-ground relative isolate overflow-hidden border-b-4 border-border text-night [--line:var(--night)] [--shade:var(--night)]">
+         * cream paper.
+         *
+         * The paper runs up behind the header too, which paints no
+         * background of its own — only its inner pill does. The section is
+         * pulled up by the bar's height and its content pushed back down by
+         * the same, so nothing moves except the art, which now meets the top
+         * of the page instead of stopping under a strip of flat cream. */}
+        <section className="art-ground relative isolate mt-[calc(var(--header-h)*-1)] overflow-hidden border-b-4 border-border pt-[var(--header-h)] text-night [--line:var(--night)] [--shade:var(--night)]">
           {/* 70rem is a cap, not a width: bleeding the band edge to edge
               blows the four of them up past legibility, and past the cap the
               flat cream takes over while `hero-art-fade` dissolves the two
