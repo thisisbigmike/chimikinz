@@ -1,10 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 import { PixelButton } from '@/components/pixel/pixel-button'
 import { PixelTag } from '@/components/pixel/pixel-panel'
-import { artwork, fullSrc, type Artwork } from '@/lib/artwork'
+import { artwork, type Artwork } from '@/lib/artwork'
 
 /**
  * The "discover another" panel.
@@ -47,66 +46,41 @@ export function ChimiOfTheMoment({
 
   return (
     <section className="pixel-box-lg bg-card">
-      {/* The art column is sized off the viewport height, not the container
-          width, so the square never grows taller than the screen — the whole
-          card stays visible without scrolling. The 45% cap keeps it from
-          eating the copy on short, wide windows. */}
-      <div className="grid items-stretch gap-0 md:grid-cols-[min(60vh,45%)_1fr]">
-        {/* Art */}
-        <button
-          type="button"
-          onClick={() => onOpen?.(piece)}
-          aria-label={`Open ${piece.title}`}
-          className="art-ground group relative aspect-square w-full overflow-hidden border-b-4 border-border md:border-b-0 md:border-r-4"
-        >
-          <Image
-            key={piece.slug}
-            src={fullSrc(piece.slug)}
-            alt={piece.alt}
-            fill
-            sizes="(min-width: 768px) 45vw, 100vw"
-            priority
-            className={`art-smooth object-cover transition-transform duration-300 group-hover:scale-[1.03] ${
-              rolling ? 'pixel-burst' : ''
-            }`}
-          />
-        </button>
+      <div className="flex flex-col gap-5 p-6 sm:p-8">
+        <div className="flex items-center gap-3">
+          <span className="size-3 shrink-0 animate-pulse bg-primary" aria-hidden="true" />
+          <PixelTag className="bg-secondary text-secondary-foreground">
+            Chimi of the moment
+          </PixelTag>
+        </div>
 
-        {/* Words */}
-        <div className="flex flex-col justify-center gap-5 p-6 sm:p-8">
-          <div className="flex items-center gap-3">
-            <span className="size-3 shrink-0 animate-pulse bg-primary" aria-hidden="true" />
-            <PixelTag className="bg-secondary text-secondary-foreground">
-              Chimi of the moment
-            </PixelTag>
-          </div>
-
-          <div>
-            <h2 className="font-display text-2xl uppercase sm:text-3xl">
-              {piece.title}
-            </h2>
-            <p className="mt-3 text-pretty text-2xl leading-snug text-muted-foreground">
-              {piece.alt}
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <PixelButton onClick={discover} size="lg" className="pixel-pulse">
-              Discover another
-            </PixelButton>
-            <button
-              type="button"
-              onClick={() => onOpen?.(piece)}
-              className="font-display text-[10px] uppercase text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
-            >
-              Open this one
-            </button>
-          </div>
-
-          <p className="font-display text-[9px] uppercase text-muted-foreground">
-            Or just scroll — all {artwork.length} are below.
+        {/* The roll used to land as a burst on the artwork. With the art gone
+            the name is the thing that changes, so it takes the animation. */}
+        <div className={rolling ? 'pixel-burst' : undefined}>
+          <h2 className="font-display text-2xl uppercase sm:text-3xl">
+            {piece.title}
+          </h2>
+          <p className="mt-3 text-pretty text-2xl leading-snug text-muted-foreground">
+            {piece.alt}
           </p>
         </div>
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <PixelButton onClick={discover} size="lg" className="pixel-pulse">
+            Discover another
+          </PixelButton>
+          <button
+            type="button"
+            onClick={() => onOpen?.(piece)}
+            className="font-display text-[10px] uppercase text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
+          >
+            Open this one
+          </button>
+        </div>
+
+        <p className="font-display text-[9px] uppercase text-muted-foreground">
+          Or just scroll — all {artwork.length} are below.
+        </p>
       </div>
     </section>
   )

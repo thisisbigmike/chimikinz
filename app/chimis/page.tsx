@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
@@ -41,6 +42,21 @@ export default function ChimisPage() {
                 what it looks like, how fast it moves, and how forgiving it is
                 when you get something wrong.
               </p>
+            </ScrollReveal>
+
+            {/* The four, walking. The frame is cut to the drawing's own
+                ratio so it sits flush, with no ground showing around it. */}
+            <ScrollReveal variant="fade-up" delay={300} className="w-full">
+              <div className="pixel-box-lg art-ground relative aspect-[1889/930] w-full overflow-hidden">
+                <Image
+                  src="/chimikinz/chimis-walking.webp"
+                  alt="The four founding Chimis walking in a line, each on their own coloured panel"
+                  fill
+                  sizes="(min-width: 896px) 848px, 100vw"
+                  priority
+                  className="art-smooth object-cover"
+                />
+              </div>
             </ScrollReveal>
           </div>
         </section>
