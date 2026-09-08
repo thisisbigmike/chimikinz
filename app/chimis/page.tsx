@@ -20,9 +20,34 @@ export default function ChimisPage() {
       <SiteHeader />
 
       <main>
-        {/* Intro */}
-        <section className="border-b-4 border-border">
-          <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
+        {/* Intro.
+         *
+         * Same treatment as the home hero: the scene sits *behind* the copy
+         * on pinned cream paper, so the section keeps its own height instead
+         * of growing to fit the art. `--art-ground` does not swap with the
+         * theme (it is the paper this ink was drawn for), so the ink on top
+         * is pinned too — without that, a reader on dark gets cream type on
+         * cream paper. */}
+        <section className="art-ground relative isolate overflow-hidden border-b-4 border-border text-night [--line:var(--night)] [--shade:var(--night)]">
+          {/* 70rem is a cap, not a width: bleeding the band edge to edge
+              blows the four of them up past legibility, and past the cap the
+              flat cream takes over while `hero-art-fade` dissolves the two
+              side edges. */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+            <div className="hero-art-fade absolute inset-y-0 left-1/2 w-[min(100%,70rem)] -translate-x-1/2">
+              <Image
+                src="/chimikinz/chimis-walking.webp"
+                alt=""
+                fill
+                priority
+                sizes="(min-width: 1120px) 70rem, 100vw"
+                className="art-smooth object-cover opacity-45"
+              />
+            </div>
+            <div className="hero-art-veil absolute inset-0" />
+          </div>
+
+          <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
             <ScrollReveal variant="pixel-pop">
               <PixelTag className="bg-secondary text-secondary-foreground">
                 The residents
@@ -36,27 +61,12 @@ export default function ChimisPage() {
             </ScrollReveal>
 
             <ScrollReveal variant="fade-up" delay={200}>
-              <p className="max-w-2xl text-pretty text-2xl leading-snug text-muted-foreground">
+              <p className="max-w-2xl text-pretty text-2xl leading-snug text-night/85">
                 Every Chimi starts as a feeling. Four of them arrived first and
                 between them worked out what {site.world} was going to be —
                 what it looks like, how fast it moves, and how forgiving it is
                 when you get something wrong.
               </p>
-            </ScrollReveal>
-
-            {/* The four, walking. The frame is cut to the drawing's own
-                ratio so it sits flush, with no ground showing around it. */}
-            <ScrollReveal variant="fade-up" delay={300} className="w-full">
-              <div className="pixel-box-lg art-ground relative aspect-[1889/930] w-full overflow-hidden">
-                <Image
-                  src="/chimikinz/chimis-walking.webp"
-                  alt="The four founding Chimis walking in a line, each on their own coloured panel"
-                  fill
-                  sizes="(min-width: 896px) 848px, 100vw"
-                  priority
-                  className="art-smooth object-cover"
-                />
-              </div>
             </ScrollReveal>
           </div>
         </section>
