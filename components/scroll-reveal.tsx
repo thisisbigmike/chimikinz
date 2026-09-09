@@ -41,8 +41,11 @@ export function ScrollReveal({
    * `will-change` is a promise to the browser that costs a compositor layer
    * to keep. A single page mounts dozens of these wrappers, so holding the
    * hint forever meant dozens of permanent layers and noticeably heavier
-   * scrolling. We hold it only until this element has finished revealing,
-   * then hand the layer back.
+   * scrolling. The hint is held only across this element's own reveal —
+   * from the frame it starts animating until it settles, then the layer
+   * goes back. Held from mount instead, every wrapper on the page claimed
+   * a layer at once before any of them had anything to animate, which is
+   * what a phone's compositor runs out of room for.
    */
   const [settled, setSettled] = useState(false)
 
@@ -52,7 +55,10 @@ export function ScrollReveal({
 
     // Respect reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) {
+    // The same escape hatch covers a browser with no IntersectionObserver:
+    // everything here ships at opacity 0, so with nothing to observe it
+    // there is no way back to visible.
+    if (prefersReducedMotion || typeof IntersectionObserver === 'undefined') {
       setIsVisible(true)
       setSettled(true)
       return
@@ -85,7 +91,7 @@ export function ScrollReveal({
       ref={ref}
       className={cn(
         'transition-[transform,opacity] ease-out',
-        !settled && 'will-change-[transform,opacity]',
+        isVisible && !settled && 'will-change-[transform,opacity]',
         !isVisible && variantStyles[variant],
         isVisible && 'translate-x-0 translate-y-0 scale-100 opacity-100',
         className,
@@ -132,7 +138,10 @@ export function ScrollRevealGroup({
     if (!el) return
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) {
+    // The same escape hatch covers a browser with no IntersectionObserver:
+    // everything here ships at opacity 0, so with nothing to observe it
+    // there is no way back to visible.
+    if (prefersReducedMotion || typeof IntersectionObserver === 'undefined') {
       setIsVisible(true)
       setSettled(true)
       return
@@ -171,7 +180,7 @@ export function ScrollRevealGroup({
           key={i}
           className={cn(
             'transition-[transform,opacity] ease-out',
-            !settled && 'will-change-[transform,opacity]',
+            isVisible && !settled && 'will-change-[transform,opacity]',
             !isVisible && variantStyles[variant],
             isVisible && 'translate-x-0 translate-y-0 scale-100 opacity-100',
             childClassName,

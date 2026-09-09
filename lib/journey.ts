@@ -70,9 +70,9 @@ export const chapters: Chapter[] = [
       'The gallery is the honest record of this part — everything drawn so far, in the order it happened. It is the fastest-moving part of the project and the best place to watch it grow.',
     ],
     status: 'now',
-    art: '/chimikinz/art/full/pug-rider.webp',
+    art: '/chimikinz/art/full/four-windows.webp',
     artAlt:
-      'A green-eyed Chimi in a blue coat and striped scarf with a pug sitting on its head',
+      'Chimis looking out of four windows, each showing a different season',
   },
   {
     slug: 'what-comes-next',
