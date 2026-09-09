@@ -47,27 +47,27 @@ export function ChimiOfTheMoment({
 
   return (
     <section className="pixel-box-lg bg-card">
-      {/* The art is contained on the cream ground rather than cropped to
-          fill — these are square paintings, so covering the column would
-          cut their edges off. The art takes the wider half of the split
-          and holds a floor height, so the panel reads the same whatever
-          the copy underneath it runs to. */}
-      <div className="grid items-stretch gap-0 md:grid-cols-[1.1fr_1fr]">
+      {/* The art frame is square and the art fills it — the same pairing the
+          wall uses — so no ground shows through around the piece. That makes
+          the frame's height its own width, so the column is capped: half the
+          card, and never more than 60vh, or a wide window would push the
+          bottom of the card off the screen. */}
+      <div className="grid items-stretch gap-0 md:grid-cols-[min(60vh,50%)_1fr]">
         {/* Art */}
         <button
           type="button"
           onClick={() => onOpen?.(piece)}
           aria-label={`Open ${piece.title}`}
-          className="art-ground group relative aspect-square w-full overflow-hidden border-b-4 border-border md:aspect-auto md:min-h-[420px] md:border-b-0 md:border-r-4"
+          className="art-ground group relative aspect-square w-full overflow-hidden border-b-4 border-border md:border-b-0 md:border-r-4"
         >
           <Image
             key={piece.slug}
             src={fullSrc(piece.slug)}
             alt={piece.alt}
             fill
-            sizes="(min-width: 768px) 55vw, 100vw"
+            sizes="(min-width: 768px) 50vw, 100vw"
             priority
-            className={`art-smooth object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03] ${
+            className={`art-smooth object-cover transition-transform duration-300 group-hover:scale-[1.03] ${
               rolling ? 'pixel-burst' : ''
             }`}
           />

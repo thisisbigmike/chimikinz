@@ -140,7 +140,7 @@ export const artwork: Artwork[] = [
   },
   {
     slug: 'cat-on-head',
-    title: 'Tanki',
+    title: 'Tonki',
     group: 'characters',
     category: 'ones',
     alt: 'A Chimi in an orange hoodie and green hood with a black cat perched on its head',
