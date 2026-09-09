@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 import { PixelButton } from '@/components/pixel/pixel-button'
 import { PixelTag } from '@/components/pixel/pixel-panel'
-import { artwork, featurable, fullSrc, type Artwork } from '@/lib/artwork'
+import { artwork, fullSrc, momentPieces, type Artwork } from '@/lib/artwork'
 
 /**
  * The "discover another" panel.
@@ -23,11 +23,11 @@ export function ChimiOfTheMoment({
 
   const roll = useCallback(() => {
     setIndex((current) => {
-      if (featurable.length < 2) return current
+      if (momentPieces.length < 2) return current
       // Never land on the piece already showing.
       let next = current
       while (next === current) {
-        next = Math.floor(Math.random() * featurable.length)
+        next = Math.floor(Math.random() * momentPieces.length)
       }
       return next
     })
@@ -43,7 +43,7 @@ export function ChimiOfTheMoment({
     window.setTimeout(() => setRolling(false), 320)
   }
 
-  const piece = featurable[index]
+  const piece = momentPieces[index]
 
   return (
     <section className="pixel-box-lg bg-card">

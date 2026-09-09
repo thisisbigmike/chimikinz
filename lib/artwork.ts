@@ -22,8 +22,6 @@ export type Artwork = {
   alt: string
   /** Wide pieces span two columns on the wall. */
   wide?: boolean
-  /** Kept out of the 'chimi of the moment' roll. Still hangs on the wall. */
-  neverFeature?: boolean
 }
 
 /** Grid image — small, for the wall. */
@@ -167,7 +165,6 @@ export const artwork: Artwork[] = [
     group: 'characters',
     category: 'ones',
     alt: 'A Chimi in a black robe and orange hair wearing a horned bone mask',
-    neverFeature: true,
   },
 
   // ── Scenes ────────────────────────────────────────────────────────────
@@ -424,6 +421,41 @@ export const artwork: Artwork[] = [
     category: 'scenes',
     alt: 'A small Chimi on open ground casting the long shadow of someone much taller',
   },
+  {
+    slug: 'on-the-rail',
+    title: 'On The Rail',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'Zipp, Moss, Clov and Whim leaning in a row along a rail, watching something off to the side',
+  },
+  {
+    slug: 'star-hill',
+    title: 'Star Hill',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'A Chimi sitting alone on a dark hilltop under a wide sky of stars and drifting cloud',
+  },
+  {
+    slug: 'the-visitor',
+    title: 'The Visitor',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'Four Chimis in a green field meeting a tall white creature wearing a halo',
+  },
+  {
+    slug: 'the-race',
+    title: 'The Race',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'Four Chimis racing across open pink ground — one off a laptop, two on foot, one by bike',
+  },
+  {
+    slug: 'walk-cycle',
+    title: 'Walk Cycle',
+    group: 'scenes',
+    category: 'scenes',
+    alt: 'The four Chimis mid-stride, each walking through their own panel of colour',
+  },
 ]
 
 export const artGroups: { id: ArtGroup; label: string; blurb: string }[] = [
@@ -444,8 +476,44 @@ export const artGroups: { id: ArtGroup; label: string; blurb: string }[] = [
   },
 ]
 
-/** The pool the 'chimi of the moment' rolls from. */
-export const featurable = artwork.filter((piece) => !piece.neverFeature)
+/**
+ * What the 'chimi of the moment' rolls through — a hand-picked set, not the
+ * whole wall. Order is the order they were handed over; the roll is random,
+ * so it only decides which one renders first on the server.
+ *
+ * Slugs are checked against `artwork` at module load, so a typo or a piece
+ * pulled from the wall fails loudly here instead of rendering a broken frame.
+ */
+const momentSlugs = [
+  'star-hill',
+  'on-the-rail',
+  'the-visitor',
+  'the-race',
+  'night-hill',
+  'pencil-stairs',
+  'your-days',
+  'cap-and-books',
+  'your-way',
+  'the-cursor',
+  'in-one-ear',
+  'table-for-one',
+  'problem-wall',
+  'out-of-the-screen',
+  'piano-keys',
+  'the-flip',
+  'toast-bed',
+  'the-long-shadow',
+  'movie-night',
+  'apple-nap',
+  'clover-cove-sign',
+  'walk-cycle',
+]
+
+export const momentPieces: Artwork[] = momentSlugs.map((slug) => {
+  const piece = artwork.find((a) => a.slug === slug)
+  if (!piece) throw new Error(`momentSlugs: no artwork with slug '${slug}'`)
+  return piece
+})
 
 export const artworkByGroup = (group: ArtGroup) =>
   artwork.filter((piece) => piece.group === group)
