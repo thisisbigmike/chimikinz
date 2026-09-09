@@ -47,6 +47,11 @@ export function ChimiOfTheMoment({
 
   return (
     <section className="pixel-box-lg bg-card">
+      {/* The art is contained on the cream ground rather than cropped to
+          fill — these are square paintings, so covering the column would
+          cut their edges off. The art takes the wider half of the split
+          and holds a floor height, so the panel reads the same whatever
+          the copy underneath it runs to. */}
       <div className="grid items-stretch gap-0 md:grid-cols-[1.1fr_1fr]">
         {/* Art */}
         <button
