@@ -47,26 +47,22 @@ export function ChimiOfTheMoment({
 
   return (
     <section className="pixel-box-lg bg-card">
-      {/* The art column is sized off the viewport height, not the container
-          width, so the square never grows taller than the screen — the whole
-          card stays visible without scrolling. The 45% cap keeps it from
-          eating the copy on short, wide windows. */}
-      <div className="grid items-stretch gap-0 md:grid-cols-[min(60vh,45%)_1fr]">
+      <div className="grid items-stretch gap-0 md:grid-cols-[1.1fr_1fr]">
         {/* Art */}
         <button
           type="button"
           onClick={() => onOpen?.(piece)}
           aria-label={`Open ${piece.title}`}
-          className="art-ground group relative aspect-square w-full overflow-hidden border-b-4 border-border md:border-b-0 md:border-r-4"
+          className="art-ground group relative aspect-square w-full overflow-hidden border-b-4 border-border md:aspect-auto md:min-h-[420px] md:border-b-0 md:border-r-4"
         >
           <Image
             key={piece.slug}
             src={fullSrc(piece.slug)}
             alt={piece.alt}
             fill
-            sizes="(min-width: 768px) 45vw, 100vw"
+            sizes="(min-width: 768px) 55vw, 100vw"
             priority
-            className={`art-smooth object-cover transition-transform duration-300 group-hover:scale-[1.03] ${
+            className={`art-smooth object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03] ${
               rolling ? 'pixel-burst' : ''
             }`}
           />
