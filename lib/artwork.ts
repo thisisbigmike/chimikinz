@@ -22,6 +22,8 @@ export type Artwork = {
   alt: string
   /** Wide pieces span two columns on the wall. */
   wide?: boolean
+  /** Kept out of the 'chimi of the moment' roll. Still hangs on the wall. */
+  neverFeature?: boolean
 }
 
 /** Grid image — small, for the wall. */
@@ -165,6 +167,7 @@ export const artwork: Artwork[] = [
     group: 'characters',
     category: 'ones',
     alt: 'A Chimi in a black robe and orange hair wearing a horned bone mask',
+    neverFeature: true,
   },
 
   // ── Scenes ────────────────────────────────────────────────────────────
@@ -440,6 +443,9 @@ export const artGroups: { id: ArtGroup; label: string; blurb: string }[] = [
     blurb: 'Days out, quiet moments and the odd bit of trouble in Clover Cove.',
   },
 ]
+
+/** The pool the 'chimi of the moment' rolls from. */
+export const featurable = artwork.filter((piece) => !piece.neverFeature)
 
 export const artworkByGroup = (group: ArtGroup) =>
   artwork.filter((piece) => piece.group === group)
