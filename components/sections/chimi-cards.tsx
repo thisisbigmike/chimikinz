@@ -37,9 +37,24 @@ export function ChimiCards() {
           />
         </ScrollReveal>
 
-        <ul className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {/* A swipeable rail on a phone, a grid from `sm` up.
+            Scroll-snap rather than a carousel script: the browser already
+            does the momentum, the snapping and the keyboard, and there is
+            nothing here that needs a slide index. The negative margin lets
+            the cards run to the edge of the screen while the padding keeps
+            the first and last one clear of it. */}
+        <ul
+          className={cn(
+            '-mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-2',
+            'rail-scroll',
+            'sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-8 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3',
+          )}
+        >
           {chimiCardArt.map((card, index) => (
-            <li key={card.slug}>
+            <li
+              key={card.slug}
+              className="w-[78%] shrink-0 snap-center sm:w-auto sm:shrink"
+            >
               <ScrollReveal variant="fade-up" delay={index * 100}>
                 {/* The float sits on this inner box, not on the
                     ScrollReveal wrapper — that animates a transform of its
