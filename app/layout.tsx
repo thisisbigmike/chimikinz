@@ -64,6 +64,7 @@ export const metadata: Metadata = {
 }
 
 import { FavoritesProvider } from '@/lib/context/favorites-context'
+import { LoadingScreen } from '@/components/loading-screen'
 
 export const viewport: Viewport = {
   // The tokens in globals.css theme themselves with light-dark(), so the
@@ -86,6 +87,9 @@ export default function RootLayout({
       className={`bg-background ${pixelDisplay.variable} ${pixelBody.variable}`}
     >
       <body className="antialiased">
+        {/* Part of the first HTML, so it is already covering the page at
+            first paint. It lifts itself once the load finishes. */}
+        <LoadingScreen />
         <FavoritesProvider>
           {children}
           {process.env.NODE_ENV === 'production' && <Analytics />}
