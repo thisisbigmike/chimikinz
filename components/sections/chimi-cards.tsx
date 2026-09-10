@@ -1,42 +1,49 @@
-import { ChimiCard } from '@/components/chimi-card'
+import Image from 'next/image'
 import { SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { mainChimis } from '@/lib/chimis'
+import { cardSrc, chimiCardArt } from '@/lib/chimi-cards'
 
 /**
- * The founding four as their full collector cards, laid out down the page.
+ * The collector cards, as they are actually printed.
  *
- * The rail higher up is a way in to a Chimi's own route; this is the same
- * cards read in place, for anyone who would rather scroll than click. They
- * carry `headingLevel={2}` so the page keeps the one `h1` it already has.
+ * Sized to a common height rather than a common width: the cards are not
+ * all cut to the same proportions, so matching their widths would leave the
+ * row ragged along the bottom. Each one is drawn with its own frame, so
+ * there is no plate or ground under them here.
  */
 export function ChimiCards() {
-  if (mainChimis.length === 0) return null
+  if (chimiCardArt.length === 0) return null
 
   return (
     <section className="border-b-4 border-border">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-14 sm:px-6 lg:py-20">
+      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-14 sm:px-6 lg:py-20">
         <ScrollReveal variant="fade-up">
           <SectionHeading
             align="center"
-            eyebrow="The full card"
+            eyebrow="The card"
             title="Chimi Cards"
-            body="Everything on the back of the box — feeling, traits, lore and where each one turns up."
+            body="Every Chimi is printed on one — the number, the stats, the feeling it embodies and a line of its own."
             className="mx-auto"
           />
         </ScrollReveal>
 
-        <div className="flex flex-col gap-10 lg:gap-14">
-          {mainChimis.map((chimi, index) => (
-            <ScrollReveal
-              key={chimi.slug}
-              variant="fade-up"
-              delay={index === 0 ? 100 : 0}
-            >
-              <ChimiCard chimi={chimi} headingLevel={2} />
-            </ScrollReveal>
+        <ul className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {chimiCardArt.map((card, index) => (
+            <li key={card.slug}>
+              <ScrollReveal variant="fade-up" delay={index * 100}>
+                <div className="relative h-[420px] w-full sm:h-[460px] lg:h-[520px]">
+                  <Image
+                    src={cardSrc(card.slug)}
+                    alt={card.alt}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 90vw"
+                    className="art-smooth object-contain"
+                  />
+                </div>
+              </ScrollReveal>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )
