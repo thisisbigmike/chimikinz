@@ -522,7 +522,8 @@ export const artworkByGroup = (group: ArtGroup) =>
 export const artCategories: { id: ArtCategory; label: string }[] = [
   { id: 'chimis', label: 'Chimis' },
   { id: 'ones', label: '1/1s' },
-  { id: 'cards', label: 'Cards' },
+  /* 'cards' is deliberately not listed: one piece is not worth a filter
+     of its own. It still hangs under All. */
   { id: 'scenes', label: 'Scenes' },
   { id: 'gifs', label: 'GIFs' },
   { id: 'collabs', label: 'Collabs' },

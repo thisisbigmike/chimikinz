@@ -21,7 +21,7 @@ export function ChimiCards() {
           <SectionHeading
             align="center"
             eyebrow="The card"
-            title="Chimi Cards"
+            title="Chimi Cardz"
             body="Every Chimi is printed on one — the number, the stats, the feeling it embodies and a line of its own."
             className="mx-auto"
           />

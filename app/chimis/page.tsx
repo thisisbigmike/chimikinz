@@ -100,7 +100,13 @@ export default function ChimisPage() {
           />
         </section>
 
-        {/* Rare personalities — renders only once one exists */}
+        <RarePersonalities />
+
+        <ChimiCards />
+
+        {/* The rare Chimis as characters — a rail once any exist, and
+            until then the note that they are still on their way. Distinct
+            from the RarePersonalities section above, which is the 1/1 art. */}
         {rareChimis.length > 0 ? (
           <section className="border-b-4 border-border">
             <div className="mx-auto max-w-7xl px-4 pt-14 sm:px-6 lg:pt-20">
@@ -146,10 +152,6 @@ export default function ChimisPage() {
             </div>
           </section>
         )}
-
-        <RarePersonalities />
-
-        <ChimiCards />
       </main>
 
       <SiteFooter />
