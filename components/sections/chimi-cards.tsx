@@ -3,6 +3,7 @@ import { SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { SeeMoreCards } from '@/components/see-more-cards'
 import { cardSrc, chimiCardArt } from '@/lib/chimi-cards'
+import { cn } from '@/lib/utils'
 
 /**
  * The collector cards, as they are actually printed.
@@ -12,6 +13,14 @@ import { cardSrc, chimiCardArt } from '@/lib/chimi-cards'
  * row ragged along the bottom. Each one is drawn with its own frame, so
  * there is no plate or ground under them here.
  */
+/**
+ * Three float variants, cycled across the row: same drift, different
+ * durations and start delays, so the cards bob out of step with each other
+ * rather than moving as one block. All three are switched off in the
+ * reduced-motion block in globals.css.
+ */
+const FLOAT = ['pixel-float', 'pixel-float-delayed', 'pixel-float-slow']
+
 export function ChimiCards() {
   if (chimiCardArt.length === 0) return null
 
@@ -32,7 +41,15 @@ export function ChimiCards() {
           {chimiCardArt.map((card, index) => (
             <li key={card.slug}>
               <ScrollReveal variant="fade-up" delay={index * 100}>
-                <div className="relative h-[420px] w-full sm:h-[460px] lg:h-[520px]">
+                {/* The float sits on this inner box, not on the
+                    ScrollReveal wrapper — that animates a transform of its
+                    own on the way in, and the two would fight. */}
+                <div
+                  className={cn(
+                    'relative h-[420px] w-full sm:h-[460px] lg:h-[520px]',
+                    FLOAT[index % FLOAT.length],
+                  )}
+                >
                   <Image
                     src={cardSrc(card.slug)}
                     alt={card.alt}
