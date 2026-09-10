@@ -79,8 +79,8 @@ const channels = [
     body: 'Every GIF we have made, in one place. Find them all here — and add your own.',
     tone: 'bg-primary text-primary-foreground',
     Mark: GifMark,
-    /* Sits across the bottom of the pair rather than alone in a column. */
-    wide: true,
+    /* Odd one out: sits centred on its own row below the pair. */
+    solo: true,
   },
 ]
 
@@ -105,21 +105,28 @@ export function SocialLinks() {
               key={channel.label}
               variant="fade-up"
               delay={i * 150}
-              className={channel.wide ? 'sm:col-span-2' : undefined}
+              /**
+               * An odd number of cards leaves the last one stranded in the
+               * left column. It spans the row instead and then takes a
+               * single column's width back — half the row less half the
+               * `gap-6` between them — so it lands centred at exactly the
+               * width of the two above rather than stretching across both.
+               *
+               * Below `sm` the grid is one column and every card is full
+               * width already, so none of this applies.
+               */
+              className={
+                channel.solo
+                  ? 'sm:col-span-2 sm:w-[calc(50%-0.75rem)] sm:justify-self-center'
+                  : undefined
+              }
             >
               <li className="h-full">
                 <a
                   href={channel.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn(
-                    'group pixel-box pixel-press pixel-lift flex h-full items-center gap-4 bg-card p-5',
-                    /* The wide one runs the width of the pair above it, so
-                       left-aligned content leaves half the card empty. Only
-                       from `sm`: below that every card is full width and one
-                       centred among them would just look out of step. */
-                    channel.wide && 'sm:justify-center',
-                  )}
+                  className="group pixel-box pixel-press pixel-lift flex h-full items-center gap-4 bg-card p-5"
                 >
                   <div
                     className={`pixel-box-sm grid size-14 shrink-0 place-items-center ${channel.tone}`}

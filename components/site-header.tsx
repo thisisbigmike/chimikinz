@@ -7,6 +7,23 @@ import { useEffect, useRef, useState } from 'react'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
+type Plate = { x: number; y: number; w: number; h: number }
+
+/**
+ * Where the plate sat on the page just left.
+ *
+ * `SiteHeader` is rendered by each page rather than by the root layout, so
+ * a navigation unmounts it and mounts a fresh one — component state cannot
+ * carry the old position across, and the plate would simply appear at the
+ * new link with nothing to travel from. This sits outside the component so
+ * it survives that, and the new header glides out of the old one's place.
+ * A full reload clears it, which is right: there is nowhere to come from.
+ */
+let lastPlate: Plate | null = null
+
+/** The glide itself. Long enough to read as travel, short enough to lead. */
+const GLIDE = 'transform 420ms cubic-bezier(0.22, 1, 0.36, 1), width 420ms cubic-bezier(0.22, 1, 0.36, 1)'
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
@@ -49,15 +66,15 @@ export function SiteHeader() {
    */
   const navRef = useRef<HTMLElement>(null)
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([])
-  const [plate, setPlate] = useState<{
-    x: number
-    y: number
-    w: number
-    h: number
-  } | null>(null)
-  /** Off for the first placement, so it appears where it belongs instead of
-   *  flying in from the corner. */
-  const [sliding, setSliding] = useState(false)
+  const [plate, setPlate] = useState<Plate | null>(null)
+  /** Off until the starting position has been painted — a transition needs
+   *  somewhere to leave from. */
+  const [gliding, setGliding] = useState(false)
+  const [reduced, setReduced] = useState(false)
+
+  useEffect(() => {
+    setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  }, [])
 
   const activeIndex = site.nav.findIndex((item) => isActive(item.href))
 
@@ -72,29 +89,68 @@ export function SiteHeader() {
       return
     }
 
-    const measure = () => {
+    const measure = (): Plate => {
       const bounds = nav.getBoundingClientRect()
       const box = link.getBoundingClientRect()
-      setPlate({
+      return {
         x: box.left - bounds.left,
         y: box.top - bounds.top,
         w: box.width,
         h: box.height,
+      }
+    }
+
+    const target = measure()
+    const from = lastPlate
+    lastPlate = target
+
+    let frame = 0
+    /* Guards the two listeners below. Until the glide has been started,
+       neither may write to the plate — a stray measurement lands it on the
+       target early and there is nothing left to travel. */
+    let ready = false
+
+    const moved =
+      from &&
+      (Math.abs(from.x - target.x) > 0.5 || Math.abs(from.w - target.w) > 0.5)
+
+    if (moved) {
+      // Put it back where the last page left it, unanimated...
+      setGliding(false)
+      setPlate(from)
+      // ...then let that paint before moving. Two frames, because a
+      // transition cannot start from a value the browser has not committed.
+      frame = requestAnimationFrame(() => {
+        frame = requestAnimationFrame(() => {
+          setGliding(true)
+          setPlate(target)
+          ready = true
+        })
+      })
+    } else {
+      setPlate(target)
+      frame = requestAnimationFrame(() => {
+        setGliding(true)
+        ready = true
       })
     }
 
-    measure()
-    const settle = requestAnimationFrame(() => setSliding(true))
+    const remeasure = () => {
+      if (!ready) return
+      const next = measure()
+      lastPlate = next
+      setPlate(next)
+    }
 
     // The display face is what sets these widths, so a late font swap moves
     // every link under the plate.
-    void document.fonts?.ready.then(measure).catch(() => {})
+    void document.fonts?.ready.then(remeasure).catch(() => {})
 
-    const observer = new ResizeObserver(measure)
+    const observer = new ResizeObserver(remeasure)
     observer.observe(nav)
 
     return () => {
-      cancelAnimationFrame(settle)
+      cancelAnimationFrame(frame)
       observer.disconnect()
     }
   }, [activeIndex, pathname])
@@ -137,15 +193,12 @@ export function SiteHeader() {
             {plate ? (
               <span
                 aria-hidden="true"
-                className={cn(
-                  'pointer-events-none absolute left-0 top-0 border-4 border-border bg-secondary',
-                  sliding &&
-                    'transition-[transform,width] duration-300 ease-out motion-reduce:transition-none',
-                )}
+                className="pointer-events-none absolute left-0 top-0 border-4 border-border bg-secondary will-change-transform"
                 style={{
                   transform: `translate(${plate.x}px, ${plate.y}px)`,
                   width: plate.w,
                   height: plate.h,
+                  transition: gliding && !reduced ? GLIDE : 'none',
                 }}
               />
             ) : null}
