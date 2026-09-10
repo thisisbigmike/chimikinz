@@ -621,6 +621,13 @@ export const artwork: Artwork[] = [
     category: 'ones',
     alt: 'yummy — a Chimi in a cream bear onesie with round ears and a gold medal, on lilac',
   },
+  {
+    slug: 'mermes',
+    title: 'mermes',
+    group: 'characters',
+    category: 'ones',
+    alt: 'mermes — a Chimi with long blonde hair and blue eyes in a white tee and shorts, a small pendant at the neck and a yellow pencil in hand, on bright blue',
+  },
 ]
 
 export const artGroups: { id: ArtGroup; label: string; blurb: string }[] = [
