@@ -18,9 +18,9 @@ export const collections: Collection[] = [
     slug: 'genesis',
     name: 'Chimikinz Genesis',
     blurb:
-      'The full cast. 4,444 chimis drawn by hand, each one born with a single charm of its own.',
+      'The full cast. 7,777 chimis drawn by hand, each one born with a single charm of its own.',
     cover: '/chimikinz/chimikins-logo-group.png',
-    supply: '4,444',
+    supply: '7,777',
     status: 'Minting soon',
     // TODO: real OpenSea URL
     opensea: 'https://opensea.io/collection/chimikinz',

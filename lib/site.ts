@@ -1,6 +1,6 @@
 export const site = {
   name: 'Chimikinz',
-  supply: 4444,
+  supply: 7777,
   chain: 'Ethereum',
   tagline: 'Hand-drawn chimis. Every one carries a charm.',
   world: 'Clover Cove',
@@ -45,14 +45,14 @@ export const launched: boolean = false
 export const workshopOpen: boolean = false
 
 export const stats = [
-  { value: '4,444', label: 'Chimis' },
+  { value: '7,777', label: 'Chimis' },
   { value: '100%', label: 'Hand-drawn' },
   { value: 'ETH', label: 'Chain' },
 ] as const
 
 export const marqueeItems = [
   'MINT COMING SOON',
-  '4,444 CHIMIS',
+  '7,777 CHIMIS',
   'BUILT ON ETHEREUM',
   'ONE CHARM EACH',
   'NO TWO ALIKE',
@@ -64,7 +64,7 @@ export const roadmap = [
     phase: 'Phase 01',
     title: 'The Scribble',
     status: 'done',
-    body: 'Every chimi drawn by hand — no generator, no filler. 4,444 charms sketched, inked and named.',
+    body: 'Every chimi drawn by hand — no generator, no filler. 7,777 charms sketched, inked and named.',
   },
   {
     phase: 'Phase 02',

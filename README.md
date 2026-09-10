@@ -2,7 +2,7 @@
 
 > **Hand-drawn chimis. Every one carries a charm.**
 
-Chimikinz is a collection of 4,444 hand-drawn, unique chimis built on **Ethereum**. No trait machines, no generic generators — every single creature is inked by hand and carries its own distinct charm.
+Chimikinz is a collection of 7,777 hand-drawn, unique chimis built on **Ethereum**. No trait machines, no generic generators — every single creature is inked by hand and carries its own distinct charm.
 
 ---
 
@@ -19,7 +19,7 @@ Chimikinz is a collection of 4,444 hand-drawn, unique chimis built on **Ethereum
 ## 🚀 Project Roadmap
 
 - **Phase 01: The Scribble** *(Completed)*  
-  Every chimi drawn by hand — 4,444 charms sketched, inked, and named.
+  Every chimi drawn by hand — 7,777 charms sketched, inked, and named.
 - **Phase 02: Polish the Charm** *(Active)*  
   Lore finalized, traits balanced, terminal built, and Quests live.
 - **Phase 03: Share the Luck** *(Upcoming)*  

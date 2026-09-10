@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: '%s · Chimikinz',
   },
   description:
-    'Chimikinz is a collection of 4,444 hand-drawn chimis, each carrying a charm of its own. Collect one, catch the luck.',
+    'Chimikinz is a collection of 7,777 hand-drawn chimis, each carrying a charm of its own. Collect one, catch the luck.',
   generator: 'v0.app',
   keywords: ['Chimikinz', 'chimis', 'Ethereum', 'ETH', 'NFT', 'pixel', 'collection'],
   openGraph: {
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Chimikinz — 4,444 Lucky Chimis',
+    title: 'Chimikinz — 7,777 Lucky Chimis',
     description: 'Hand-drawn chimis, each carrying a charm of its own.',
     creator: '@chimikinzzz',
   },
