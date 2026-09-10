@@ -5,6 +5,7 @@ import { SiteFooter } from '@/components/site-footer'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { PixelTag } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
+import { JourneyRail } from '@/components/journey-rail'
 import { chapters, statusLabel } from '@/lib/journey'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
@@ -48,31 +49,9 @@ export default function JourneyPage() {
               </p>
             </ScrollReveal>
 
-            {/* Chapter rail */}
+            {/* Chapter rail — follows the reader, see JourneyRail. */}
             <ScrollReveal variant="fade-up" delay={300}>
-              <ol className="flex flex-wrap items-center justify-center gap-2">
-                {chapters.map((chapter, i) => (
-                  <li key={chapter.slug} className="flex items-center gap-2">
-                    <a
-                      href={`#${chapter.slug}`}
-                      className={cn(
-                        'pixel-box-sm pixel-press px-3 py-2 font-display text-[9px] uppercase',
-                        chapter.status === 'now'
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-card',
-                      )}
-                    >
-                      {chapter.title}
-                    </a>
-                    {i < chapters.length - 1 ? (
-                      <span
-                        className="hidden size-2 rotate-45 bg-foreground sm:block"
-                        aria-hidden="true"
-                      />
-                    ) : null}
-                  </li>
-                ))}
-              </ol>
+              <JourneyRail />
             </ScrollReveal>
           </div>
         </section>
@@ -124,7 +103,7 @@ export default function JourneyPage() {
                     </div>
 
                     <div>
-                      <p className="font-display text-[10px] uppercase text-primary">
+                      <p className="font-display text-[10px] uppercase text-foreground">
                         {chapter.era}
                       </p>
                       <h2 className="mt-2 font-display text-2xl uppercase sm:text-3xl">

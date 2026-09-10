@@ -93,7 +93,7 @@ export default function CollectionsPage() {
                         {collection.blurb}
                       </p>
 
-                      <span className="mt-auto pt-2 font-display text-[10px] uppercase text-primary">
+                      <span className="mt-auto pt-2 font-display text-[10px] uppercase text-foreground">
                         {launched ? 'View on OpenSea' : 'Open collection'}{' '}
                         <span className="pixel-arrow">&rarr;</span>
                       </span>

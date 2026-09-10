@@ -74,7 +74,7 @@ export function EntryTiles() {
                   <p className="text-pretty text-xl leading-snug text-muted-foreground">
                     {tile.copy}
                   </p>
-                  <span className="mt-auto pt-2 font-display text-[10px] uppercase text-primary">
+                  <span className="mt-auto pt-2 font-display text-[10px] uppercase text-foreground">
                     {tile.cta} <span className="pixel-arrow">&rarr;</span>
                   </span>
                 </div>

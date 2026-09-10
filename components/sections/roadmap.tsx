@@ -38,7 +38,7 @@ export function Roadmap() {
                   )}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-display text-[10px] uppercase text-secondary">
+                    <span className="font-display text-[10px] uppercase text-foreground">
                       {item.phase}
                     </span>
                     <PixelTag className={cn('border-border', status.className)}>

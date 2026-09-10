@@ -35,7 +35,7 @@ export function Team() {
                     <h3 className="font-display text-sm uppercase transition-transform duration-200 group-hover:-translate-y-0.5">
                       {member.name}
                     </h3>
-                    <p className="font-display text-[10px] uppercase text-primary">
+                    <p className="font-display text-[10px] uppercase text-foreground">
                       {member.role}
                     </p>
                     <p className="text-pretty text-xl leading-snug text-muted-foreground">

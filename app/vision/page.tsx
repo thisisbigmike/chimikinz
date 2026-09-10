@@ -98,7 +98,7 @@ export default function VisionPage() {
                 >
                   <li className="h-full">
                     <PixelPanel className="h-full">
-                      <span className="font-display text-[10px] uppercase text-primary">
+                      <span className="font-display text-[10px] uppercase text-foreground">
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <h3 className="mt-2 font-display text-sm uppercase">
@@ -131,7 +131,7 @@ export default function VisionPage() {
                 <ScrollReveal key={goal.title} variant="fade-up" delay={i * 150}>
                   <li className="flex h-full flex-col gap-4 border-4 border-cream bg-cream/5 p-5">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-display text-[10px] uppercase text-secondary">
+                      <span className="font-display text-[10px] uppercase text-foreground">
                         {goal.horizon}
                       </span>
                       <PixelTag className="border-cream bg-cream/10">
