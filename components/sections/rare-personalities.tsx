@@ -6,24 +6,26 @@ import ThumbnailSlider, {
 } from '@/components/ui/thumbnail-slider'
 import { SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { artwork, fullSrc, thumbSrc } from '@/lib/artwork'
+import {
+  rareFullSrc,
+  rarePersonalities,
+  rareThumbSrc,
+} from '@/lib/rare-personalities'
 
 /**
  * The one-of-ones, as a slider: one on the stage, the rest on the strip.
  *
- * Fed from the `ones` bucket in lib/artwork, so a new 1/1 added there turns
- * up here and in the gallery at once with nothing to wire up twice.
+ * Fed from lib/rare-personalities, which is this section's own list — these
+ * pieces are deliberately not in the gallery's artwork.
  */
 export function RarePersonalities() {
   const slides = useMemo<ThumbnailSlide[]>(
     () =>
-      artwork
-        .filter((piece) => piece.category === 'ones')
-        .map((piece) => ({
-          src: fullSrc(piece.slug),
-          thumbnailSrc: thumbSrc(piece.slug),
-          alt: piece.alt,
-        })),
+      rarePersonalities.map((piece) => ({
+        src: rareFullSrc(piece.slug),
+        thumbnailSrc: rareThumbSrc(piece.slug),
+        alt: piece.alt,
+      })),
     [],
   )
 

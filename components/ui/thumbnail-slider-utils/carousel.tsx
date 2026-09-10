@@ -151,10 +151,18 @@ export function Slider({
 export function ThumbsSlider({
   className,
   thumbsClassName,
+  thumbFit = 'cover',
 }: {
   className?: string
   /** Sizing for one thumb — basis and height. */
   thumbsClassName?: string
+  /**
+   * How a thumbnail sits in its box. `cover` fills it, which suits photos;
+   * `contain` fits the whole image in, which is what art with a subject in
+   * it needs — a thumb box is wider than it is tall, so covering one crops
+   * the top and bottom off a figure.
+   */
+  thumbFit?: 'cover' | 'contain'
 }) {
   const { thumbsRef, thumbnails, selected, scrollTo } = useCarousel('ThumbsSlider')
 
@@ -183,7 +191,10 @@ export function ThumbsSlider({
               alt=""
               aria-hidden="true"
               loading="lazy"
-              className="h-full w-full object-cover"
+              className={cn(
+                'h-full w-full',
+                thumbFit === 'contain' ? 'object-contain' : 'object-cover',
+              )}
             />
           </button>
         ))}

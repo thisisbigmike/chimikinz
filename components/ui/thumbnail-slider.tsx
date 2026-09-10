@@ -66,7 +66,11 @@ export default function ThumbnailSlider({
             </Slider>
           ))}
         </SliderContainer>
-        <ThumbsSlider className="px-1 pb-1" thumbsClassName="h-24 basis-[15%]" />
+        <ThumbsSlider
+          className="px-1 pb-1"
+          thumbsClassName="art-ground h-24 basis-[28%] sm:basis-[15%]"
+          thumbFit="contain"
+        />
       </Carousel>
     </div>
   )
