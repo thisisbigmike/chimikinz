@@ -211,12 +211,12 @@ export function SiteHeader() {
                   linkRefs.current[i] = el
                 }}
                 aria-current={isActive(item.href) ? 'page' : undefined}
-                className={cn(
-                  /* Above the plate, and keeping the transparent border so
-                     the link measures the same whether it is current or not. */
-                  'pixel-glow relative border-4 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-tight transition-colors',
-                  !isActive(item.href) && 'hover:border-border hover:bg-secondary',
-                )}
+                /* No hover state: the plate is the only thing that marks a
+                   link, and a second box lighting up under the cursor read
+                   as a second current page. The transparent border stays so
+                   the link measures the same whether it is current or not,
+                   which is what the plate is sized from. */
+                className="relative border-4 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-tight"
               >
                 {item.label}
               </Link>
