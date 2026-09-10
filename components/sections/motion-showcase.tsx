@@ -58,6 +58,11 @@ export function MotionShowcase() {
     const sync = () => {
       const shouldPlay = onScreen && !reduced.matches
       for (const video of videos) {
+        /* Metadata is all these ship with, so the poster carries the box
+           until the clip is actually wanted. Once the strip is near, let
+           them buffer properly — the whole set is under 4MB and the second
+           copy of the list re-uses the first's out of the HTTP cache. */
+        if (onScreen && video.preload !== 'auto') video.preload = 'auto'
         // A play() that loses a race with an unmount rejects; there is
         // nothing to recover, and an unhandled rejection in the console is
         // worse than the no-op.
@@ -260,9 +265,13 @@ export function MotionShowcase() {
                 <div className="pixel-box art-ground w-[62vw] max-w-[300px] overflow-hidden sm:w-[260px] lg:w-[300px]">
                   <video
                     src={loop.src}
+                    poster={loop.poster}
                     muted
                     loop
                     playsInline
+                    /* Bumped to `auto` by the observer below once the strip
+                       is worth loading. Until then the poster is the frame
+                       on show, so nothing here is ever an empty box. */
                     preload="metadata"
                     aria-label={copy === 1 ? undefined : loop.alt}
                     className="pointer-events-none block aspect-square w-full object-cover"

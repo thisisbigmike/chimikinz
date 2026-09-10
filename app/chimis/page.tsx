@@ -6,6 +6,7 @@ import { PixelLink } from '@/components/pixel/pixel-button'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { ChimiRail } from '@/components/chimi-rail'
+import { RarePersonalities } from '@/components/sections/rare-personalities'
 import { mainChimis, rareChimis } from '@/lib/chimis'
 import { site } from '@/lib/site'
 
@@ -145,19 +146,7 @@ export default function ChimisPage() {
           </section>
         )}
 
-        {/* Rare Personalities — the plate is up, the cast is not. Drop the
-            cards or rail in place of the empty well below when they exist. */}
-        <section className="border-b-4 border-border">
-          <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-14 sm:px-6 lg:py-20">
-            <ScrollReveal variant="fade-up">
-              <SectionHeading
-                align="center"
-                title="Rare Personalities"
-                className="mx-auto"
-              />
-            </ScrollReveal>
-          </div>
-        </section>
+        <RarePersonalities />
       </main>
 
       <SiteFooter />

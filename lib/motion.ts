@@ -18,6 +18,20 @@ export type MotionLoop = {
   /** File under /public/chimikinz/motion. */
   src: string
   /**
+   * First frame of the clip, as a still.
+   *
+   * Twenty-two video elements cannot all buffer at once — the browser runs
+   * six requests to an origin at a time — so without this the boxes further
+   * along the strip sit empty until their turn comes round, which on a strip
+   * that drifts means most of a lap. The poster costs no decoder and paints
+   * the moment it lands, so a box shows its clip from the start and the
+   * video takes over underneath it.
+   *
+   * Regenerate after swapping a clip:
+   *   ffmpeg -y -ss 0 -i loop-N.mp4 -frames:v 1 -vf scale=500:-2    *     -c:v libwebp -quality 76 poster/loop-N.webp
+   */
+  poster: string
+  /**
    * What the clip shows, for screen readers.
    *
    * These are deliberately generic. Nobody has described the clips yet, and a
@@ -29,15 +43,59 @@ export type MotionLoop = {
 }
 
 export const motionLoops: MotionLoop[] = [
-  { src: '/chimikinz/motion/loop-1.mp4', alt: 'An animated scene from Clover Cove' },
-  { src: '/chimikinz/motion/loop-2.mp4', alt: 'An animated scene from Clover Cove' },
-  { src: '/chimikinz/motion/loop-3.mp4', alt: 'An animated scene from Clover Cove' },
-  { src: '/chimikinz/motion/loop-4.mp4', alt: 'An animated scene from Clover Cove' },
-  { src: '/chimikinz/motion/loop-5.mp4', alt: 'An animated scene from Clover Cove' },
-  { src: '/chimikinz/motion/loop-6.mp4', alt: 'An animated scene from Clover Cove' },
-  { src: '/chimikinz/motion/loop-7.mp4', alt: 'An animated scene from Clover Cove' },
-  { src: '/chimikinz/motion/loop-8.mp4', alt: 'An animated scene from Clover Cove' },
-  { src: '/chimikinz/motion/loop-9.mp4', alt: 'An animated scene from Clover Cove' },
-  { src: '/chimikinz/motion/loop-10.mp4', alt: 'An animated scene from Clover Cove' },
-  { src: '/chimikinz/motion/loop-11.mp4', alt: 'An animated scene from Clover Cove' },
+  {
+    src: '/chimikinz/motion/loop-1.mp4',
+    poster: '/chimikinz/motion/poster/loop-1.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-2.mp4',
+    poster: '/chimikinz/motion/poster/loop-2.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-3.mp4',
+    poster: '/chimikinz/motion/poster/loop-3.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-4.mp4',
+    poster: '/chimikinz/motion/poster/loop-4.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-5.mp4',
+    poster: '/chimikinz/motion/poster/loop-5.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-6.mp4',
+    poster: '/chimikinz/motion/poster/loop-6.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-7.mp4',
+    poster: '/chimikinz/motion/poster/loop-7.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-8.mp4',
+    poster: '/chimikinz/motion/poster/loop-8.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-9.mp4',
+    poster: '/chimikinz/motion/poster/loop-9.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-10.mp4',
+    poster: '/chimikinz/motion/poster/loop-10.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-11.mp4',
+    poster: '/chimikinz/motion/poster/loop-11.webp',
+    alt: 'An animated scene from Clover Cove',
+  },
 ]
