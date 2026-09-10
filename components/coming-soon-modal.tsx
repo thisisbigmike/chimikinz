@@ -1,7 +1,7 @@
 'use client'
 
 import type * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { PixelTag } from '@/components/pixel/pixel-panel'
@@ -41,6 +41,15 @@ export function ComingSoonModal({
     setContainer(document.body)
   }, [])
 
+  /**
+   * Clicking the backdrop dismisses — but only when the press *started*
+   * there. A click event fires on the nearest common ancestor of the press
+   * and the release, so selecting text in the plate and letting go outside
+   * it would otherwise read as a click on the backdrop and shut the modal
+   * out from under the reader.
+   */
+  const pressedBackdrop = useRef(false)
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -65,11 +74,15 @@ export function ComingSoonModal({
       aria-labelledby="coming-soon-title"
       /* Above the sticky header, which sits at z-50. */
       className="fixed inset-0 z-[100] flex items-center justify-center bg-night/80 p-4"
-      onClick={onClose}
+      onPointerDown={(e) => {
+        pressedBackdrop.current = e.target === e.currentTarget
+      }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget && pressedBackdrop.current) onClose()
+      }}
     >
       <div
         className="pixel-box-lg pixel-slide-up relative flex w-full max-w-lg flex-col items-center gap-5 bg-card p-6 text-center sm:p-8"
-        onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
