@@ -34,8 +34,8 @@ export function MintButton({ className }: { className?: string }) {
           body={
             <>
               <span className="text-foreground">The mint</span> is not open
-              yet. The chimis are still getting their charms in order — join
-              the Discord and you will hear it first.
+              yet. The chimis are still getting their charms in order —
+              opening {site.launch}.
             </>
           }
           onClose={() => setOpen(false)}

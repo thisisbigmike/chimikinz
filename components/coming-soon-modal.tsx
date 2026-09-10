@@ -1,8 +1,8 @@
 'use client'
 
-import Image from 'next/image'
 import type * as React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { PixelTag } from '@/components/pixel/pixel-panel'
 import { site } from '@/lib/site'
@@ -11,6 +11,9 @@ import { site } from '@/lib/site'
  * Shown when someone reaches for something that is not open yet — a
  * collection before the OpenSea drop, or the mint before it goes live.
  * Flip `launched` in lib/site.ts to send collections to OpenSea instead.
+ *
+ * Same plate as the closed Workshop (app/workshop/page.tsx), so every
+ * "not yet" on the site reads as the same object.
  *
  * `body` overrides the sentence under the heading; without it the modal
  * reads as the collection case it was first written for.
@@ -24,6 +27,20 @@ export function ComingSoonModal({
   body?: React.ReactNode
   onClose: () => void
 }) {
+  /**
+   * Rendered through a portal on purpose. `ScrollReveal` animates with a
+   * transform, and a transformed ancestor becomes the containing block for
+   * `position: fixed` — so a modal opened from a button inside one (the
+   * mint CTA is inside two) lays itself out against that button instead of
+   * the viewport, and arrives as a squeezed column. Going out to <body>
+   * puts it back on the viewport wherever it is opened from.
+   */
+  const [container, setContainer] = useState<HTMLElement | null>(null)
+
+  useEffect(() => {
+    setContainer(document.body)
+  }, [])
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -39,12 +56,15 @@ export function ComingSoonModal({
     }
   }, [onClose])
 
-  return (
+  if (!container) return null
+
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
       aria-labelledby="coming-soon-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-night/80 p-4"
+      /* Above the sticky header, which sits at z-50. */
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-night/80 p-4"
       onClick={onClose}
     >
       <div
@@ -60,25 +80,15 @@ export function ComingSoonModal({
           X
         </button>
 
-        <div className="art-ground relative size-32 border-4 border-border bg-background">
-          <Image
-            src="/chimikinz/oddling-6.png"
-            alt=""
-            fill
-            sizes="128px"
-            className="pixel-float object-contain p-2"
-          />
-        </div>
-
         <PixelTag className="bg-secondary text-secondary-foreground">
           Not yet
         </PixelTag>
 
         <h2
           id="coming-soon-title"
-          className="text-balance font-display text-xl uppercase sm:text-2xl"
+          className="text-balance font-display text-2xl uppercase sm:text-3xl"
         >
-          Coming Soon
+          <span className="pixel-text-shadow-primary">Coming Soon</span>
         </h2>
 
         <p className="text-pretty text-2xl leading-snug text-muted-foreground">
@@ -86,16 +96,12 @@ export function ComingSoonModal({
             <>
               <span className="text-foreground">{title}</span> is not on
               OpenSea yet. The chimis are still getting their charms in order
-              — we are almost there.
+              — launching {site.launch}.
             </>
           )}
         </p>
 
-        <p className="font-display text-[10px] uppercase text-muted-foreground">
-          Launching {site.launch}
-        </p>
-
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="flex flex-wrap items-center justify-center gap-3">
           <PixelLink href={site.links.discord} external size="md">
             Join the Discord
           </PixelLink>
@@ -104,6 +110,7 @@ export function ComingSoonModal({
           </PixelLink>
         </div>
       </div>
-    </div>
+    </div>,
+    container,
   )
 }
