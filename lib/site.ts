@@ -46,8 +46,8 @@ export const workshopOpen: boolean = false
 
 export const stats = [
   { value: '7,777', label: 'Chimis' },
-  { value: '100%', label: 'Hand-drawn' },
   { value: 'ETH', label: 'Chain' },
+  { value: '$3', label: 'Mint price' },
 ] as const
 
 export const marqueeItems = [
