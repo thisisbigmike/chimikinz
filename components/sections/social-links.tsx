@@ -112,7 +112,14 @@ export function SocialLinks() {
                   href={channel.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group pixel-box pixel-press pixel-lift flex h-full items-center gap-4 bg-card p-5"
+                  className={cn(
+                    'group pixel-box pixel-press pixel-lift flex h-full items-center gap-4 bg-card p-5',
+                    /* The wide one runs the width of the pair above it, so
+                       left-aligned content leaves half the card empty. Only
+                       from `sm`: below that every card is full width and one
+                       centred among them would just look out of step. */
+                    channel.wide && 'sm:justify-center',
+                  )}
                 >
                   <div
                     className={`pixel-box-sm grid size-14 shrink-0 place-items-center ${channel.tone}`}
