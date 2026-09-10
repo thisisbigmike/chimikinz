@@ -63,7 +63,7 @@ export function Hero() {
       <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:py-20">
         <ScrollReveal variant="pixel-pop" delay={0}>
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <PixelTag className="bg-accent text-accent-foreground">
+            <PixelTag className="bg-secondary text-secondary-foreground">
               Launching {site.launch}
             </PixelTag>
           </div>
