@@ -22,6 +22,7 @@ export function RarePersonalities() {
   const slides = useMemo<ThumbnailSlide[]>(
     () =>
       rarePersonalities.map((piece) => ({
+        name: piece.name,
         src: rareFullSrc(piece.slug),
         thumbnailSrc: rareThumbSrc(piece.slug),
         alt: piece.alt,

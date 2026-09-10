@@ -6,11 +6,14 @@ import {
   Carousel,
   Slider,
   SliderContainer,
+  SliderCaption,
   ThumbsSlider,
 } from '@/components/ui/thumbnail-slider-utils/carousel'
 import { cn } from '@/lib/utils'
 
 export type ThumbnailSlide = {
+  /** Shown as the caption under the stage, and names the thumb button. */
+  name?: string
   /** Full-size image for the main stage. */
   src: string
   /** Small image for the strip underneath. */
@@ -54,6 +57,7 @@ export default function ThumbnailSlider({
                  rather than a picture hung in a box. */
               className="relative h-[300px] w-full sm:h-[350px] xl:h-[400px]"
               thumbnailSrc={slide.thumbnailSrc}
+              label={slide.name}
             >
               <Image
                 src={slide.src}
@@ -69,6 +73,12 @@ export default function ThumbnailSlider({
             </Slider>
           ))}
         </SliderContainer>
+
+        {/* The name sits between the stage and the strip, so it reads as a
+            caption for the figure above rather than a heading for the row
+            below. */}
+        <SliderCaption showCount />
+
         <ThumbsSlider
           className="px-1 pb-1"
           thumbsClassName="h-24 basis-[28%] sm:basis-[15%]"

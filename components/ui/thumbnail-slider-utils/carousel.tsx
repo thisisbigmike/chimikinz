@@ -24,6 +24,8 @@ type CarouselContextValue = {
   scrollTo: (index: number) => void
   thumbnails: string[]
   setThumbnails: (srcs: string[]) => void
+  labels: string[]
+  setLabels: (labels: string[]) => void
 }
 
 const CarouselContext = React.createContext<CarouselContextValue | null>(null)
@@ -50,6 +52,7 @@ export function Carousel({
 
   const [selected, setSelected] = React.useState(0)
   const [thumbnails, setThumbnails] = React.useState<string[]>([])
+  const [labels, setLabels] = React.useState<string[]>([])
 
   const onSelect = React.useCallback(() => {
     if (!mainApi) return
@@ -77,8 +80,17 @@ export function Carousel({
   )
 
   const value = React.useMemo(
-    () => ({ mainRef, thumbsRef, selected, scrollTo, thumbnails, setThumbnails }),
-    [mainRef, thumbsRef, selected, scrollTo, thumbnails],
+    () => ({
+      mainRef,
+      thumbsRef,
+      selected,
+      scrollTo,
+      thumbnails,
+      setThumbnails,
+      labels,
+      setLabels,
+    }),
+    [mainRef, thumbsRef, selected, scrollTo, thumbnails, labels],
   )
 
   return (
@@ -100,18 +112,20 @@ export function SliderContainer({
   children,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const { mainRef, setThumbnails } = useCarousel('SliderContainer')
+  const { mainRef, setThumbnails, setLabels } = useCarousel('SliderContainer')
 
   /* Read the thumbnails straight off the slides rather than having each one
      register itself: children are a static list here, so this keeps the
      strip in the same order as the slides with no mount-order guesswork. */
-  const sources = React.Children.toArray(children)
-    .filter(React.isValidElement)
-    .map(
-      (child) =>
-        (child.props as { thumbnailSrc?: string }).thumbnailSrc ?? '',
-    )
+  const slides = React.Children.toArray(children).filter(React.isValidElement)
+  const sources = slides.map(
+    (child) => (child.props as { thumbnailSrc?: string }).thumbnailSrc ?? '',
+  )
+  const names = slides.map(
+    (child) => (child.props as { label?: string }).label ?? '',
+  )
   const signature = sources.join('|')
+  const nameSignature = names.join('|')
 
   React.useEffect(() => {
     setThumbnails(signature.length ? signature.split('|') : [])
@@ -119,6 +133,11 @@ export function SliderContainer({
     // every render, the contents do not.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signature])
+
+  React.useEffect(() => {
+    setLabels(nameSignature.length ? nameSignature.split('|') : [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nameSignature])
 
   return (
     <div ref={mainRef} className="overflow-hidden">
@@ -132,10 +151,16 @@ export function SliderContainer({
 export function Slider({
   className,
   children,
-  /* Consumed by SliderContainer for the thumb strip; never rendered here. */
+  /* Both consumed by SliderContainer — for the thumb strip and the
+     caption — rather than rendered here. */
   thumbnailSrc: _thumbnailSrc,
+  label: _label,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { thumbnailSrc?: string }) {
+}: React.HTMLAttributes<HTMLDivElement> & {
+  thumbnailSrc?: string
+  /** Name for this slide: the caption, and the thumb's accessible name. */
+  label?: string
+}) {
   return (
     <div
       role="group"
@@ -164,7 +189,8 @@ export function ThumbsSlider({
    */
   thumbFit?: 'cover' | 'contain'
 }) {
-  const { thumbsRef, thumbnails, selected, scrollTo } = useCarousel('ThumbsSlider')
+  const { thumbsRef, thumbnails, labels, selected, scrollTo } =
+    useCarousel('ThumbsSlider')
 
   if (thumbnails.length === 0) return null
 
@@ -176,7 +202,15 @@ export function ThumbsSlider({
             key={`${src}-${index}`}
             type="button"
             onClick={() => scrollTo(index)}
-            aria-label={`Show slide ${index + 1} of ${thumbnails.length}`}
+            /* The name if the slide carries one — "Show Roni" is a better
+               button than "Show slide 2 of 7", and it is what a hover
+               tooltip can show too. */
+            aria-label={
+              labels[index]
+                ? `Show ${labels[index]}`
+                : `Show slide ${index + 1} of ${thumbnails.length}`
+            }
+            title={labels[index] || undefined}
             aria-current={index === selected}
             className={cn(
               'min-w-0 shrink-0 grow-0 basis-[15%] overflow-hidden border-4 transition-opacity',
@@ -199,6 +233,53 @@ export function ThumbsSlider({
           </button>
         ))}
       </div>
+    </div>
+  )
+}
+
+/**
+ * The name of the slide currently on the stage.
+ *
+ * Named slides are the only ones worth a caption, so this renders nothing
+ * until one has a `label`. `aria-live` because the text changes under the
+ * reader as the carousel moves rather than because they moved focus.
+ */
+export function SliderCaption({
+  className,
+  plateClassName,
+  showCount = false,
+}: {
+  className?: string
+  plateClassName?: string
+  /** Adds a quiet "3 / 7" beside the name. */
+  showCount?: boolean
+}) {
+  const { labels, selected } = useCarousel('SliderCaption')
+  const label = labels[selected]
+
+  if (!label) return null
+
+  return (
+    <div
+      aria-live="polite"
+      className={cn(
+        'mt-4 flex flex-wrap items-center justify-center gap-3',
+        className,
+      )}
+    >
+      <span
+        className={cn(
+          'pixel-box-sm bg-card px-4 py-2 font-display text-xs uppercase',
+          plateClassName,
+        )}
+      >
+        {label}
+      </span>
+      {showCount ? (
+        <span className="font-display text-[10px] uppercase text-muted-foreground">
+          {selected + 1} / {labels.length}
+        </span>
+      ) : null}
     </div>
   )
 }
