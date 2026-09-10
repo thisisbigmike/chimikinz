@@ -456,6 +456,73 @@ export const artwork: Artwork[] = [
     category: 'scenes',
     alt: 'The four Chimis mid-stride, each walking through their own panel of colour',
   },
+
+  // ── Community ─────────────────────────────────────────────────────────
+  // Named for the people they were drawn for. `title` is the name as given,
+  // and it is what the card and the lightbox show.
+  {
+    slug: 'edo',
+    title: 'Edo',
+    group: 'characters',
+    category: 'community',
+    alt: 'Edo — a brown Chimi in a yellow and pink patterned onesie and bow tie, aviator goggles and a spiked crown, on pale blue',
+  },
+  {
+    slug: 'euan',
+    title: 'Euan',
+    group: 'characters',
+    category: 'community',
+    alt: 'Euan — a dark Chimi with curly black hair, glasses, a moustache and goatee, in an olive hoodie and trainers, on charcoal',
+  },
+  {
+    slug: 'grumpysmurf',
+    title: 'Grumpysmurf',
+    group: 'characters',
+    category: 'community',
+    alt: 'Grumpysmurf — a blue Chimi in a white cap and eye patch with a flower pendant, holding a small red axe, on blue',
+  },
+  {
+    slug: 'lissa',
+    title: 'Lissa',
+    group: 'characters',
+    category: 'community',
+    alt: 'Lissa — a black-haired Chimi with a blunt fringe in a blue school jumper and grey skirt, a grey cat sitting on its head, on blue',
+  },
+  {
+    slug: 'martins',
+    title: 'Martins',
+    group: 'characters',
+    category: 'community',
+    alt: 'Martins — a brown Chimi with spiked black hair and gold ear hoops, in a blue hoodie with a cartoon on the pocket, on grey',
+  },
+  {
+    slug: 'mynd',
+    title: 'Mynd',
+    group: 'characters',
+    category: 'community',
+    alt: 'Mynd — a Chimi with long white hair and round pink sunglasses, in a navy suit and tie, on violet',
+  },
+  {
+    slug: 'tinoch',
+    title: 'Tinoch',
+    group: 'characters',
+    category: 'community',
+    alt: 'Tinoch — a tan Chimi in an orange beanie and blue hoodie with a dark mask across its eyes, on slate blue',
+  },
+  {
+    slug: 'tizz',
+    title: 'Tizz',
+    group: 'characters',
+    category: 'community',
+    alt: 'Tizz — a Chimi in a plum and white onesie and bow tie under a horned helmet, wide-eyed, on sand',
+  },
+  {
+    slug: 'whateverman',
+    title: 'Whateverman',
+    group: 'characters',
+    category: 'community',
+    alt: 'Whateverman — a Chimi in a red and white onesie with sunglasses and a gold top hat, on pale teal',
+  },
 ]
 
 export const artGroups: { id: ArtGroup; label: string; blurb: string }[] = [
