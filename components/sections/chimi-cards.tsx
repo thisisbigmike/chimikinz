@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
+import { SeeMoreCards } from '@/components/see-more-cards'
 import { cardSrc, chimiCardArt } from '@/lib/chimi-cards'
 
 /**
@@ -44,6 +45,12 @@ export function ChimiCards() {
             </li>
           ))}
         </ul>
+
+        <ScrollReveal variant="fade-up">
+          <div className="flex justify-center">
+            <SeeMoreCards />
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )

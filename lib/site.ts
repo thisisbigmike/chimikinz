@@ -10,6 +10,7 @@ export const site = {
     xFollowIntent: 'https://x.com/intent/follow?screen_name=chimikinzzz',
     discord: 'https://discord.gg/pTaBsxrXE',
     mint: 'https://chimikinz.nfts2.me',
+    giphy: 'https://giphy.com/chimikinzonape',
   },
   nav: [
     { label: 'Home', href: '/' },

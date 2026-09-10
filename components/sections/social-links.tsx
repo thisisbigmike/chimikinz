@@ -4,6 +4,7 @@ import { PixelTag } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { PixelSparkles } from '@/components/pixel-sparkles'
 import { site } from '@/lib/site'
+import { cn } from '@/lib/utils'
 
 /**
  * The two brand marks, inline.
@@ -38,6 +39,25 @@ function XMark({ className }: { className?: string }) {
   )
 }
 
+/**
+ * Not a brand mark. Giphy's logo is a wordmark, and a wrong redrawing of
+ * someone's logo is worse than none — so this plate says what it is in the
+ * site's own display face, which sits with the pixel work anyway.
+ */
+function GifMark({ className }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn(
+        'grid place-items-center font-display text-[10px] leading-none tracking-tight',
+        className,
+      )}
+    >
+      GIF
+    </span>
+  )
+}
+
 const channels = [
   {
     label: 'Discord',
@@ -52,6 +72,15 @@ const channels = [
     body: 'New drawings as they land, and not much else. No threads about roadmaps.',
     tone: 'bg-secondary text-secondary-foreground',
     Mark: XMark,
+  },
+  {
+    label: 'Giphy',
+    href: site.links.giphy,
+    body: 'Every GIF we have made, in one place. Find them all here — and add your own.',
+    tone: 'bg-primary text-primary-foreground',
+    Mark: GifMark,
+    /* Sits across the bottom of the pair rather than alone in a column. */
+    wide: true,
   },
 ]
 
@@ -72,7 +101,12 @@ export function SocialLinks() {
 
         <ul className="mt-10 grid gap-6 sm:grid-cols-2">
           {channels.map((channel, i) => (
-            <ScrollReveal key={channel.label} variant="fade-up" delay={i * 150}>
+            <ScrollReveal
+              key={channel.label}
+              variant="fade-up"
+              delay={i * 150}
+              className={channel.wide ? 'sm:col-span-2' : undefined}
+            >
               <li className="h-full">
                 <a
                   href={channel.href}
@@ -81,9 +115,9 @@ export function SocialLinks() {
                   className="group pixel-box pixel-press pixel-lift flex h-full items-center gap-4 bg-card p-5"
                 >
                   <div
-                    className={`pixel-box-sm grid size-20 shrink-0 place-items-center ${channel.tone}`}
+                    className={`pixel-box-sm grid size-14 shrink-0 place-items-center ${channel.tone}`}
                   >
-                    <channel.Mark className="size-10" />
+                    <channel.Mark className="size-7" />
                   </div>
 
                   <div className="flex flex-col gap-2">
