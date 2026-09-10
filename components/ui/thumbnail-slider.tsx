@@ -49,7 +49,10 @@ export default function ThumbnailSlider({
           {slides.map((slide, index) => (
             <Slider
               key={slide.src}
-              className="pixel-box art-ground relative h-[300px] w-full overflow-hidden sm:h-[350px] xl:h-[400px]"
+              /* No frame and no ground: the art is drawn on transparency,
+                 so it sits straight on the section and reads as a figure
+                 rather than a picture hung in a box. */
+              className="relative h-[300px] w-full sm:h-[350px] xl:h-[400px]"
               thumbnailSrc={slide.thumbnailSrc}
             >
               <Image
@@ -58,9 +61,9 @@ export default function ThumbnailSlider({
                 fill
                 sizes={sizes}
                 priority={priority && index === 0}
-                /* `object-contain`, like the gallery lightbox: the art files
-                   carry their own coloured ground, so cropping them cuts
-                   into the drawing rather than into a margin. */
+                /* `object-contain`, like the gallery lightbox: these are
+                   whole figures on transparency, so covering the box would
+                   crop the drawing rather than a margin. */
                 className="art-smooth object-contain"
               />
             </Slider>
@@ -68,7 +71,7 @@ export default function ThumbnailSlider({
         </SliderContainer>
         <ThumbsSlider
           className="px-1 pb-1"
-          thumbsClassName="art-ground h-24 basis-[28%] sm:basis-[15%]"
+          thumbsClassName="h-24 basis-[28%] sm:basis-[15%]"
           thumbFit="contain"
         />
       </Carousel>
