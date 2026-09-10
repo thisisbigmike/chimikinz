@@ -34,24 +34,41 @@ function Field({
   label,
   children,
   className,
+  as: Heading = 'h2',
 }: {
   label: string
   children: React.ReactNode
   className?: string
+  /** One step below the card's own title — see `headingLevel`. */
+  as?: 'h2' | 'h3'
 }) {
   return (
     <div className={cn('flex flex-col gap-3 p-5 sm:p-6', className)}>
-      <h2 className="font-display text-[9px] uppercase tracking-tight text-night/75">
+      <Heading className="font-display text-[9px] uppercase tracking-tight text-night/75">
         {label}
-      </h2>
+      </Heading>
       {children}
     </div>
   )
 }
 
-export function ChimiCard({ chimi }: { chimi: Chimi }) {
+export function ChimiCard({
+  chimi,
+  headingLevel = 1,
+}: {
+  chimi: Chimi
+  /**
+   * The card owns the page on a Chimi's own route, so its name is an `h1`
+   * there. Embedded in a listing it is one card among several under that
+   * page's own heading, so pass `2` and the labels inside step down with it
+   * — a page gets one `h1`, not one per card.
+   */
+  headingLevel?: 1 | 2
+}) {
   const kindLabel =
     chimi.kind === 'rare' ? 'Rare personality' : 'Founding personality'
+  const Title = headingLevel === 1 ? 'h1' : 'h2'
+  const Label = headingLevel === 1 ? 'h2' : 'h3'
 
   return (
     <article className="soft-card pixel-box-lg overflow-hidden rounded-[28px]">
@@ -71,14 +88,14 @@ export function ChimiCard({ chimi }: { chimi: Chimi }) {
           {/* Words */}
           <div className="flex flex-col gap-5 pb-6 pt-8 lg:pb-16 lg:pt-12">
             <div className="flex flex-col gap-2">
-              <h1 className="flex flex-wrap items-center gap-2 font-display text-xl uppercase leading-tight sm:text-2xl">
+              <Title className="flex flex-wrap items-center gap-2 font-display text-xl uppercase leading-tight sm:text-2xl">
                 {chimi.emotion}
                 {chimi.kind === 'rare' ? (
                   <span aria-label="Rare" title="Rare">
                     ⭐
                   </span>
                 ) : null}
-              </h1>
+              </Title>
               <p className="font-display text-[10px] uppercase tracking-tight text-night/75">
                 {kindLabel}
               </p>
@@ -133,7 +150,7 @@ export function ChimiCard({ chimi }: { chimi: Chimi }) {
 
       {/* ── The cream strip: the hard details ────────────────────────── */}
       <div className="grid divide-y-4 divide-border border-t-4 border-border bg-cream text-night lg:grid-cols-[1fr_0.65fr_1.25fr_1.35fr_0.8fr] lg:divide-x-4 lg:divide-y-0">
-        <Field label={chimi.name}>
+        <Field label={chimi.name} as={Label}>
           <div className="flex items-center gap-2">
             <Clover className="size-5 shrink-0" />
             <span className="font-display text-[10px] uppercase leading-tight tracking-tight">
@@ -143,9 +160,9 @@ export function ChimiCard({ chimi }: { chimi: Chimi }) {
             </span>
           </div>
           <div className="mt-1 flex flex-col gap-2">
-            <h2 className="font-display text-[9px] uppercase tracking-tight text-night/75">
+            <Label className="font-display text-[9px] uppercase tracking-tight text-night/75">
               Emotion
-            </h2>
+            </Label>
             <span
               className="inline-flex w-fit items-center border-[3px] border-border px-2 py-1 font-display text-[9px] uppercase leading-none tracking-tight"
               style={{ backgroundColor: chimi.accent }}
@@ -155,7 +172,7 @@ export function ChimiCard({ chimi }: { chimi: Chimi }) {
           </div>
         </Field>
 
-        <Field label="Gender">
+        <Field label="Gender" as={Label}>
           <div className="flex items-center gap-2">
             <span
               aria-hidden="true"
@@ -169,7 +186,7 @@ export function ChimiCard({ chimi }: { chimi: Chimi }) {
           </div>
         </Field>
 
-        <Field label="Traits">
+        <Field label="Traits" as={Label}>
           <ul className="flex flex-col gap-1.5">
             {chimi.traits.map((trait) => (
               <li
@@ -186,12 +203,12 @@ export function ChimiCard({ chimi }: { chimi: Chimi }) {
           </ul>
         </Field>
 
-        <Field label="Lore">
+        <Field label="Lore" as={Label}>
           <p className="text-pretty text-xl leading-snug">{chimi.lore}</p>
           <Clover className="size-4 shrink-0 text-night/40" />
         </Field>
 
-        <Field label="How to find">
+        <Field label="How to find" as={Label}>
           <span
             className="inline-flex w-fit items-center border-[3px] border-border px-2 py-1 font-display text-[9px] uppercase leading-none tracking-tight"
             style={{ backgroundColor: chimi.accent }}

@@ -54,7 +54,6 @@ export const marqueeItems = [
   'MINT COMING SOON',
   '7,777 CHIMIS',
   'BUILT ON ETHEREUM',
-  'ONE CHARM EACH',
   'NO TWO ALIKE',
   'CATCH THE LUCK',
 ] as const

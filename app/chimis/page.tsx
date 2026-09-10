@@ -6,6 +6,7 @@ import { PixelLink } from '@/components/pixel/pixel-button'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { ChimiRail } from '@/components/chimi-rail'
+import { ChimiCards } from '@/components/sections/chimi-cards'
 import { RarePersonalities } from '@/components/sections/rare-personalities'
 import { mainChimis, rareChimis } from '@/lib/chimis'
 import { site } from '@/lib/site'
@@ -147,6 +148,8 @@ export default function ChimisPage() {
         )}
 
         <RarePersonalities />
+
+        <ChimiCards />
       </main>
 
       <SiteFooter />

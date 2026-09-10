@@ -100,7 +100,7 @@
   --sky: #8ecdf5; /* calm, imagination, freedom */
   --blossom: #ffc5d6; /* love, kindness, softness */
   --sunbeam: #ffdb6b; /* joy, energy, light — art and sparkles only, see below */
-  --sprout: #8fe36b; /* the lead green: new growth, go */
+  --sprout: #8fe36b; /* retired: the old lead green, kept for reference */
   --dream: #b6a5f7; /* dreams, mystery, creativity */
   --ember: #ff8a4c; /* the warm pop */
   --night: #141416; /* depth, balance, focus */
@@ -140,7 +140,11 @@
      a favourited card vs a hovered one. Pointing both at Clover would have
      flattened those into one colour. Sprout is the brighter, limier of the
      two, so it still leads. */
-  --primary: var(--sprout);
+  /* One green across the whole site. This used to be the brighter
+     `--sprout`, which sat a shade off the clover the nav and the tags wear
+     — two greens a few points apart read as a mistake rather than a pair,
+     so the lead role went to clover and `--sprout` is no longer used. */
+  --primary: var(--clover);
   --primary-foreground: var(--night);
   --secondary: var(--clover);
   --secondary-foreground: var(--night);
