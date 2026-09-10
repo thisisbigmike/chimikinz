@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
@@ -41,6 +41,64 @@ export function SiteHeader() {
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
+  /**
+   * The green plate behind the current page is one element that slides,
+   * rather than a background switched on and off per link. It is measured
+   * from the link it belongs to, so it keeps whatever width the word needs
+   * and lands exactly on the box the link would have drawn itself.
+   */
+  const navRef = useRef<HTMLElement>(null)
+  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([])
+  const [plate, setPlate] = useState<{
+    x: number
+    y: number
+    w: number
+    h: number
+  } | null>(null)
+  /** Off for the first placement, so it appears where it belongs instead of
+   *  flying in from the corner. */
+  const [sliding, setSliding] = useState(false)
+
+  const activeIndex = site.nav.findIndex((item) => isActive(item.href))
+
+  useEffect(() => {
+    const nav = navRef.current
+    const link = linkRefs.current[activeIndex]
+
+    // A route that is not in the nav — Collections, a Chimi's own page —
+    // gets no plate rather than a stranded one.
+    if (!nav || !link) {
+      setPlate(null)
+      return
+    }
+
+    const measure = () => {
+      const bounds = nav.getBoundingClientRect()
+      const box = link.getBoundingClientRect()
+      setPlate({
+        x: box.left - bounds.left,
+        y: box.top - bounds.top,
+        w: box.width,
+        h: box.height,
+      })
+    }
+
+    measure()
+    const settle = requestAnimationFrame(() => setSliding(true))
+
+    // The display face is what sets these widths, so a late font swap moves
+    // every link under the plate.
+    void document.fonts?.ready.then(measure).catch(() => {})
+
+    const observer = new ResizeObserver(measure)
+    observer.observe(nav)
+
+    return () => {
+      cancelAnimationFrame(settle)
+      observer.disconnect()
+    }
+  }, [activeIndex, pathname])
+
   return (
     <header className="sticky top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4">
       {/* The bar floats now: no full-width fill and no bottom rule, so the
@@ -68,15 +126,43 @@ export function SiteHeader() {
             {site.name}
           </Link>
 
-          <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
-            {site.nav.map((item) => (
+          <nav
+            ref={navRef}
+            aria-label="Main"
+            className="relative hidden items-center gap-1 lg:flex"
+          >
+            {/* The plate. Its 4px border lands exactly where each link keeps
+                a transparent one, so the box is the same size either way and
+                nothing shifts as it arrives. */}
+            {plate ? (
+              <span
+                aria-hidden="true"
+                className={cn(
+                  'pointer-events-none absolute left-0 top-0 border-4 border-border bg-secondary',
+                  sliding &&
+                    'transition-[transform,width] duration-300 ease-out motion-reduce:transition-none',
+                )}
+                style={{
+                  transform: `translate(${plate.x}px, ${plate.y}px)`,
+                  width: plate.w,
+                  height: plate.h,
+                }}
+              />
+            ) : null}
+
+            {site.nav.map((item, i) => (
               <Link
                 key={item.href}
                 href={item.href}
+                ref={(el) => {
+                  linkRefs.current[i] = el
+                }}
                 aria-current={isActive(item.href) ? 'page' : undefined}
                 className={cn(
-                  'pixel-glow border-4 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-tight transition-colors hover:border-border hover:bg-secondary',
-                  isActive(item.href) && 'border-border bg-secondary',
+                  /* Above the plate, and keeping the transparent border so
+                     the link measures the same whether it is current or not. */
+                  'pixel-glow relative border-4 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-tight transition-colors',
+                  !isActive(item.href) && 'hover:border-border hover:bg-secondary',
                 )}
               >
                 {item.label}
