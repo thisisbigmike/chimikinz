@@ -1,20 +1,27 @@
 'use client'
 
 import Image from 'next/image'
+import type * as React from 'react'
 import { useEffect } from 'react'
 import { PixelLink } from '@/components/pixel/pixel-button'
 import { PixelTag } from '@/components/pixel/pixel-panel'
 import { site } from '@/lib/site'
 
 /**
- * Shown when someone opens a collection before the OpenSea drop is live.
- * Flip `launched` in lib/site.ts to send them to OpenSea instead.
+ * Shown when someone reaches for something that is not open yet — a
+ * collection before the OpenSea drop, or the mint before it goes live.
+ * Flip `launched` in lib/site.ts to send collections to OpenSea instead.
+ *
+ * `body` overrides the sentence under the heading; without it the modal
+ * reads as the collection case it was first written for.
  */
 export function ComingSoonModal({
   title,
+  body,
   onClose,
 }: {
   title: string
+  body?: React.ReactNode
   onClose: () => void
 }) {
   useEffect(() => {
@@ -75,9 +82,13 @@ export function ComingSoonModal({
         </h2>
 
         <p className="text-pretty text-2xl leading-snug text-muted-foreground">
-          <span className="text-foreground">{title}</span> is not on OpenSea
-          yet. The chimis are still getting their charms in order — we are
-          almost there.
+          {body ?? (
+            <>
+              <span className="text-foreground">{title}</span> is not on
+              OpenSea yet. The chimis are still getting their charms in order
+              — we are almost there.
+            </>
+          )}
         </p>
 
         <p className="font-display text-[10px] uppercase text-muted-foreground">

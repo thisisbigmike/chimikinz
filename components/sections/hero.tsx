@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { PixelButton } from '@/components/pixel/pixel-button'
+import { MintButton } from '@/components/mint-button'
 import { PixelTag } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { PixelSparkles } from '@/components/pixel-sparkles'
@@ -105,13 +105,9 @@ export function Hero() {
         </ScrollReveal>
 
         <ScrollReveal variant="fade-up" delay={300}>
-          {/* No link on it. `aria-disabled` rather than `disabled`, so the
-              slab keeps its full weight — it is still the hero's one call to
-              action — while a screen reader is told it cannot be acted on
-              yet. Give it an href again when the mint opens. */}
-          <PixelButton size="lg" aria-disabled="true">
-            Mint on {site.chain}
-          </PixelButton>
+          {/* Opens the Coming Soon modal while the mint is shut — see
+              components/mint-button.tsx. */}
+          <MintButton />
         </ScrollReveal>
 
         <dl className="mt-2 grid w-full max-w-3xl grid-cols-2 gap-3 sm:grid-cols-3">

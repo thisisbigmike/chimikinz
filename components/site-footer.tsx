@@ -13,7 +13,6 @@ const columns = [
     heading: 'Explore',
     links: [
       { label: 'The Chimis', href: '/chimis' },
-      { label: 'Rare Personalities', href: '/rare-personalities' },
       { label: 'Gallery', href: '/gallery' },
       { label: 'The Workshop', href: '/workshop' },
       { label: 'The Journey', href: '/journey' },

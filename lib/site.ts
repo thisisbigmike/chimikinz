@@ -14,7 +14,6 @@ export const site = {
   nav: [
     { label: 'Home', href: '/' },
     { label: 'Chimis', href: '/chimis' },
-    { label: 'Rare Personalities', href: '/rare-personalities' },
     { label: 'Gallery', href: '/gallery' },
     { label: 'Workshop', href: '/workshop' },
     { label: 'Journey', href: '/journey' },

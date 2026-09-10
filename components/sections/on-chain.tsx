@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { PixelButton } from '@/components/pixel/pixel-button'
+import { MintButton } from '@/components/mint-button'
 import { PixelTag, SectionHeading } from '@/components/pixel/pixel-panel'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { brandArt } from '@/lib/collection'
@@ -64,10 +64,9 @@ export function OnChain() {
           </ScrollReveal>
 
           <ScrollReveal variant="fade-up" delay={500}>
-            {/* No link on it while the mint is shut — see the hero's. */}
-            <PixelButton size="lg" aria-disabled="true">
-              Mint on {site.chain}
-            </PixelButton>
+            {/* Opens the Coming Soon modal while the mint is shut — see
+                the hero's. */}
+            <MintButton />
           </ScrollReveal>
         </div>
       </div>
