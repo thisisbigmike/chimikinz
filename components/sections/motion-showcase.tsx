@@ -39,7 +39,7 @@ export function MotionShowcase() {
   const stripRef = useRef<HTMLDivElement>(null)
 
   /**
-   * Twenty-two H.264 decoders is not something to leave running down the page.
+   * Twenty-six H.264 decoders is not something to leave running down the page.
    *
    * The clips only play while the strip is near the viewport, and never at
    * all for a reader who has asked for less motion — which is why none of

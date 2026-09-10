@@ -2,13 +2,16 @@
  * The animated strip on the home page.
  *
  * These are H.264 MP4s rather than GIFs, which is the whole reason the strip
- * can afford to be this long: the eleven of them together are about 3.7MB,
+ * can afford to be this long: the thirteen of them together are about 4.5MB,
  * where the same seconds as GIFs would have run to tens of megabytes. The
  * trade is that they are `<video>` elements, not images, so the component
  * has to start and stop them itself — see `MotionShowcase`.
  *
  * Each file is square (848x848) except `loop-2`, which is 848x636 and gets
  * cropped to fit by `object-cover` like the rest.
+ *
+ * The last two are the only ones anyone has described, so they carry real
+ * alt text — see the note on `alt` below.
  *
  * `loop-N` matches the numbering of the files as they were handed over, so
  * re-pointing one at a different clip is a one-line change here.
@@ -97,5 +100,15 @@ export const motionLoops: MotionLoop[] = [
     src: '/chimikinz/motion/loop-11.mp4',
     poster: '/chimikinz/motion/poster/loop-11.webp',
     alt: 'An animated scene from Clover Cove',
+  },
+  {
+    src: '/chimikinz/motion/loop-12.mp4',
+    poster: '/chimikinz/motion/poster/loop-12.webp',
+    alt: 'A Chimi in a red hoodie leaning on a tub of popcorn, eating it a handful at a time',
+  },
+  {
+    src: '/chimikinz/motion/loop-13.mp4',
+    poster: '/chimikinz/motion/poster/loop-13.webp',
+    alt: 'A Chimi in a red hoodie rolling past a hedge on a skateboard, holding up a GM sign',
   },
 ]
