@@ -55,7 +55,7 @@ export function OnChain() {
           <ScrollReveal variant="pixel-pop" delay={400}>
             <div className="flex flex-wrap items-center gap-3">
               <PixelTag className="bg-accent text-accent-foreground">
-                Mint: soon
+                Mint: live now
               </PixelTag>
               <PixelTag className="bg-card">
                 Supply: {site.supply.toLocaleString()}
@@ -64,7 +64,7 @@ export function OnChain() {
           </ScrollReveal>
 
           <ScrollReveal variant="fade-up" delay={500}>
-            {/* Opens the Coming Soon modal while the mint is shut — see
+            {/* Goes straight to the mint on OpenSea — see
                 the hero's. */}
             <MintButton />
           </ScrollReveal>

@@ -105,7 +105,7 @@ export function Hero() {
         </ScrollReveal>
 
         <ScrollReveal variant="fade-up" delay={300}>
-          {/* Opens the Coming Soon modal while the mint is shut — see
+          {/* Goes straight to the mint on OpenSea — see
               components/mint-button.tsx. */}
           <MintButton />
         </ScrollReveal>

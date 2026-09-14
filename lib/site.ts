@@ -9,7 +9,7 @@ export const site = {
     x: 'https://x.com/chimikinzzz',
     xFollowIntent: 'https://x.com/intent/follow?screen_name=chimikinzzz',
     discord: 'https://discord.gg/pTaBsxrXE',
-    mint: 'https://chimikinz.nfts2.me',
+    mint: 'https://opensea.io/collection/chimikinz-onchain/overview',
     giphy: 'https://giphy.com/chimikinzonape',
   },
   nav: [
@@ -31,7 +31,7 @@ export const site = {
  * Typed as `boolean` on purpose — a literal `false` would make TypeScript
  * treat the live branch as dead code.
  */
-export const launched: boolean = false
+export const launched: boolean = true
 
 /**
  * The launch switch for the Workshop page.
@@ -52,7 +52,7 @@ export const stats = [
 ] as const
 
 export const marqueeItems = [
-  'MINT COMING SOON',
+  'MINT LIVE NOW',
   '4,444 CHIMIS',
   'BUILT ON ETHEREUM',
   'NO TWO ALIKE',

@@ -14,11 +14,15 @@ export default function CollectionsPage() {
   const [pending, setPending] = useState<Collection | null>(null)
 
   /**
-   * Before launch every card opens the modal. After launch the same click
-   * goes straight to that collection's OpenSea page.
+   * Before launch every card opens the modal. After launch a live
+   * collection's card goes straight to its OpenSea page; the ones still in
+   * the sketchbook keep opening the modal.
    */
+  const isLive = (collection: Collection) =>
+    launched && collection.status === 'Live' && Boolean(collection.opensea)
+
   const open = (collection: Collection) => {
-    if (launched && collection.opensea) {
+    if (isLive(collection)) {
       window.open(collection.opensea, '_blank', 'noopener,noreferrer')
       return
     }
@@ -94,7 +98,7 @@ export default function CollectionsPage() {
                       </p>
 
                       <span className="mt-auto pt-2 font-display text-[10px] uppercase text-foreground">
-                        {launched ? 'View on OpenSea' : 'Open collection'}{' '}
+                        {isLive(collection) ? 'View on OpenSea' : 'Open collection'}{' '}
                         <span className="pixel-arrow">&rarr;</span>
                       </span>
                     </div>

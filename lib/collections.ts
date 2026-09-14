@@ -7,7 +7,8 @@ export type Collection = {
   supply: string
   status: 'Minting soon' | 'Live' | 'In the sketchbook'
   /**
-   * Where the card sends people once `launched` (lib/site.ts) is true.
+   * Where the card sends people once `launched` (lib/site.ts) is true and
+   * the collection's `status` is 'Live'.
    * Fill these in with the real OpenSea collection URLs before launch.
    */
   opensea: string
@@ -21,9 +22,8 @@ export const collections: Collection[] = [
       'The full cast. 4,444 chimis drawn by hand, each one born with a single charm of its own.',
     cover: '/chimikinz/chimikins-logo-group.png',
     supply: '4,444',
-    status: 'Minting soon',
-    // TODO: real OpenSea URL
-    opensea: 'https://opensea.io/collection/chimikinz',
+    status: 'Live',
+    opensea: 'https://opensea.io/collection/chimikinz-onchain/overview',
   },
   {
     slug: 'the-four-chimis',
