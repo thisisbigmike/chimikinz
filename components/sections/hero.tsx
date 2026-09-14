@@ -64,7 +64,7 @@ export function Hero() {
         <ScrollReveal variant="pixel-pop" delay={0}>
           <div className="flex flex-wrap items-center justify-center gap-2">
             <PixelTag className="bg-secondary text-secondary-foreground">
-              Launching {site.launch}
+              Mint live now
             </PixelTag>
           </div>
         </ScrollReveal>
