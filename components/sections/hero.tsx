@@ -110,7 +110,7 @@ export function Hero() {
           <MintButton />
         </ScrollReveal>
 
-        <dl className="mt-2 grid w-full max-w-3xl grid-cols-2 gap-3 sm:grid-cols-3">
+        <dl className="mt-2 grid w-full max-w-xl grid-cols-2 gap-3">
           {stats.map((stat, i) => (
             <ScrollReveal
               key={stat.label}
@@ -123,15 +123,10 @@ export function Hero() {
                * takes a single column's width back — half the row less half
                * the 0.75rem gap — so it lands centred at exactly the width
                * of the cards above it rather than shrink-to-fit.
-               *
-               * Above sm the grid is three columns, three stats fill it
-               * evenly, and the whole thing reverts: `w-auto` alone would
-               * leave `justify-self-center` sizing the card to its text, so
-               * the stretch has to be handed back explicitly.
                */
               className={
                 stats.length % 2 === 1 && i === stats.length - 1
-                  ? 'col-span-2 w-[calc(50%-0.375rem)] justify-self-center sm:col-span-1 sm:w-auto sm:justify-self-stretch'
+                  ? 'col-span-2 w-[calc(50%-0.375rem)] justify-self-center'
                   : undefined
               }
             >
